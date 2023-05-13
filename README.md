@@ -5,6 +5,10 @@
 # Pre-requisites
 - [Node.js](https://nodejs.org/en/)
 
+# Services
+If you don't want to use Node.js, you can use one of the following services:
+- [Google Apps Script](https://github.com/torikushiii/starrail-auto/tree/master/services/google-script)
+
 # Installation
 1. Clone the repository.
 2. Run `npm install` to install the dependencies.
