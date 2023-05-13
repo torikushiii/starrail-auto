@@ -48,7 +48,7 @@ class StarRail {
         }
 
         const info = await StarRail.getInfo();
-        if (info.retcode !== 0 && message !== "OK") {
+        if (info.retcode !== 0 && info.message !== "OK") {
             throw new Error(`API error: ${info.message}`);            
         }
 
@@ -67,7 +67,9 @@ class StarRail {
         const discord = new Discord();
         if (data.issigned) {
             await discord.send({ message: "You've already checked in today, Trailblazer~" }, true);
-            return;
+            return {
+                message: "You've already checked in today, Trailblazer~"
+            };
         }
 
         const totalSigned = data.total;
@@ -94,7 +96,9 @@ class StarRail {
             award: awardData
         });
 
-        return true;
+        return {
+            message: `Signed in successfully! You have signed in for ${data.total} days!`,
+        };
     }
 
     static async getInfo () {
@@ -110,7 +114,7 @@ class StarRail {
                     act_id: ACT_ID
                 }
             });
-    
+
             if (res.statusCode !== 200) {
                 throw new Error(`HTTP error: ${res.statusCode}`);
             }
@@ -160,15 +164,25 @@ class StarRail {
 
 export default StarRail;
 
-/**
- * Adjust the time to your liking.
- * Or when does the daily reset happen in your timezone.
- */
-const job = new CronJob("0 0 0 * * *", async () => {
+if (process.argv.includes("--sign")) {
     const starRail = new StarRail();
-    await starRail.run();
-});
+    const run = await starRail.run();
 
-job.start();
+    console.log(run.message);
 
-console.log("Cron job started");
+    process.exit(0);
+}
+else {
+    /**
+     * Adjust the time to your liking.
+     * Or when does the daily reset happen in your timezone.
+     */
+    const job = new CronJob("0 0 0 * * *", async () => {
+        const starRail = new StarRail();
+        await starRail.run();
+    });
+
+    job.start();
+
+    console.log("Cron job started");
+}
