@@ -2,10 +2,15 @@
 
 [Daily Check-In](https://act.hoyolab.com/bbs/event/signin/hkrpg/index.html?act_id=e202303301540311)
 
+# Contents
+- [Pre-requisites](#pre-requisites)
+- [Setting-up](#setting-up)
+- [Running Automatically](#trigger)
+
 # Pre-requisites
 - Google Account
 
-# Installation
+# Setting-up
 1. Go to [Google Apps Script](https://script.google.com/home).
 2. Create a new project.
     ![](https://i.imgur.com/y3FgPUV.png)
@@ -48,7 +53,8 @@
 7. Paste it into the "Value" field for "COOKIE" in the "Script properties" section.
 8. Click on "Save script properties".
 
-# If you want to run it automatically every day
+# Trigger
+If you want to automate the script, you can add a trigger to run it daily.
 1. Click on the "Triggers" icon.
     ![](https://i.imgur.com/hAjfBhr.png)
 2. Click on "Add Trigger".
