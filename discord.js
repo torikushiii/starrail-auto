@@ -7,7 +7,7 @@ export default class Discord {
         }
 
         if (logged) {
-            return await got({
+            const res = await got({
                 url: Discord.webhookAuth,
                 method: "POST",
                 responseType: "json",
@@ -31,6 +31,12 @@ export default class Discord {
                     avatar_url: "https://i.imgur.com/o0hyhmw.png"
                 }
             });
+
+            if (res.statusCode !== 204) {
+                throw new Error(`Discord webhook error: ${res.statusCode}`);
+            }
+
+            return true;
         }
         
         const embed = Discord.generateEmbed(data);
@@ -46,7 +52,7 @@ export default class Discord {
         });
 
         if (res.statusCode !== 204) {
-            throw new Error(`HTTP error: ${res.statusCode}`);
+            throw new Error(`Discord webhook error: ${res.statusCode}`);
         }
 
         return true;
