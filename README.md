@@ -17,7 +17,7 @@
 5. Add `COOKIE` with your cookie.
 6. Add `DISCORD_WEBHOOK` with your Discord webhook.
 7. Run `index.js` with `node index.js` if you want to run it indefinitely everytime the daily reset occurs.
-8. Run `check-in.js` with `node check-in.js` if you want to run it once.
+8. Run `index.js` with `node check-in.js --sign` if you want to run it once.
 
 # Usage
 1. Go to the Daily Check-In page [here](https://act.hoyolab.com/bbs/event/signin/hkrpg/index.html?act_id=e202303301540311).
@@ -30,7 +30,7 @@
 7. Paste the output into `COOKIE` field at the .env file
 8. Fill in the `DISCORD_WEBHOOK` field if you want to receive a Discord notification when the check-in is successful.
 9. Run `index.js` with `node index.js` if you want to run it indefinitely everytime the daily reset occurs.
-10. Run `check-in.js` with `node check-in.js` if you want to run it once.
+10. Run `index.js` with `node check-in.js --sign` if you want to run it once.
 
 # Discord Webhooks
 This is an **OPTIONAL** feature. If you want to receive a Discord notification when the check-in is successful, you can create a Discord webhook and add it to the `.env` file.
