@@ -95,24 +95,31 @@ class StarRail {
   }
 
   static async sign() {
+    const payload = {
+      act_id: ACT_ID
+    };
+
     const options = {
       method: "POST",
       headers: {
         "User-Agent": StarRail.userAgent,
         Cookie: COOKIE
       },
-      payload: {
-        act_id: ACT_ID
-      }
+      payload: JSON.stringify(payload)
     };
 
     const res = UrlFetchApp.fetch(`${BASE_URL}/sign`, options);
 
     if (res.getResponseCode() !== 200) {
-      throw new Error(`HTTP error: ${res.getResponseCode()}`);
+      throw new Error(`Sign HTTP error: ${res.getResponseCode()}`);
     }
 
-    return JSON.parse(res.getContentText());
+    const body = JSON.parse(res.getContentText());
+    if (body.retcode !== 0 && body.message !== "OK") {
+      throw new Error(`Sign API error: ${body.message}`);
+    }
+
+    return true;
   }
 
   async run() {
@@ -125,20 +132,16 @@ class StarRail {
     }
 
     const info = await StarRail.getInfo();
-    if (info.retcode !== 0 && info.message !== "OK") {
-      throw new Error(`API error: ${info.message}`);
-    }
-
     const awards = await StarRail.awards();
     if (awards.length === 0) {
       throw new Error("There's no awards to claim (?)");
     }
 
     const data = {
-      today: info.data.today,
-      total: info.data.total_sign_day,
-      issigned: info.data.is_sign,
-      missed: info.data.sign_cnt_missed
+      today: info.today,
+      total: info.total_sign_day,
+      issigned: info.is_sign,
+      missed: info.sign_cnt_missed
     };
 
     const discord = new Discord(DISCORD_WEBHOOK);
@@ -156,26 +159,24 @@ class StarRail {
     };
 
     const sign = await StarRail.sign();
-    if (sign.retcode !== 0 && sign.message !== "OK") {
-      throw new Error(`API error: ${sign.message}`);
+    if (sign) {
+      console.log(`Signed in successfully! You have signed in for ${data.total} days!`);
+      console.log(`You have received ${awardData.count}x ${awardData.name}!`);
+
+      if (!DISCORD_WEBHOOK || typeof DISCORD_WEBHOOK !== "string") {
+        console.log("No Discord webhook provided, skipping...");
+        return true;
+      }
+
+      await discord.send({
+        signed: data.total,
+        award: awardData
+      });
+
+      return {
+        message: `Signed in successfully! You have signed in for ${data.total} days!`,
+      };
     }
-
-    console.log(`Signed in successfully! You have signed in for ${data.total} days!`);
-    console.log(`You have received ${awardData.count}x ${awardData.name}!`);
-
-    if (!DISCORD_WEBHOOK || typeof DISCORD_WEBHOOK !== "string") {
-      console.log("No Discord webhook provided, skipping...");
-      return true;
-    }
-
-    await discord.send({
-      signed: data.total,
-      award: awardData
-    });
-
-    return {
-      message: `Signed in successfully! You have signed in for ${data.total} days!`,
-    };
   }
 
   static async getInfo() {
@@ -191,10 +192,15 @@ class StarRail {
     const res = UrlFetchApp.fetch(`${BASE_URL}/info?act_id=${ACT_ID}`, options);
 
     if (res.getResponseCode() !== 200) {
-      throw new Error(`HTTP error: ${res.getResponseCode()}`);
+      throw new Error(`Info HTTP error: ${res.getResponseCode()}`);
     }
 
-    return JSON.parse(res.getContentText());
+    const body = JSON.parse(res.getContentText());
+    if (body.retcode !== 0 && body.message !== "OK") {
+      throw new Error(`Info API error: ${body.message}`);
+    }
+
+    return body.data;
   }
 
   static async awards() {
