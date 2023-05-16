@@ -12,19 +12,24 @@ const ACT_ID = "e202303301540311";
 const BASE_URL = "https://sg-public-api.hoyolab.com/event/luna/os";
 
 class StarRail {
-    constructor () {
-        this.cookie = COOKIE;
-        this.baseUrl = BASE_URL;
+    #cookie;
+
+    constructor (cookie) {
+        if (typeof cookie !== "string" || typeof cookie === "undefined") {
+            throw new Error("cookie must be a string");
+        }
+
+        this.#cookie = cookie;
     }
 
-    static async sign () {
+    static async sign (cookie) {
         const res = await got({
             method: "POST",
             url: `${BASE_URL}/sign`,
             responseType: "json",
             headers: {
                 "User-Agent": StarRail.userAgent,
-                Cookie: COOKIE
+                Cookie: cookie
             },
             json: {
                 act_id: ACT_ID
@@ -39,76 +44,71 @@ class StarRail {
     }
 
     async run () {
-        const cookie = this.cookie;
-        if (!cookie) {
-            throw new Error("cookie is required");
-        }
-        else if (typeof cookie !== "string") {
-            throw new Error("cookie must be a string");
-        }
+        const cookies = this.#parseCookies;
 
-        const info = await StarRail.getInfo();
-        if (info.retcode !== 0 && info.message !== "OK") {
-            throw new Error(`API error: ${info.message}`);            
-        }
+        let counter = 0;
+        for (const cookie of cookies) {
+            counter++;
 
-        const awards = await StarRail.awards();
-        if (awards.length === 0) {
-            throw new Error("There's no awards to claim (?)");
-        }
+            const info = await StarRail.getInfo(cookie);
+            if (info.retcode !== 0 && info.message !== "OK") {
+                throw new Error(`API error: ${info.message}`);            
+            }
 
-        const data = {
-            today: info.data.today,
-            total: info.data.total_sign_day,
-            issigned: info.data.is_sign,
-            missed: info.data.sign_cnt_missed
-        };
+            const awards = await StarRail.awards(cookie);
+            if (awards.length === 0) {
+                throw new Error("There's no awards to claim (?)");
+            }
 
-        const discord = new Discord();
-        if (data.issigned) {
-            await discord.send({ message: "You've already checked in today, Trailblazer~" }, true);
-            return {
-                message: "You've already checked in today, Trailblazer~"
+            const data = {
+                today: info.data.today,
+                total: info.data.total_sign_day,
+                issigned: info.data.is_sign,
+                missed: info.data.sign_cnt_missed
             };
+
+            const discord = new Discord();
+            if (data.issigned) {
+                await discord.send({ message: `[Account ${counter}]: You've already checked in today, Trailblazer~` }, true);
+                console.log(`[Account ${counter}]: You've already checked in today, Trailblazer~`);
+
+                continue;
+            }
+
+            const totalSigned = data.total;
+            const awardData = {
+                name: awards[totalSigned].name,
+                count: awards[totalSigned].cnt
+            };
+
+            const sign = await StarRail.sign(cookie);
+            if (sign.retcode !== 0 && sign.message !== "OK") {
+                throw new Error(`API error: ${sign.message}`);
+            }
+
+            console.log(`[Account ${counter}]: Signed in successfully! You have signed in for ${data.total} days!`);
+            console.log(`[Account ${counter}]: You have received ${awardData.count}x ${awardData.name}!`);
+
+            if (!DISCORD_WEBHOOK || typeof DISCORD_WEBHOOK !== "string") {
+                console.log("No Discord webhook provided, skipping...");
+                continue;
+            }
+
+            await discord.send({
+                signed: data.total,
+                award: awardData
+            });
         }
-
-        const totalSigned = data.total;
-        const awardData = {
-            name: awards[totalSigned].name,
-            count: awards[totalSigned].cnt
-        };
-
-        const sign = await StarRail.sign();
-        if (sign.retcode !== 0 && sign.message !== "OK") {
-            throw new Error(`API error: ${sign.message}`);
-        }
-
-        console.log(`Signed in successfully! You have signed in for ${data.total} days!`);
-        console.log(`You have received ${awardData.count}x ${awardData.name}!`);
-
-        if (!DISCORD_WEBHOOK || typeof DISCORD_WEBHOOK !== "string") {
-            console.log("No Discord webhook provided, skipping...");
-            return true;
-        }
-
-        await discord.send({
-            signed: data.total,
-            award: awardData
-        });
-
-        return {
-            message: `Signed in successfully! You have signed in for ${data.total} days!`,
-        };
     }
 
-    static async getInfo () {
+    static async getInfo (cookie) {
         try {
             const res = await got({
                 url: `${BASE_URL}/info`,
                 responseType: "json",
                 headers: {
                     "User-Agent": StarRail.userAgent,
-                    Cookie: COOKIE
+                    Cookie: cookie
                 },
                 searchParams: {
                     act_id: ACT_ID
@@ -133,13 +133,13 @@ class StarRail {
         }
     }
 
-    static async awards () {
+    static async awards (cookie) {
         const res = await got({
             url: `${BASE_URL}/home`,
             responseType: "json",
             headers: {
                 "User-Agent": StarRail.userAgent,
-                Cookie: COOKIE
+                Cookie: cookie
             },
             searchParams: {
                 act_id: ACT_ID
@@ -157,6 +157,10 @@ class StarRail {
         return res.body.data.awards;
     }
 
+    get #parseCookies () {
+        return this.#cookie.split("#");
+    }
+
     get userAgent () {
         return "Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Mobile Safari/537.36";
     }
@@ -165,10 +169,8 @@ class StarRail {
 export default StarRail;
 
 if (process.argv.includes("--sign")) {
-    const starRail = new StarRail();
-    const run = await starRail.run();
-
-    console.log(run.message);
+    const starRail = new StarRail(COOKIE);
+    await starRail.run();
 
     process.exit(0);
 }
@@ -178,7 +180,7 @@ else {
      * Or when does the daily reset happen in your timezone.
      */
     const job = new CronJob("0 0 0 * * *", async () => {
-        const starRail = new StarRail();
+        const starRail = new StarRail(COOKIE);
         await starRail.run();
     });
 

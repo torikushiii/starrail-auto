@@ -1,6 +1,8 @@
 // Your HSR Cookie should look like this
 // Ensure the name of the cookie is COOKIE
 // _MHYUUID=xxxx ; mi18nLang=en-us ; ltoken=xxxx ; ltuid=xxxx ; cookie_token=xxxx ; account_id=xxxx
+// Separate cookies for multiple accounts with a # symbol
+// e.g. cookie1#cookie2
 
 const scriptProperties = PropertiesService.getScriptProperties();
 
@@ -89,12 +91,15 @@ class Discord {
 }
 
 class StarRail {
-  constructor() {
-    this.cookie = COOKIE;
-    this.baseUrl = BASE_URL;
+  constructor(cookie) {
+    if (typeof cookie !== "string" || typeof cookie === "undefined") {
+      throw new Error("cookie must be a string");
+    }
+
+    this.cookie = cookie;
   }
 
-  static async sign() {
+  static async sign(cookie) {
     const payload = {
       act_id: ACT_ID
     };
@@ -103,7 +108,7 @@ class StarRail {
       method: "POST",
       headers: {
         "User-Agent": StarRail.userAgent,
-        Cookie: COOKIE
+        Cookie: cookie
       },
       payload: JSON.stringify(payload)
     };
@@ -123,67 +128,61 @@ class StarRail {
   }
 
   async run() {
-    const cookie = this.cookie;
-    if (!cookie) {
-      throw new Error("cookie is required");
-    }
-    else if (typeof cookie !== "string") {
-      throw new Error("cookie must be a string");
-    }
+    const cookies = this.parseCookies;
 
-    const info = await StarRail.getInfo();
-    const awards = await StarRail.awards();
-    if (awards.length === 0) {
-      throw new Error("There's no awards to claim (?)");
-    }
+    let counter = 0;
+    for (const cookie of cookies) {
+      counter++;
 
-    const data = {
-      today: info.today,
-      total: info.total_sign_day,
-      issigned: info.is_sign,
-      missed: info.sign_cnt_missed
-    };
-
-    const discord = new Discord(DISCORD_WEBHOOK);
-    if (data.issigned) {
-      await discord.send({ message: "You've already checked in today, Trailblazer~" }, true);
-      return {
-        message: "You've already checked in today, Trailblazer~"
-      };
-    }
-
-    const totalSigned = data.total;
-    const awardData = {
-      name: awards[totalSigned].name,
-      count: awards[totalSigned].cnt
-    };
-
-    const sign = await StarRail.sign();
-    if (sign) {
-      console.log(`Signed in successfully! You have signed in for ${data.total} days!`);
-      console.log(`You have received ${awardData.count}x ${awardData.name}!`);
-
-      if (!DISCORD_WEBHOOK || typeof DISCORD_WEBHOOK !== "string") {
-        console.log("No Discord webhook provided, skipping...");
-        return true;
+      const info = await StarRail.getInfo(cookie);
+      const awards = await StarRail.awards(cookie);
+      if (awards.length === 0) {
+        throw new Error("There's no awards to claim (?)");
       }
 
-      await discord.send({
-        signed: data.total,
-        award: awardData
-      });
-
-      return {
-        message: `Signed in successfully! You have signed in for ${data.total} days!`,
+      const data = {
+        today: info.today,
+        total: info.total_sign_day,
+        issigned: info.is_sign,
+        missed: info.sign_cnt_missed
       };
+
+      const discord = new Discord(DISCORD_WEBHOOK);
+      if (data.issigned) {
+        await discord.send({ message: `[Account ${counter}]: You've already checked in today, Trailblazer~` }, true);
+        console.log(`[Account ${counter}]: You've already checked in today, Trailblazer~`);
+        continue;
+      }
+
+      const totalSigned = data.total;
+      const awardData = {
+        name: awards[totalSigned].name,
+        count: awards[totalSigned].cnt
+      };
+
+      const sign = await StarRail.sign(cookie);
+      if (sign) {
+        console.log(`[Account ${counter}]: Signed in successfully! You have signed in for ${data.total} days!`);
+        console.log(`[Account ${counter}]: You have received ${awardData.count}x ${awardData.name}!`);
+
+        if (!DISCORD_WEBHOOK || typeof DISCORD_WEBHOOK !== "string") {
+          console.log("No Discord webhook provided, skipping...");
+          return true;
+        }
+
+        await discord.send({
+          signed: data.total,
+          award: awardData
+        });
+      }
     }
   }
 
-  static async getInfo() {
+  static async getInfo(cookie) {
     const options = {
       headers: {
         "User-Agent": StarRail.userAgent,
-        Cookie: COOKIE
+        Cookie: cookie
       },
       muteHttpExceptions: true,
       method: "GET"
@@ -203,11 +202,11 @@ class StarRail {
     return body.data;
   }
 
-  static async awards() {
+  static async awards(cookie) {
     const options = {
       headers: {
         "User-Agent": StarRail.userAgent,
-        Cookie: COOKIE
+        Cookie: cookie
       },
       muteHttpExceptions: true,
       method: "GET"
@@ -228,17 +227,18 @@ class StarRail {
     return body.data.awards;
   }
 
+  get parseCookies() {
+    return this.cookie.split("#");
+  }
+
   static get userAgent() {
     return "Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Mobile Safari/537.36";
   }
 }
 
 function run() {
-  const starRail = new StarRail();
-  const run = starRail.run()
-    .then((res) => {
-      console.log(res.message);
-    })
+  const starRail = new StarRail(COOKIE);
+  starRail.run()
     .catch((err) => {
       console.error(err);
     });

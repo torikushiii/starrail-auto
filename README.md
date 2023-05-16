@@ -19,6 +19,8 @@ If you don't want to use Node.js, you can use one of the following services:
    DISCORD_WEBHOOK=
    ```
 5. Add `COOKIE` with your cookie.
+   - **IF YOU WANT TO RUN IT WITH MULTIPLE ACCOUNTS, SEPARATE THE COOKIES WITH A HASH (#).**
+   - **EXAMPLE: `COOKIE=cookie1#cookie2#cookie3`**
 6. Add `DISCORD_WEBHOOK` with your Discord webhook.
 7. Run `index.js` with `node index.js` if you want to run it indefinitely everytime the daily reset occurs.
 8. Run `index.js` with `node check-in.js --sign` if you want to run it once.
@@ -32,6 +34,8 @@ If you don't want to use Node.js, you can use one of the following services:
 6. Copy the output from the console.
    ![](https://i.imgur.com/hFCL4yN.png)
 7. Paste the output into `COOKIE` field at the .env file
+   - **IF YOU WANT TO RUN IT WITH MULTIPLE ACCOUNTS, SEPARATE THE COOKIES WITH A HASH (#).**
+   - **EXAMPLE: `COOKIE=cookie1#cookie2#cookie3`**
 8. Fill in the `DISCORD_WEBHOOK` field if you want to receive a Discord notification when the check-in is successful.
 9. Run `index.js` with `node index.js` if you want to run it indefinitely everytime the daily reset occurs.
 10. Run `index.js` with `node check-in.js --sign` if you want to run it once.

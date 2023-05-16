@@ -27,6 +27,8 @@
    ```
     ![](https://i.imgur.com/BudKBiI.png)
 7. Add `COOKIE` with your cookie.
+   - **IF YOU WANT TO RUN IT WITH MULTIPLE ACCOUNTS, SEPARATE THE COOKIES WITH A HASH (#).**
+   - **EXAMPLE: `COOKIE=cookie1#cookie2#cookie3`**
 8. Add `DISCORD_WEBHOOK` with your Discord webhook (optional).
 9. Click on "Save script properties".
 10. Click on "Editor" and then "Save Project" and "Run" to run it once.
@@ -51,6 +53,8 @@
 6. Copy the output from the console.
    ![](https://i.imgur.com/hFCL4yN.png)
 7. Paste it into the "Value" field for "COOKIE" in the "Script properties" section.
+   - **IF YOU WANT TO RUN IT WITH MULTIPLE ACCOUNTS, SEPARATE THE COOKIES WITH A HASH (#).**
+   - **EXAMPLE: `COOKIE=cookie1#cookie2#cookie3`**
 8. Click on "Save script properties".
 
 # Trigger
