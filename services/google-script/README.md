@@ -68,6 +68,6 @@ If you want to automate the script, you can add a trigger to run it daily.
     - Choose which deployment should run: `Head`
     - Select event source: `Time-driven`
     - Select type of time based trigger: `Day timer`
-    - Select time of day: `Midnight to 1am`
+    - Select time of day: `Midnight to 1am` or any time when the check-in resets
     ![](https://i.imgur.com/HSDge0k.png)
 4. Click on "Save".
