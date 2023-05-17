@@ -1,4 +1,14 @@
-# Honkai: Star Rail Check-In Helper
+<h1 align="center">
+    <img width="120" height="120" src="https://i.imgur.com/qidPCBf.png" alt=""><br>
+    Honkai: Star Rail Check-In Helper
+</h1>
+
+<p align="center">
+   <img src="https://img.shields.io/github/license/torikushiii/starrail-auto">
+   <img src="https://img.shields.io/github/stars/torikushiii/starrail-auto">
+</p>
+
+# Daily Check-In
 
 [Daily Check-In](https://act.hoyolab.com/bbs/event/signin/hkrpg/index.html?act_id=e202303301540311)
 
