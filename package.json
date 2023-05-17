@@ -1,13 +1,28 @@
 {
   "name": "starrail-auto",
   "module": "index.js",
+  "description": "An auto check-in script for StarRail",
   "type": "module",
-  "devDependencies": {
-    "bun-types": "^0.5.0"
+  "scripts": {
+    "start": "node index.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
+  "devDependencies": {
+    "bun-types": "^0.5.0",
+    "@babel/core": "^7.18.10",
+    "@babel/eslint-parser": "^7.18.9",
+    "eslint": "^8.21.0",
+    "eslint-plugin-unicorn": "^43.0.2"
+  },
+  "author": "torikushiii",
+  "license": "AGPL-3.0",
+  "main": "index.js",
   "dependencies": {
+    "chalk": "^5.2.0",
     "cron": "^2.3.0",
     "dotenv": "^16.0.3",
-    "got": "^12.6.0"
+    "got": "^12.6.0",
+    "winston": "^3.8.2"
   }
 }
