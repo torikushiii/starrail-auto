@@ -33,7 +33,7 @@ If you don't want to use Node.js, you can use one of the following services:
    - **EXAMPLE: `COOKIE=cookie1#cookie2#cookie3`**
 6. Add `DISCORD_WEBHOOK` with your Discord webhook.
 7. Run `index.js` with `node index.js` if you want to run it indefinitely everytime the daily reset occurs.
-8. Run `index.js` with `node check-in.js --sign` if you want to run it once.
+8. Run `index.js` with `node index.js --sign` if you want to run it once.
 
 # Usage
 1. Go to the Daily Check-In page [here](https://act.hoyolab.com/bbs/event/signin/hkrpg/index.html?act_id=e202303301540311).
