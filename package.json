@@ -21,7 +21,6 @@
   "dependencies": {
     "chalk": "^5.2.0",
     "cron": "^2.3.0",
-    "dotenv": "^16.0.3",
     "got": "^12.6.0",
     "winston": "^3.8.2"
   }
