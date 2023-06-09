@@ -1,5 +1,8 @@
 # Changelog
 
+## 6/10/2023
+- Minor: Added `--stamina` flag to allow user to check their current stamina.
+
 ## 6/9/2023
 - Major: Reworked the entire check-in functions
 - Major: Added custom error class to handle errors
