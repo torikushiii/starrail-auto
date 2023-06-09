@@ -10,8 +10,12 @@ const cronjobs = async () => {
 		CHECK_IN: config.CRON_TIMINGS.CHECK_IN ?? "0 0 0 * * *",
 		STAMINA_CHECK_INTERVAL: config.CRON_TIMINGS.STAMINA_CHECK_INTERVAL ?? "0 */30 * * * *"
 	};
+	
+	let Discord = null;
+	if (config.DISCORD_WEBHOOK) {
+		Discord = new DiscordClass({ webhook: config.DISCORD_WEBHOOK });
+	}
 
-	const Discord = new DiscordClass({ webhook: config.DISCORD_WEBHOOK });
 	const checkIn = new CheckIn({ cookies: config.COOKIES });
 
 	const checkInJob = new CronJob(TIMINGS.CHECK_IN, async () => {
@@ -20,7 +24,9 @@ const cronjobs = async () => {
 			return;
 		}
 
-		await Discord.send(result.message);
+		if (Discord) {
+			await Discord.send(result.message);
+		}
 	});
 
 	checkInJob.start();
@@ -33,8 +39,10 @@ const cronjobs = async () => {
 				return;
 			}
 
-			for (const message of result) {
-				await Discord.send(message, { skipEmbed: true });
+			if (Discord) {
+				for (const message of result) {
+					await Discord.send(message, { skipEmbed: true });
+				}
 			}
 		});
 
@@ -51,7 +59,7 @@ if (process.argv.includes("--sign")) {
 	if (result.message.length === 0) {
 		logger.info("No check-in required.");
 	}
-	else {
+	else if (config.DISCORD_WEBHOOK !== null) {
 		logger.info("Sending check-in notification...");
 		const Discord = new DiscordClass({ webhook: config.DISCORD_WEBHOOK });
 		await Discord.send(result.message);
