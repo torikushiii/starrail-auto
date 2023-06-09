@@ -52,7 +52,7 @@ const cronjobs = async () => {
 	logger.info("All cronjobs started successfully!");
 };
 
-if (process.argv.includes("--sign")) {
+if (process.argv[2] === "--sign") {
 	logger.info("Running check-in...");
 	const checkIn = new CheckIn({ cookies: config.COOKIES });
 	const result = await checkIn.checkAndSign();
@@ -67,6 +67,20 @@ if (process.argv.includes("--sign")) {
 
 	logger.info("Check-in completed!");
 	
+	process.exit(0);
+}
+else if (process.argv[2] === "--stamina") {
+	logger.info("Running stamina check...");
+	const stamina = new Stamina({ accounts: config.COOKIES });
+	const result = await stamina.run(true);
+	if (result.length === 0) {
+		logger.info("No accounts exist to be checked.");
+	}
+
+	logger.info(result);
+
+	logger.info("Stamina check completed!");
+
 	process.exit(0);
 }
 
