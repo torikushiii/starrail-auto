@@ -33,8 +33,8 @@ If you don't want to use Node.js, you can use one of the following services:
 5. Type in `document.cookie` in the console and press Enter.
 6. Copy the output from the console.
    ![](https://i.imgur.com/hFCL4yN.png)
-7. Paste the output into `COOKIE` property in the `config.js` file.
-8. Fill in the `DISCORD_WEBHOOK` field if you want to receive a Discord notification when the check-in is successful.
+7. Paste the output into `cookies` property in the `config.js` file.
+8. Fill in the `webhook` field if you want to receive a Discord notification when the check-in is successful.
 9. Run `index.js` with `node index.js` if you want to run it indefinitely everytime the daily reset occurs.
 10. Run `index.js` with `node index.js --sign` if you want to run it once.
 
