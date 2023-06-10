@@ -1,26 +1,38 @@
-const STAMINA_CHECK = false; // Set to true to enable stamina check
-const DISCORD_WEBHOOK = null; // Discord webhook URL to send notification to
-const COOKIES = [
-	{
-		uid: 123, // UID of the in-game account
-		cookie: "", // Cookie of the account
-		threshold: 170 // Stamina threshold to notify
+const config = {
+	staminaCheck: false, // Set to true to enable stamina check (will send notification if stamina is above the threshold)
+	cookies: [
+		{
+			uid: 123, // Your in-game UID
+			cookie: "",
+			threshold: 170 // Stamina threshold to send notification
+		},
+		{
+			uid: null, // null UID will be ignored from stamina check but will still be checked in daily
+			cookie: "",
+			threshold: 170
+		}
+	],
+	notification: {
+		enabled: false, // Set to true to enable notification
+		service: {
+			discord: {
+				enabled: false, // Set to true to enable Discord notification
+				webhook: "" // Discord webhook URL
+			},
+			telegram: {
+				enabled: false, // Set to true to enable Telegram notification
+				config: {
+					chatId: 123, // Telegram chat ID, use @getmyid_bot to get your chat ID
+					token: "", // Telegram bot token
+					disableNotification: false // Revoke notification (sound, vibration, etc.)
+				}
+			}
+		}
 	},
-	{
-		uid: null, // null UID will be ignored from stamina check but will still be checked in
-		cookie: "",
-		threshold: 50
+	cronTimings: {
+		CHECK_IN: "0 0 0 * * *", // Check in daily at 00:00:00
+		STAMINA_CHECK_INTERVAL: "0 */30 * * * *" // Check stamina every 30 minutes
 	}
-];
-
-const CRON_TIMINGS = {
-	CHECK_IN: "0 0 0 * * *", // Check in at 00:00:00 everyday
-	STAMINA_CHECK_INTERVAL: "0 */30 * * * *" // Check stamina every 30 minutes
 };
 
-export default {
-	STAMINA_CHECK,
-	DISCORD_WEBHOOK,
-	COOKIES,
-	CRON_TIMINGS
-};
+export default config;
