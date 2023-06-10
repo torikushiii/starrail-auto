@@ -1,5 +1,8 @@
 # Changelog
 
+## 6/11/2023
+- Major: Fixed wrong license provided in the repo, followed correct license at the `package.json` file.
+
 ## 6/10/2023
 - Major: Added `Telegram` support
 - Minor: Added `--stamina` flag to allow user to check their current stamina.
