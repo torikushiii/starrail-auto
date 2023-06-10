@@ -2,6 +2,8 @@
 
 ## 6/10/2023
 - Minor: Added `--stamina` flag to allow user to check their current stamina.
+- Minor: Small code refactor and code reorganization.
+- Minor: Removed notifications when user is using flags.
 
 ## 6/9/2023
 - Major: Reworked the entire check-in functions
