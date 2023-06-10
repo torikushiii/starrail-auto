@@ -1,47 +1,66 @@
 import { CronJob } from "cron";
 import config from "./config.js";
 import logger from "./lib/winston.js";
-import DiscordClass from "./lib/discord.js";
 import Stamina from "./lib/apps/stamina.js";
 import CheckIn from "./lib/apps/check-in.js";
+import NotificationClass from "./lib/notification.js";
 
 const cronjobs = async () => {
 	const TIMINGS = {
-		CHECK_IN: config.CRON_TIMINGS.CHECK_IN ?? "0 0 0 * * *",
-		STAMINA_CHECK_INTERVAL: config.CRON_TIMINGS.STAMINA_CHECK_INTERVAL ?? "0 */30 * * * *"
+		CHECK_IN: config.cronTimings.CHECK_IN ?? "0 0 0 * * *",
+		STAMINA_CHECK_INTERVAL: config.cronTimings.STAMINA_CHECK_INTERVAL ?? "0 */30 * * * *"
 	};
-	
-	let Discord = null;
-	if (config.DISCORD_WEBHOOK) {
-		Discord = new DiscordClass({ webhook: config.DISCORD_WEBHOOK });
+
+	let Notification;
+	let sendNotification = false;
+	const { notification } = config;
+	if (notification.enabled) {
+		const { service } = notification;
+		if (service.discord.enabled || service.telegram.enabled) {
+			Notification = new NotificationClass(config.notification.service);
+			sendNotification = true;
+		}
 	}
-
-	const checkIn = new CheckIn({ cookies: config.COOKIES });
-
+	
+	const checkIn = new CheckIn({ cookies: config.cookies });
 	const checkInJob = new CronJob(TIMINGS.CHECK_IN, async () => {
 		const result = await checkIn.checkAndSign();
 		if (result.message.length === 0) {
 			return;
 		}
 
-		if (Discord) {
-			await Discord.send(result.message);
+		if (sendNotification) {
+			const { service } = config.notification;
+			if (service.discord.enabled) {
+				await Notification.send("discord", result.message);
+			}
+
+			if (service.telegram.enabled) {
+				await Notification.send("telegram", result.message, { checkIn: true });
+			}
 		}
 	});
 
 	checkInJob.start();
 
-	if (config.STAMINA_CHECK) {
-		const stamina = new Stamina({ accounts: config.COOKIES });
+	if (config.staminaCheck) {
+		const stamina = new Stamina({ accounts: config.cookies });
 		const staminaJob = new CronJob(TIMINGS.STAMINA_CHECK_INTERVAL, async () => {
 			const result = await stamina.run();
 			if (result.length === 0) {
 				return;
 			}
 
-			if (Discord) {
-				for (const message of result) {
-					await Discord.send(message, { skipEmbed: true });
+			if (sendNotification) {
+				const { service } = config.notification;
+				if (service.discord.enabled) {
+					for (const message of result) {
+						await Notification.send("discord", message, { skipEmbed: true });
+					}
+				}
+
+				if (service.telegram.enabled) {
+					await Notification.send("telegram", result, { stamina: true });
 				}
 			}
 		});
@@ -54,15 +73,10 @@ const cronjobs = async () => {
 
 if (process.argv[2] === "--sign") {
 	logger.info("Running check-in...");
-	const checkIn = new CheckIn({ cookies: config.COOKIES });
+	const checkIn = new CheckIn({ cookies: config.cookies });
 	const result = await checkIn.checkAndSign();
 	if (result.message.length === 0) {
 		logger.info("No check-in required.");
-	}
-	else if (config.DISCORD_WEBHOOK !== null) {
-		logger.info("Sending check-in notification...");
-		const Discord = new DiscordClass({ webhook: config.DISCORD_WEBHOOK });
-		await Discord.send(result.message);
 	}
 
 	logger.info("Check-in completed!");
@@ -71,13 +85,11 @@ if (process.argv[2] === "--sign") {
 }
 else if (process.argv[2] === "--stamina") {
 	logger.info("Running stamina check...");
-	const stamina = new Stamina({ accounts: config.COOKIES });
+	const stamina = new Stamina({ accounts: config.cookies });
 	const result = await stamina.run(true);
 	if (result.length === 0) {
 		logger.info("No accounts exist to be checked.");
 	}
-
-	logger.info(result);
 
 	logger.info("Stamina check completed!");
 
