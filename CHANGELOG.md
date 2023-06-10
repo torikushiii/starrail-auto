@@ -2,6 +2,7 @@
 
 ## 6/11/2023
 - Major: Fixed wrong license provided in the repo, followed correct license at the `package.json` file.
+- Minor: Moved notifications setup to it's own respective folder.
 
 ## 6/10/2023
 - Major: Added `Telegram` support
