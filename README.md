@@ -4,9 +4,13 @@
 </h1>
 
 <p align="center">
+   <img src="https://img.shields.io/badge/NodeJS-20.2.0-green">
    <img src="https://img.shields.io/github/license/torikushiii/starrail-auto">
    <img src="https://img.shields.io/github/stars/torikushiii/starrail-auto">
+   <a href="https://app.codacy.com/gh/torikushiii/starrail-auto/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade"><img src="https://app.codacy.com/project/badge/Grade/8bf05ddfba214bd2b7dbdcd28600e2c9"/></a>
 </p>
+
+![Alt](https://repobeats.axiom.co/api/embed/258364749d69138ce925035dfe396bac085e8f1f.svg "Repobeats analytics image")
 
 # Daily Check-In
 
