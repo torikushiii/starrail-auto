@@ -5,6 +5,7 @@
 - Minor: Moved notifications setup to it's own respective folder.
 - Minor: Update the variable name at README.md file.
 - Minor: Removed unintended check for `--stamina` flag.
+- Minor: Update Stamina class to dynamically determine server based on account's region.
 
 ## 6/10/2023
 - Major: Added `Telegram` support
