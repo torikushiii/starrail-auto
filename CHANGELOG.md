@@ -9,6 +9,7 @@
 - Minor: Misc updates to README.md file.
 - Minor: Removed unintended if statement.
 - Minor: Fixed `Stamina` class to fix account firing logic.
+- Minor: Removed unintended `console.log`.
 
 ## 6/10/2023
 - Major: Added `Telegram` support
