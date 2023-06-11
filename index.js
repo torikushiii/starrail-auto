@@ -86,10 +86,8 @@ if (process.argv[2] === "--sign") {
 else if (process.argv[2] === "--stamina") {
 	logger.info("Running stamina check...");
 	const stamina = new Stamina({ accounts: config.cookies });
-	const result = await stamina.run(true);
-	if (result.length === 0) {
-		logger.info("No accounts exist to be checked.");
-	}
+	
+	await stamina.run(true);
 
 	logger.info("Stamina check completed!");
 
