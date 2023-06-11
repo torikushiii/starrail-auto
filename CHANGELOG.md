@@ -7,6 +7,7 @@
 - Minor: Removed unintended check for `--stamina` flag.
 - Minor: Update Stamina class to dynamically determine server based on account's region.
 - Minor: Misc updates to README.md file.
+- Minor: Removed unintended if statement
 
 ## 6/10/2023
 - Major: Added `Telegram` support
