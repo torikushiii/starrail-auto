@@ -3,7 +3,7 @@ This is an **OPTIONAL** feature. If you want to receive a Telegram notification 
 
 1. Go to [@BotFather](https://t.me/BotFather) and type `/newbot`.
 2. Create a name for your bot
-    - Such ash `Honkai Star-Rail`
+    - Such as `Honkai Star-Rail`
 3. Create a username for your bot. (Must end with `bot` or `_bot`)
     - Such as `HonkaiStarRailBot` or `HonkaiStarRail_bot`
 4. If all goes well, you should receive a message that will look like this:
