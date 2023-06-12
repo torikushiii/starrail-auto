@@ -14,6 +14,7 @@ const config = {
 	],
 	notification: {
 		enabled: false, // Set to true to enable notification
+		skipCheck: false, // Set to true if you want to keep sending notification even if stamina is above the threshold and capped.
 		service: {
 			discord: {
 				enabled: false, // Set to true to enable Discord notification

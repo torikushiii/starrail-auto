@@ -46,7 +46,7 @@ const cronjobs = async () => {
 	if (config.staminaCheck) {
 		const stamina = new Stamina({ accounts: config.cookies });
 		const staminaJob = new CronJob(TIMINGS.STAMINA_CHECK_INTERVAL, async () => {
-			const result = await stamina.run();
+			const result = await stamina.run(false, { skipCheck: config.notification.skipCheck });
 			if (result.length === 0) {
 				return;
 			}
