@@ -5,6 +5,7 @@
 - Major: Added `Account` class to handle account related functions
 - Major: Added template for classes
 - Major: Added `cron` to handle cronjobs
+- Major: Reworked script initialization to load all modules on startup and verify if the accounts are valid and 
 - Minor: Moved `check-in` and `stamina` to `hoyo` folder
 - Minor: Removed `prefixUrl` from got
 - Minor: Removed `Notification` class
