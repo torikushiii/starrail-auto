@@ -11,6 +11,7 @@
 - Minor: Removed `Notification` class
 - Minor: Removed `config` from telegram config
 - Minor: Moved `error` class to objects folder
+- Minor: Splitted cronjobs into their seperate folders
 
 ## 6/12/2023
 - Minor: Added `skipCheck` option to bypass `account.fired` check and will always send a notification.
