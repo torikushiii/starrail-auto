@@ -2,6 +2,7 @@
 
 ## 6/15/2023
 - Major: Moved `Discord`, `Telegram` to controllers folder
+- Major: Added `Account` class to handle account related functions
 
 ## 6/12/2023
 - Minor: Added `skipCheck` option to bypass `account.fired` check and will always send a notification.
