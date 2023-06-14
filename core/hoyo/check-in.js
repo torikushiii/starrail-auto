@@ -1,39 +1,14 @@
-import got from "../got.js";
-import Error from "../error.js";
-import logger from "../winston.js";
-import ClassTemplate from "../template.js";
+import HoyoTemplate from "./template.js";
 
-export default class CheckIn extends ClassTemplate {
+export default class CheckIn extends HoyoTemplate {
 	static discordMessages = [];
 
-	static cookies = [];
+	static data = [];
 	static ACT_ID = "e202303301540311";
 
-	constructor (data) {
-		super();
-
-		if (typeof data !== "object") {
-			throw new Error({ message: "Data must be an object" });
-		}
-
-		if (!data?.cookies) {
-			throw new Error({ message: "Cookie must be provided" });
-		}
-        
-		if (!Array.isArray(data.cookies)) {
-			throw new Error({ message: "Cookie must be an array" });
-		}
-
-		if (data.cookies.length === 0) {
-			throw new Error({ message: "Cookie must have at least one element" });
-		}
-
-		CheckIn.cookies = data.cookies;
-	}
-
 	static async getSignInfo (cookie) {
-		const { statusCode, body } = await got({
-			url: "info",
+		const { statusCode, body } = await sr.Got({
+			url: "https://sg-public-api.hoyolab.com/event/luna/os/info",
 			headers: {
 				Cookie: cookie
 			},
@@ -43,31 +18,35 @@ export default class CheckIn extends ClassTemplate {
 		});
 
 		if (statusCode !== 200) {
-			throw new Error({
+			sr.Logger.json({
 				message: "Error when getting sign info",
 				args: {
 					statusCode,
 					body
 				}
 			});
+
+			return false;
 		}
 
 		if (body.retcode !== 0 && body.message !== "OK") {
-			throw new Error({
+			sr.Logger.json({
 				message: "API error when getting sign info",
 				args: {
 					statusCode,
 					body
 				}
 			});
+
+			return false;
 		}
 
 		return body;
 	}
 
 	static async getAwards (cookie) {
-		const { statusCode, body } = await got({
-			url: "home",
+		const { statusCode, body } = await sr.Got({
+			url: "https://sg-public-api.hoyolab.com/event/luna/os/home",
 			headers: {
 				Cookie: cookie
 			},
@@ -77,32 +56,36 @@ export default class CheckIn extends ClassTemplate {
 		});
 
 		if (statusCode !== 200) {
-			throw new Error({
+			sr.Logger.json({
 				message: "Error when getting awards",
 				args: {
 					statusCode,
 					body
 				}
 			});
+
+			return false;
 		}
 
 		if (body.retcode !== 0 && body.message !== "OK") {
-			throw new Error({
+			sr.Logger.json({
 				message: "API error when getting awards",
 				args: {
 					statusCode,
 					body
 				}
 			});
+
+			return false;
 		}
 
 		return body.data.awards;
 	}
 
 	static async sign (cookie) {
-		const { statusCode, body } = await got({
+		const { statusCode, body } = await sr.Got({
 			method: "POST",
-			url: "sign",
+			url: "https://sg-public-api.hoyolab.com/event/luna/os/sign",
 			headers: {
 				Cookie: cookie
 			},
@@ -112,29 +95,33 @@ export default class CheckIn extends ClassTemplate {
 		});
 
 		if (statusCode !== 200) {
-			throw new Error({
+			sr.Logger.json({
 				message: "Error when signing",
 				args: {
 					statusCode,
 					body
 				}
 			});
+
+			return false;
 		}
 
 		if (body.retcode !== 0 && body.message !== "OK") {
-			throw new Error({
+			sr.Logger.json({
 				message: "API error when signing",
 				args: {
 					statusCode,
 					body
 				}
 			});
+
+			return false;
 		}
 
 		return true;
 	}
 
-	async checkAndSign () {
+	static async checkAndSign () {
 		const cookies = CheckIn.#getCookies();
         
 		for (let i = 0; i < cookies.length; i++) {
@@ -146,8 +133,13 @@ export default class CheckIn extends ClassTemplate {
 			const info = infoData;
 			const awards = awardsData;
 
+			if (!info || !awards) {
+				sr.Logger.warn(`[Account ${i + 1}]: Failed to get sign info or awards`);
+				continue;
+			}
+
 			if (awards.length === 0) {
-				logger.warn(`[Account ${i + 1}]: No awards found (?)`);
+				sr.Logger.warn(`[Account ${i + 1}]: No awards found (?)`);
 				continue;
 			}
 
@@ -159,7 +151,7 @@ export default class CheckIn extends ClassTemplate {
 			};
 
 			if (data.issigned) {
-				logger.warn(`[Account ${i + 1}]: You've already checked in today, Trailblazer~`);
+				sr.Logger.warn(`[Account ${i + 1}]: You've already checked in today, Trailblazer~`);
 				CheckIn.discordMessages.push({
 					account: i + 1,
 					signed: data.total,
@@ -181,8 +173,8 @@ export default class CheckIn extends ClassTemplate {
 
 			await CheckIn.sign(cookies[i]);
 
-			logger.info(`[Account ${i + 1}]: Signed-in successfully! You've signed in for ${totalSigned + 1} days!`);
-			logger.info(`[Account ${i + 1}]: You've received ${awardData.count}x ${awardData.name}!`);
+			sr.Logger.info(`[Account ${i + 1}]: Signed-in successfully! You've signed in for ${totalSigned + 1} days!`);
+			sr.Logger.info(`[Account ${i + 1}]: You've received ${awardData.count}x ${awardData.name}!`);
 
 			CheckIn.discordMessages.push({
 				account: i + 1,
@@ -192,13 +184,27 @@ export default class CheckIn extends ClassTemplate {
 			});
 		}
 
-		return { message: CheckIn.discordMessages };
+		const message = CheckIn.discordMessages;
+		CheckIn.discordMessages = [];
+
+		return message;
+	}
+
+	static async initialize () {
+		CheckIn.discordMessages = [];
+		await CheckIn.loadData();
+		return CheckIn;
+	}
+
+	static async loadData () {
+		const accounts = sr.Account.getActiveAccounts();
+		CheckIn.data = accounts;
 	}
 
 	static #getCookies () {
-		const cookies = CheckIn.cookies;
+		const cookies = CheckIn.data;
 		if (cookies.length === 0) {
-			throw new Error({ message: "No cookies provided" });
+			throw new sr.Error({ message: "No cookies provided" });
 		}
 
 		return cookies.map(i => i.cookie);

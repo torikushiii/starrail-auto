@@ -1,9 +1,7 @@
-import got from "../got.js";
 import crypto from "crypto";
-import Error from "../error.js";
-import logger from "../winston.js";
+import HoyoTemplate from "./template.js";
 
-export default class Stamina {
+export default class Stamina extends HoyoTemplate {
 	static MAX_STAMINA = 180;
 	static DS_SALT = "6s25p5ox5y14umn1p61aqyyvbvvl3lrt";
 
@@ -13,69 +11,16 @@ export default class Stamina {
 		s: { ms: 1.0e3 }
 	};
 
-	static accounts = new Map();
+	static data = new Map();
 
-	constructor (data) {
-		if (!Array.isArray(data.accounts)) {
-			throw new Error({ message: "Accounts must be an array" });
-		}
-
-		if (data.accounts.length === 0) {
-			throw new Error({ message: "Accounts must have at least one element" });
-		}
-
-		const accounts = data.accounts.filter(i => i.uid !== null);
-
-		for (const account of accounts) {
-			if (Number.isNaN(Number(account.uid))) {
-				throw new Error({ message: "UID must be a number" });
-			}
-
-			if (account.cookie === null) {
-				throw new Error({ message: "Cookie must be provided" });
-			}
-
-			if (typeof account.cookie !== "string") {
-				throw new Error({ message: "Cookie must be a string" });
-			}
-
-			if (!account.threshold) {
-				throw new Error({ message: "Threshold must be provided" });
-			}
-
-			if (Number.isNaN(Number(account.threshold))) {
-				throw new Error({ message: "Threshold must be a number" });
-			}
-
-			if (account.threshold < 0) {
-				throw new Error({ message: "Threshold must be a positive number" });
-			}
-
-			if (account.threshold > Stamina.MAX_STAMINA) {
-				throw new Error({ message: "Threshold must be less than 180" });
-			}
-
-			if (Stamina.accounts.has(account.uid)) {
-				throw new Error({ message: `Account with UID ${account.uid} already exists` });
-			}
-
-			Stamina.accounts.set(account.uid, {
-				...account,
-				fired: false
-			});
-
-			logger.info(`Registered account with UID ${account.uid} and threshold ${account.threshold}`);
-		}
-	}
-
-	async run (stringOnly = false, options = {}) {
+	static async checkAndRun (stringOnly = false, options = {}) {
 		const result = [];
 
-		for (const [uid, account] of Stamina.accounts) {
+		for (const [uid, account] of Stamina.data) {
 			const generatedDS = Stamina.generateDS(Stamina.DS_SALT);
 			const region = Stamina.getAccountRegion(account.uid);
 
-			const res = await got({
+			const res = await sr.Got({
 				url: "https://bbs-api-os.hoyolab.com/game_record/hkrpg/api/note",
 				prefixUrl: "",
 				searchParams: {
@@ -92,23 +37,27 @@ export default class Stamina {
 			});
 
 			if (res.statusCode !== 200) {
-				throw new Error({
+				sr.Logger.json({
 					message: "Error when getting stamina info",
 					args: {
 						statusCode: res.statusCode,
 						body: res.body
 					}
 				});
+
+				continue;
 			}
 
 			if (res.body.retcode !== 0 && res.body.message !== "OK") {
-				throw new Error({
+				sr.Logger.json({
 					message: "API error when getting stamina info",
 					args: {
 						statusCode: res.statusCode,
 						body: res.body
 					}
 				});
+
+				continue;
 			}
 
 			const { data } = res.body;
@@ -120,14 +69,14 @@ export default class Stamina {
 
 			const delta = `Capped in ${Stamina.formatTime(staminaRecoverTime)}`;
 			if (stringOnly) {
-				logger.info(`Stamina for UID ${uid} is ${currentStamina}/${maxStamina} - ${delta}`);
+				sr.Logger.info(`Stamina for UID ${uid} is ${currentStamina}/${maxStamina} - ${delta}`);
 				continue;
 			}
 
-			logger.info(`Stamina for UID ${uid} is ${currentStamina}/${maxStamina} - ${delta}`);
+			sr.Logger.info(`Stamina for UID ${uid} is ${currentStamina}/${maxStamina} - ${delta}`);
 
 			if (currentStamina <= account.threshold) {
-				Stamina.accounts.set(uid, {
+				Stamina.data.set(uid, {
 					...account,
 					fired: false
 				});
@@ -135,13 +84,13 @@ export default class Stamina {
 				continue;
 			}
 
-			logger.info(`Stamina for UID ${uid} is above the threshold (${currentStamina}/${maxStamina}) - ${delta}`);
+			sr.Logger.info(`Stamina for UID ${uid} is above the threshold (${currentStamina}/${maxStamina}) - ${delta}`);
 
 			if (account.fired && options.skipCheck === false) {
 				continue;
 			}
 
-			Stamina.accounts.set(uid, {
+			Stamina.data.set(uid, {
 				...account,
 				fired: true
 			});
@@ -179,6 +128,29 @@ export default class Stamina {
 		}
 
 		return result;
+	}
+
+	static async initialize () {
+		Stamina.data = new Map();
+		await Stamina.loadData();
+		return Stamina;
+	}
+
+	static async loadData () {
+		const accounts = sr.Account.getActiveAccounts();
+		for (const account of accounts) {
+			if (!this.getAccountRegion(account.uid)) {
+				sr.Logger.info(`Skipping account with uid "${account.uid}" for stamina check`);
+				continue;
+			}
+
+			Stamina.data.set(account.uid, {
+				...account,
+				fired: false
+			});
+
+			sr.Logger.info(`Loaded account with uid "${account.uid}" for stamina check with threshold ${account.threshold}`);
+		}
 	}
 
 	static generateDS (salt) {
@@ -244,7 +216,7 @@ export default class Stamina {
 			case "6":
 				return `prod_official_usa`;
 			default:
-				throw new Error({ message: "Invalid UID" });
+				return false;
 		}
 	}
 }
