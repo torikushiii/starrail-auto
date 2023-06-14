@@ -9,6 +9,7 @@
 - Minor: Removed `prefixUrl` from got
 - Minor: Removed `Notification` class
 - Minor: Removed `config` from telegram config
+- Minor: Moved `error` class to objects folder
 
 ## 6/12/2023
 - Minor: Added `skipCheck` option to bypass `account.fired` check and will always send a notification.
