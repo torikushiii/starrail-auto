@@ -20,6 +20,13 @@
 If you don't want to use Node.js, you can use one of the following services:
 - [Google Apps Script](https://github.com/torikushiii/starrail-auto/tree/master/services/google-script)
 
+# Features
+- [x] Auto Check-in
+- [x] Stamina check (Node only)
+- [x] Discord notifications
+- [x] Telegram notifications (Node only)
+- [x] Multiple accounts
+
 # Pre-requisites
 - [Node.js](https://nodejs.org/en/)
 
