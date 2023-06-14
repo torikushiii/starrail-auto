@@ -23,6 +23,7 @@ If you don't want to use Node.js, you can use one of the following services:
 # Features
 - [x] Auto Check-in
 - [x] Stamina check (Node only)
+- [x] Expedition check (Node only)
 - [x] Discord notifications
 - [x] Telegram notifications (Node only)
 - [x] Multiple accounts

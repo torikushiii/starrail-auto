@@ -10,7 +10,8 @@ export default (async function () {
 		"classes/account",
 
 		"hoyo/check-in",
-		"hoyo/stamina"
+		"hoyo/stamina",
+		"hoyo/expedition"
 	];
 
 	for (const file of files) {
