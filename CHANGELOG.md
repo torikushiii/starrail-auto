@@ -7,6 +7,7 @@
 - Major: Added `cron` to handle cronjobs
 - Minor: Moved `check-in` and `stamina` to `hoyo` folder
 - Minor: Removed `prefixUrl` from got
+- Minor: Removed `Notification` class
 
 ## 6/12/2023
 - Minor: Added `skipCheck` option to bypass `account.fired` check and will always send a notification.
