@@ -1,5 +1,8 @@
 # Changelog
 
+## 6/15/2023
+- Major: Moved `Discord`, `Telegram` to controllers folder
+
 ## 6/12/2023
 - Minor: Added `skipCheck` option to bypass `account.fired` check and will always send a notification.
 
