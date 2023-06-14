@@ -4,6 +4,7 @@
 - Major: Moved `Discord`, `Telegram` to controllers folder
 - Major: Added `Account` class to handle account related functions
 - Major: Added template for classes
+- Major: Added `cron` to handle cronjobs
 
 ## 6/12/2023
 - Minor: Added `skipCheck` option to bypass `account.fired` check and will always send a notification.
