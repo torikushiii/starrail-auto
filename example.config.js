@@ -22,11 +22,9 @@ const config = {
 			},
 			telegram: {
 				enabled: false, // Set to true to enable Telegram notification
-				config: {
-					chatId: 123, // Telegram chat ID, use @getmyid_bot to get your chat ID
-					token: "", // Telegram bot token
-					disableNotification: false // Revoke notification (sound, vibration, etc.)
-				}
+				chatId: 123, // Telegram chat ID, use @getmyid_bot to get your chat ID
+				token: "", // Telegram bot token
+				disableNotification: false // Revoke notification (sound, vibration, etc.)
 			}
 		}
 	},

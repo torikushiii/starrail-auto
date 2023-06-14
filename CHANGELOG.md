@@ -8,6 +8,7 @@
 - Minor: Moved `check-in` and `stamina` to `hoyo` folder
 - Minor: Removed `prefixUrl` from got
 - Minor: Removed `Notification` class
+- Minor: Removed `config` from telegram config
 
 ## 6/12/2023
 - Minor: Added `skipCheck` option to bypass `account.fired` check and will always send a notification.
