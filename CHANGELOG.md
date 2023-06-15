@@ -1,5 +1,8 @@
 # Changelog
 
+## 6/16/2023
+- Minor: Discord embed generator now accept `stamina` and `expedition` as a parameter to generate the embed
+
 ## 6/15/2023
 - Major: Moved `Discord`, `Telegram` to controllers folder
 - Major: Added `Account` class to handle account related functions
