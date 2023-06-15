@@ -9,6 +9,35 @@ const importModule = async (module, path) => {
 	const { default: initObjects } = await import("./core/index.js");
 	globalThis.sr = await initObjects();
 
+	// Make a separate handler for this
+	const flag = process.argv[2];
+	if (flag !== "--sign" && flag !== "--stamina") {
+		sr.Logger.error("Invalid flag. Please use --sign or --stamina");
+		process.exit(1);
+	}
+
+	if (flag === "--sign") {
+		const checkInResult = await sr.CheckIn.checkAndSign();
+		for (const data of checkInResult) {
+			const message = (data.result === "OK")
+				? `[Account ${data.account}] Check-in successful: ${data.award.name} x${data.award.count}`
+				: `[Account ${data.account}] ${data.result}`;
+
+			sr.Logger.info(message);
+		}
+
+		process.exit(0);
+	}
+	else if (flag === "--stamina") {
+		const staminaResult = await sr.Stamina.checkAndRun({ checkOnly: true });
+		for (const message of staminaResult) {
+			const { uid, currentStamina, maxStamina, delta } = message;
+			sr.Logger.info(`[${uid}] Stamina is above the threshold: ${currentStamina}/${maxStamina} (${delta})`);
+		}
+
+		process.exit(0);
+	}
+
 	await importModule(sr.Cron, "crons");
 
 	const initialPlatforms = [
