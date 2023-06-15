@@ -10,8 +10,16 @@ export const definitions = {
 			return;
 		}
 
+		for (const data of checkInResult) {
+			const message = (data.result === "OK")
+				? `[Account ${data.account}] Check-in successful: ${data.award.name} x${data.award.count}`
+				: `[Account ${data.account}] ${data.result}`;
+
+			sr.Logger.info(message);
+		}
+
 		if (sr.Discord && sr.Discord.active) {
-			const embed = sr.Discord.generateEmbed(checkInResult);
+			const embed = sr.Discord.generateEmbed(checkInResult, { checkIn: true });
 			await sr.Discord.send(embed);
 		}
 

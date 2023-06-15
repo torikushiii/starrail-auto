@@ -10,15 +10,21 @@ export const definitions = {
 			return;
 		}
 
+		for (const data of expiditionResult) {
+			const { uid } = data;
+			sr.Logger.info(`[${uid}] All expedition has been completed!`);
+		}
+
 		if (sr.Discord && sr.Discord.active) {
 			for (const data of expiditionResult) {
-				await sr.Discord.send(data.embed);
+				const embed = sr.Discord.generateEmbed(data, { expedition: true });
+				await sr.Discord.send(embed);
 			}
 		}
         
 		if (sr.Telegram && sr.Telegram.active) {
 			for (const data of expiditionResult) {
-				await sr.Telegram.send(`Account: ${data.uid}\nAll expedition are done! ⚠️`);
+				await sr.Telegram.send(`🗺️ Account: ${data.uid}\nAll expedition are done!`);
 			}
 		}
 	})
