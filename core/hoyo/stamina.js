@@ -13,7 +13,7 @@ export default class Stamina extends HoyoTemplate {
 
 	static data = new Map();
 
-	static async checkAndRun (stringOnly = false, options = {}) {
+	static async checkAndRun (options = {}) {
 		const result = [];
 
 		for (const [uid, account] of Stamina.data) {
@@ -67,13 +67,18 @@ export default class Stamina extends HoyoTemplate {
 				stamina_recover_time: staminaRecoverTime
 			} = data;
 
-			const delta = `Capped in ${Stamina.formatTime(staminaRecoverTime)}`;
-			if (stringOnly) {
-				sr.Logger.info(`Stamina for UID ${uid} is ${currentStamina}/${maxStamina} - ${delta}`);
+			const delta = Stamina.formatTime(staminaRecoverTime);
+			const objectData = {
+				uid,
+				currentStamina,
+				maxStamina,
+				delta
+			};
+
+			if (options.checkOnly) {
+				result.push(objectData);
 				continue;
 			}
-
-			sr.Logger.info(`Stamina for UID ${uid} is ${currentStamina}/${maxStamina} - ${delta}`);
 
 			if (currentStamina <= account.threshold) {
 				Stamina.data.set(uid, {
@@ -84,47 +89,20 @@ export default class Stamina extends HoyoTemplate {
 				continue;
 			}
 
-			sr.Logger.info(`Stamina for UID ${uid} is above the threshold (${currentStamina}/${maxStamina}) - ${delta}`);
-
-			if (account.fired && options.skipCheck === false) {
+			if (options.skipCheck) {
+				result.push(objectData);
 				continue;
 			}
 
+			if (account.fired) {
+				continue;
+			}
+
+			result.push(objectData);
 			Stamina.data.set(uid, {
 				...account,
 				fired: true
 			});
-
-			const embed = {
-				color: 0xBB0BB5,
-				title: "Honkai: Star Rail - Stamina",
-				author: {
-					name: "Honkai: Star Rail",
-					icon_url: "https://i.imgur.com/o0hyhmw.png"
-				},
-				description: "⚠️ Your stamina is above the threshold ⚠️",
-				fields: [
-					{
-						name: `[${uid}] Current Stamina`,
-						value: `${currentStamina}/${maxStamina}`,
-						inline: false
-					}
-				],
-				timestamp: new Date(),
-				footer: {
-					text: "Honkai: Star Rail - Stamina"
-				}
-			};
-
-			if (staminaRecoverTime > 0) {
-				embed.fields.push({
-					name: "Capped in",
-					value: Stamina.formatTime(staminaRecoverTime),
-					inline: true
-				});
-			}
-
-			result.push(embed);
 		}
 
 		return result;
@@ -140,7 +118,6 @@ export default class Stamina extends HoyoTemplate {
 		const accounts = sr.Account.getActiveAccounts();
 		for (const account of accounts) {
 			if (!this.getAccountRegion(account.uid)) {
-				sr.Logger.info(`Skipping account with uid "${account.uid}" for stamina check`);
 				continue;
 			}
 

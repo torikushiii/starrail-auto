@@ -151,7 +151,6 @@ export default class CheckIn extends HoyoTemplate {
 			};
 
 			if (data.issigned) {
-				sr.Logger.warn(`[Account ${i + 1}]: You've already checked in today, Trailblazer~`);
 				CheckIn.discordMessages.push({
 					account: i + 1,
 					signed: data.total,
@@ -172,9 +171,6 @@ export default class CheckIn extends HoyoTemplate {
 			};
 
 			await CheckIn.sign(cookies[i]);
-
-			sr.Logger.info(`[Account ${i + 1}]: Signed-in successfully! You've signed in for ${totalSigned + 1} days!`);
-			sr.Logger.info(`[Account ${i + 1}]: You've received ${awardData.count}x ${awardData.name}!`);
 
 			CheckIn.discordMessages.push({
 				account: i + 1,

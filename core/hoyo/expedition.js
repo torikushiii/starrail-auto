@@ -64,32 +64,7 @@ export default class Expedition extends HoyoTemplate {
 
 			const isAllCompleted = expeditions.every(i => i.status !== "Ongoing");
 			if (isAllCompleted && options.skipCheck) {
-				sr.Logger.info(`All expedition are done for account with uid "${account.uid}"`);
-				const embed = {
-					color: 0xBB0BB5,
-					title: "Honkai: Star Rail - Expedition",
-					author: {
-						name: "Honkai: Star Rail",
-						icon_url: "https://i.imgur.com/o0hyhmw.png"
-					},
-					description: `⚠️ All expedition are done! ⚠️`,
-					fields: [
-						{
-							name: `Account: ${account.uid}`,
-							value: "All expedition are done!",
-							inline: false
-						}
-					],
-					timestamp: new Date(),
-					footer: {
-						text: "Honkai: Star Rail - Expedition"
-					}
-				};
-
-				result.push({
-					uid: account.uid,
-					embed
-				});
+				result.push({ uid: account.uid });
 				
 				continue;
 			}
@@ -108,7 +83,6 @@ export default class Expedition extends HoyoTemplate {
 		const accounts = sr.Account.getActiveAccounts();
 		for (const account of accounts) {
 			if (!this.getAccountRegion(account.uid)) {
-				sr.Logger.info(`Skipping account with uid "${account.uid}" for expedition check`);
 				continue;
 			}
 
