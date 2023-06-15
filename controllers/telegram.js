@@ -104,18 +104,13 @@ export default class Telegram extends Controller {
 			return messages.join("\n\n");
 		}
 		else if (options.stamina) {
-			const messages = [];
+			const { uid, currentStamina, maxStamina, delta } = messageData;
 
-			for (const data of messageData) {
-				const string = data.description;
-				const staminaString = `💪 ${data.fields[0].name}`;
-				const stamina = data.fields[0].value;
-				const capped = `⏰ Capped in: ${data.fields[1].value}`;
+			const alertMessage = "⚠️ Your stamina is above the threshold! ⚠️";
+			const staminaString = `📊 [${uid}] Stamina: ${currentStamina}/${maxStamina}`;
+			const deltaString = `📈 capped in: ${delta}`;
 
-				messages.push(`${string}\n\n${staminaString}: ${stamina}\n${capped}`);
-			}
-
-			return messages.join("\n\n");
+			return `${alertMessage}\n\n${staminaString}\n${deltaString}`;
 		}
 	}
 
