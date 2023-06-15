@@ -15,6 +15,7 @@
 - Minor: Moved `error` class to objects folder
 - Minor: Splitted cronjobs into their seperate folders
 - Minor: Typo fix for `expidition` to `expedition`
+- Minor: Added missing expedition cronjob config
 
 ## 6/12/2023
 - Minor: Added `skipCheck` option to bypass `account.fired` check and will always send a notification.

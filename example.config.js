@@ -30,6 +30,7 @@ const config = {
 	},
 	cronTimings: {
 		CHECK_IN: "0 0 0 * * *", // Check in daily at 00:00:00
+		EXPEDITION: "0 */30 * * * *", // Check expedition every 30 minutes
 		STAMINA_CHECK_INTERVAL: "0 */30 * * * *" // Check stamina every 30 minutes
 	}
 };
