@@ -11,11 +11,6 @@ const importModule = async (module, path) => {
 
 	// Make a separate handler for this
 	const flag = process.argv[2];
-	if (flag !== "--sign" && flag !== "--stamina") {
-		sr.Logger.error("Invalid flag. Please use --sign or --stamina");
-		process.exit(1);
-	}
-
 	if (flag === "--sign") {
 		const checkInResult = await sr.CheckIn.checkAndSign();
 		for (const data of checkInResult) {

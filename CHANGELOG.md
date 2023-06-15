@@ -3,6 +3,7 @@
 ## 6/16/2023
 - Minor: Discord embed generator now accept `stamina` and `expedition` as a parameter to generate the embed
 - Minor: Added missing argument handler for `--sign` and `--stamina` flag
+- Minor: Removed flag validation since it can throw an error when other flags are used such as `--color` if you're using pm2
 
 ## 6/15/2023
 - Major: Moved `Discord`, `Telegram` to controllers folder
