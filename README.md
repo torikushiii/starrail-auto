@@ -26,6 +26,9 @@ If you don't want to use Node.js, you can use one of the following services:
 - [x] Expedition check (Node only)
 - [x] Discord notifications
 - [x] Telegram notifications (Node only)
+    - Commands
+        - [x] Check stamina
+        - [x] Check expedition status
 - [x] Multiple accounts
 
 # Pre-requisites
