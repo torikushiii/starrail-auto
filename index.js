@@ -1,5 +1,5 @@
 import config from "./config.js";
-import { handleFlag } from "./lib/flagHandler.js";
+import { handleFlag } from "./lib/flag-handler.js";
 
 const importModule = async (module, path) => {
 	const { definitions } = await import(`./${path}/index.mjs`);

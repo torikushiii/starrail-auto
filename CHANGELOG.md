@@ -6,6 +6,7 @@
 - Minor: Removed flag validation since it can throw an error when other flags are used such as `--color` if you're using pm2
 - Minor: Moved process flag handler to it's own function
 - Minor: Added `checkOnly` option to expedition
+- Minor: Renamed `flagHandler` to `flag-handler`
 
 ## 6/15/2023
 - Major: Moved `Discord`, `Telegram` to controllers folder
