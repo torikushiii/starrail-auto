@@ -25,3 +25,7 @@ This is an **OPTIONAL** feature. If you want to receive a Telegram notification 
     ![](https://i.imgur.com/qsRLPq2.png)
 11. And if you enable stamina check, you should receive a Telegram notification when your stamina is above your set threshold and when it capped.
     ![](https://i.imgur.com/PLNlzgs.png)
+12. You can also send a bot command to check your current stamina by sending `/stamina` to your bot.
+    ![](https://i.imgur.com/hqUTXWl.png)
+13. Or you can also check your current expedition status by sending `/expedition` to your bot.
+    ![](https://i.imgur.com/ppDxJAD.png)
