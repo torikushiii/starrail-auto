@@ -49,6 +49,10 @@ If you don't want to use Node.js, you can use one of the following services:
 8. Fill in the `webhook` field if you want to receive a Discord notification when the check-in is successful.
 9. Run `index.js` with `node index.js` if you want to run it indefinitely everytime the daily reset occurs.
 10. Run `index.js` with `node index.js --sign` if you want to run it once.
+11. Additonal arguments:
+    - `--stamina` to check all accounts stamina. (You need to set your in-game `uid` for it to work)
+    - `--expedition` to check all accounts expedition status. (You need to set your in-game `uid` for it to work)
+    - `--help` to show the help menu.
 
 # Notifications
 For Discord notifications or Telegram setup, refer to this folder: [setup](https://github.com/torikushiii/starrail-auto/tree/master/setup)
