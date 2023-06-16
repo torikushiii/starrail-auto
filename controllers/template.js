@@ -4,5 +4,7 @@ export default class Controller {
 	
 	async send (message, options = {}) {}
 
+	prepareMessage (messageData, options = {}) {}
+
 	destroy () {}
 }

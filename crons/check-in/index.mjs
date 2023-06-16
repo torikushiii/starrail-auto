@@ -19,12 +19,12 @@ export const definitions = {
 		}
 
 		if (sr.Discord && sr.Discord.active) {
-			const embed = sr.Discord.generateEmbed(checkInResult, { checkIn: true });
+			const embed = sr.Discord.prepareMessage(checkInResult, { checkIn: true });
 			await sr.Discord.send(embed);
 		}
 
 		if (sr.Telegram && sr.Telegram.active) {
-			const message = sr.Telegram.formatMessage(checkInResult, { checkIn: true });
+			const message = sr.Telegram.prepareMessage(checkInResult, { checkIn: true });
 			await sr.Telegram.send(message);
 		}
 	})

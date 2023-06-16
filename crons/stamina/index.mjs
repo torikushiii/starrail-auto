@@ -17,14 +17,14 @@ export const definitions = {
 
 		if (sr.Discord && sr.Discord.active) {
 			for (const message of staminaResult) {
-				const embed = sr.Discord.generateEmbed(message, { stamina: true });
+				const embed = sr.Discord.prepareMessage(message, { stamina: true });
 				await sr.Discord.send(embed);
 			}
 		}
 
 		if (sr.Telegram && sr.Telegram.active) {
 			for (const message of staminaResult) {
-				const text = sr.Telegram.formatMessage(message, { stamina: true });
+				const text = sr.Telegram.prepareMessage(message, { stamina: true });
 				await sr.Telegram.send(text);
 			}
 		}

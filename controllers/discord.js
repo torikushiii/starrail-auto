@@ -48,7 +48,7 @@ export default class Discord extends Controller {
 		}
 	}
 
-	generateEmbed (messageData, options = {}) {
+	prepareMessage (messageData, options = {}) {
 		let message = "";
 
 		if (options.checkIn) {

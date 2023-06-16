@@ -65,7 +65,7 @@ export default class Telegram extends Controller {
 		this.cron = new sr.Cron({
 			name: "telegram-listener",
 			// If you recieved error message such as "409: Conflict", try to increase this value
-			expression: "*/3 * * * * *",
+			expression: "*/5 * * * * *",
 			description: "Listens for Telegram updates",
 			code: () => this.initListeners()
 		});
@@ -181,7 +181,7 @@ export default class Telegram extends Controller {
 		return true;
 	}
 
-	formatMessage (messageData, options = {}) {
+	prepareMessage (messageData, options = {}) {
 		if (options.checkIn) {
 			const messages = [];
 

@@ -17,7 +17,7 @@ export const definitions = {
 
 		if (sr.Discord && sr.Discord.active) {
 			for (const data of expiditionResult) {
-				const embed = sr.Discord.generateEmbed(data, { expedition: true });
+				const embed = sr.Discord.prepareMessage(data, { expedition: true });
 				await sr.Discord.send(embed);
 			}
 		}
