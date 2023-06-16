@@ -1,5 +1,8 @@
 # Changelog
 
+## 6/17/2023
+- Major: Added Telegram users now can use commands to check stamina, and check expedition status by using `/stamina` and `/expedition` respectively.
+
 ## 6/16/2023
 - Minor: Discord embed generator now accept `stamina` and `expedition` as a parameter to generate the embed
 - Minor: Added missing argument handler for `--sign` and `--stamina` flag

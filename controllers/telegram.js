@@ -7,7 +7,10 @@ export default class Telegram extends Controller {
 	#token = null;
 	#disableNotification = false;
 	#active = false;
-
+	
+	static lastUpdateId = 0;
+	static firstRun = true;
+	
 	constructor (config) {
 		super();
 
@@ -58,6 +61,95 @@ export default class Telegram extends Controller {
 		}
 
 		this.#active = true;
+		
+		this.cron = new sr.Cron({
+			name: "telegram-listener",
+			// If you recieved error message such as "409: Conflict", try to increase this value
+			expression: "*/3 * * * * *",
+			description: "Listens for Telegram updates",
+			code: () => this.initListeners()
+		});
+
+		this.cron.start();
+	}
+
+	async initListeners () {
+		if (this.#active === false) {
+			return;
+		}
+
+		const res = await got({
+			url: `https://api.telegram.org/bot${this.#token}/getUpdates`,
+			method: "POST",
+			responseType: "json",
+			json: {
+				offset: Telegram.lastUpdateId + 1
+			}
+		});
+
+		if (res.body.ok !== true) {
+			throw new Error({
+				message: "Error when getting Telegram updates",
+				args: {
+					statusCode: res.statusCode,
+					body: res.body
+				}
+			});
+		}
+
+		if (Telegram.firstRun === true && res.body.result.length > 0) {
+			// set lastUpdateId to the latest update on first run to avoid unexpected behavior
+			Telegram.lastUpdateId = res.body.result[res.body.result.length - 1].update_id;
+			Telegram.firstRun = false;
+			return;
+		}
+		else if (res.body.result.length === 0) {
+			Telegram.firstRun = false;
+		}
+
+		for (const update of res.body.result) {
+			Telegram.lastUpdateId = update.update_id;
+			const message = update.message.text;
+
+			switch (message) {
+				case "/stamina": {
+					await this.send("📊 Getting stamina data...");
+
+					const staminaResult = await sr.Stamina.checkAndRun({ checkOnly: true });
+					for (const message of staminaResult) {
+						const { uid, currentStamina, maxStamina, delta } = message;
+						const staminaString = `📊 [${uid}] Stamina: ${currentStamina}/${maxStamina}`;
+						const deltaString = `📈 capped in: ${delta}`;
+
+						await this.send(`${staminaString}\n${deltaString}`);
+					}
+
+					break;
+				}
+
+				case "/expedition": {
+					await this.send("📊 Getting expedition data...");
+
+					const expeditionResult = await sr.Expedition.checkAndRun({ checkOnly: true });
+					for (const data of expeditionResult) {
+						const { uid } = data;
+						if (!data?.expeditions) {
+							await this.send(`[${uid}] No expedition is running or all expedition has been completed!`);
+							continue;
+						}
+
+						const expedition = data.expeditions.map(item => {
+							const { delta } = item;
+							return `📈 Remaining time: ${delta}`;
+						}).join("\n");
+
+						await this.send(`[${uid}] Expedition is running!\n${expedition}`);
+					}
+					
+					break;
+				}
+			}
+		}
 	}
 
 	async send (message) {
