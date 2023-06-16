@@ -63,6 +63,22 @@ export default class Expedition extends HoyoTemplate {
 			const { expeditions } = data;
 
 			const isAllCompleted = expeditions.every(i => i.status !== "Ongoing");
+			if (isAllCompleted && options.checkOnly) {
+				result.push({ uid: account.uid });
+				
+				continue;
+			}
+			else if (!isAllCompleted && options.checkOnly) {
+				result.push({
+					uid: account.uid,
+					expeditions: expeditions.map(i => ({
+						delta: Expedition.formatTime(i.remaining_time)
+					}))
+				});
+
+				continue;
+			}
+
 			if (isAllCompleted && options.skipCheck) {
 				result.push({ uid: account.uid });
 				
