@@ -84,6 +84,10 @@ export default class Expedition extends HoyoTemplate {
 				
 				continue;
 			}
+
+			if (isAllCompleted && !options.skipCheck) {
+				result.push({ uid: account.uid });
+			}
 		}
 
 		return result;

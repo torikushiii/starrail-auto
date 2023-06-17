@@ -4,6 +4,7 @@
 - Major: Added Telegram users now can use commands to check stamina, and check expedition status by using `/stamina` and `/expedition` respectively.
 - Minor: Added `prepareMessage` function to prepare message for Telegram and Discord
 - Minor: Typo fix for `expidition` to `expedition` at expedition cron
+- Minor: Fix expedition completion check logic
 
 ## 6/16/2023
 - Minor: Discord embed generator now accept `stamina` and `expedition` as a parameter to generate the embed
