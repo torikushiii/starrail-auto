@@ -1,7 +1,10 @@
 # Changelog
 
+## 6/19/2023
+- Minor: Modified help message for `flag-handler`
+
 ## 6/17/2023
-- Major: Added Telegram users now can use commands to check stamina, and check expedition status by using `/stamina` and `/expedition` respectively.
+- Major: Telegram users now can use commands to check stamina, and check expedition status by using `/stamina` and `/expedition` respectively.
 - Minor: Added `prepareMessage` function to prepare message for Telegram and Discord
 - Minor: Typo fix for `expidition` to `expedition` at expedition cron
 - Minor: Fix expedition completion check logic
