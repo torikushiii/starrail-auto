@@ -4,7 +4,8 @@
 - Major: Added `utils` singleton and moved some of the `stamina` and `expedition` function to utils
 - Major: Added cron to check for new codes (Currently only supports Global server codes)
 - Minor: Modified help message for `flag-handler`
-- Minor: moved `formatTime` and `getAccountRegion` to `utils`
+- Minor: Moved `formatTime` and `getAccountRegion` to `utils`
+- Minor: Refactored notification codes check using optional chaining
 
 ## 6/17/2023
 - Major: Telegram users now can use commands to check stamina, and check expedition status by using `/stamina` and `/expedition` respectively.

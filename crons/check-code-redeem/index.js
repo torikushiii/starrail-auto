@@ -5,7 +5,7 @@ export const definitions = {
 	expression: "0 */30 * * * *",
 	description: "Check and redeem code",
 	code: (async function codeRedeem () {
-		if (config.notification.codes === false) {
+		if (!config?.notification?.codes) {
 			this.stop();
 			return;
 		}
