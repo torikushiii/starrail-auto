@@ -3,6 +3,7 @@
 ## 6/19/2023
 - Major: Added `utils` singleton and moved some of the `stamina` and `expedition` function to utils
 - Minor: Modified help message for `flag-handler`
+- Minor: moved `formatTime` and `getAccountRegion` to `utils`
 
 ## 6/17/2023
 - Major: Telegram users now can use commands to check stamina, and check expedition status by using `/stamina` and `/expedition` respectively.
