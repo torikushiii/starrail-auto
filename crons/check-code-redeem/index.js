@@ -30,36 +30,37 @@ export const definitions = {
 			codes.push({ code, rewards });
 		}
 
-		this.data.codes = codes.filter(i => !skippedCodes.includes(i.code));
-
 		if (this.data.firstRun) {
+			this.data.codes = codes;
 			this.data.firstRun = false;
 			return;
 		}
 
-		if (this.data.codes.length === 0) {
-			return;
-		}
-
-		for (const code of this.data.codes) {
-			const message = `Code: ${code.code}\nRewards: ${code.rewards}`;
-
-			sr.Logger.info(`New code: ${code.code} - ${code.rewards}`);
-
-			if (sr.Discord && sr.Discord.active) {
-				await sr.Discord.send({
-					color: 0xBB0BB5,
-					title: "Honkai: Star Rail New Code",
-					description: message,
-					timestamp: new Date(),
-					footer: {
-						text: "Honkai: Star Rail New Code"
-					}
-				});
+		for (const code of codes) {
+			if (skippedCodes.includes(code.code)) {
+				continue;
 			}
 
-			if (sr.Telegram && sr.Telegram.active) {
-				await sr.Telegram.send(message);
+			if (!this.data.codes.some((c) => c.code === code.code)) {
+				const message = `Code: ${code.code}\nRewards: ${code.rewards}`;
+
+				sr.Logger.info(`New code: ${code.code} - ${code.rewards}`);
+
+				if (sr.Discord && sr.Discord.active) {
+					await sr.Discord.send({
+						color: 0xBB0BB5,
+						title: "Honkai: Star Rail New Code",
+						description: message,
+						timestamp: new Date(),
+						footer: {
+							text: "Honkai: Star Rail New Code"
+						}
+					});
+				}
+
+				if (sr.Telegram && sr.Telegram.active) {
+					await sr.Telegram.send(message);
+				}
 			}
 		}
 	})
