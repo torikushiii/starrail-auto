@@ -2,6 +2,7 @@
 
 ## 6/19/2023
 - Major: Added `utils` singleton and moved some of the `stamina` and `expedition` function to utils
+- Major: Added cron to check for new codes (Currently only supports Global server codes)
 - Minor: Modified help message for `flag-handler`
 - Minor: moved `formatTime` and `getAccountRegion` to `utils`
 
