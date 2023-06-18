@@ -20,6 +20,7 @@
   "main": "index.js",
   "dependencies": {
     "chalk": "^5.2.0",
+    "cheerio": "^1.0.0-rc.12",
     "cron": "^2.3.0",
     "got": "^12.6.0",
     "winston": "^3.8.2"
