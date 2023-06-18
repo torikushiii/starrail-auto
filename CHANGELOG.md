@@ -5,6 +5,7 @@
 - Minor: Added `prepareMessage` function to prepare message for Telegram and Discord
 - Minor: Typo fix for `expidition` to `expedition` at expedition cron
 - Minor: Fix expedition completion check logic
+- Minor: Added missing region for `CN/TW` server
 
 ## 6/16/2023
 - Minor: Discord embed generator now accept `stamina` and `expedition` as a parameter to generate the embed

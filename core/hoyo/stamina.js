@@ -186,6 +186,8 @@ export default class Stamina extends HoyoTemplate {
 	static getAccountRegion (uid) {
 		const region = uid.toString().slice(0, 1);
 		switch (region) {
+			case "9":
+				return `prod_official_cht`;
 			case "8":
 				return `prod_official_asia`;
 			case "7":
