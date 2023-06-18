@@ -55,7 +55,7 @@ export default class Expedition extends HoyoTemplate {
 			const { data } = res.body;
 			const { expeditions } = data;
 
-			const isAllCompleted = expeditions.every(i => i.status === "Ongoing");
+			const isAllCompleted = expeditions.every(i => i.status !== "Ongoing");
 			if (!isAllCompleted) {
 				Expedition.data.set(uid, {
 					...account,

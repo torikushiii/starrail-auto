@@ -7,6 +7,7 @@
 - Minor: Moved `formatTime` and `getAccountRegion` to `utils`
 - Minor: Refactored notification codes check using optional chaining
 - Bugfix: Fixed bug where notification kept being send even skipCheck is set to false (#10)
+- Bugfix: Fixed wrong operetor given for expedtion check
 
 ## 6/17/2023
 - Major: Telegram users now can use commands to check stamina, and check expedition status by using `/stamina` and `/expedition` respectively.
