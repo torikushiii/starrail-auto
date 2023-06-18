@@ -1,6 +1,7 @@
 # Changelog
 
 ## 6/19/2023
+- Major: Added `utils` singleton and moved some of the `stamina` and `expedition` function to utils
 - Minor: Modified help message for `flag-handler`
 
 ## 6/17/2023

@@ -5,6 +5,8 @@ export default (async function () {
 		"lib/logger",
 		"lib/got",
 
+		"singletons/utils",
+
 		"classes/cron",
 		"object/error",
 		"classes/account",
@@ -49,6 +51,15 @@ export default (async function () {
 			const name = component.name.replace("Custom", "");
 
 			sr[name] = await component.initialize();
+		}
+		else if (type === "singletons") {
+			switch (name) {
+				case "utils": {
+					const Component = await import(`./${file}.js`);
+					sr.Utils = Component.default.singleton();
+					break;
+				}
+			}
 		}
 	}
 
