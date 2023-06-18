@@ -55,7 +55,14 @@ export default class Expedition extends HoyoTemplate {
 			const { data } = res.body;
 			const { expeditions } = data;
 
-			const isAllCompleted = expeditions.every(i => i.status !== "Ongoing");
+			const isAllCompleted = expeditions.every(i => i.status === "Ongoing");
+			if (!isAllCompleted) {
+				Expedition.data.set(uid, {
+					...account,
+					fired: false
+				});
+			}
+
 			if (isAllCompleted && options.checkOnly) {
 				result.push({ uid: account.uid });
 				
@@ -78,8 +85,12 @@ export default class Expedition extends HoyoTemplate {
 				continue;
 			}
 
-			if (isAllCompleted && !options.skipCheck) {
+			if (isAllCompleted && !account.fired) {
 				result.push({ uid: account.uid });
+				Expedition.data.set(uid, {
+					...account,
+					fired: true
+				});
 			}
 		}
 
