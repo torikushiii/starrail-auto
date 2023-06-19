@@ -1,5 +1,8 @@
 # Changelog
 
+## 6/20/2023
+- Major: Reworked `config` to class and for easier access to configs
+
 ## 6/19/2023
 - Major: Added `utils` singleton and moved some of the `stamina` and `expedition` function to utils
 - Major: Added cron to check for new codes (Currently only supports Global server codes)

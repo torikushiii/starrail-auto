@@ -1,4 +1,3 @@
-import config from "./config.js";
 import { handleFlag } from "./lib/flag-handler.js";
 
 const importModule = async (module, path) => {
@@ -28,9 +27,8 @@ const importModule = async (module, path) => {
 			continue;
 		}
 
-		const options = config.notification.service[platform.toLocaleLowerCase()];
 		try {
-			sr[platform] = new Controller.default(options);
+			sr[platform] = new Controller.default();
 		}
 		catch (e) {
 			console.error(`Failed to initialize ${platform} controller`, e);

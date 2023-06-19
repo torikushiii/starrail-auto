@@ -1,6 +1,5 @@
 const config = {
-	staminaCheck: false, // Set to true to enable stamina check (will send notification if stamina is above the threshold)
-	cookies: [
+	COOKIES: [
 		{
 			uid: 123, // Your in-game UID
 			cookie: "",
@@ -12,28 +11,17 @@ const config = {
 			threshold: 170
 		}
 	],
-	notification: {
-		enabled: false, // Set to true to enable notification
-		skipCheck: false, // Set to true if you want to keep sending notification even if stamina is above the threshold and capped.
-		codes: false, // Set to true to enable code notification (THIS ONLY CHECK FOR NEW GLOBAL CODES)
-		service: {
-			discord: {
-				enabled: false, // Set to true to enable Discord notification
-				webhook: "" // Discord webhook URL
-			},
-			telegram: {
-				enabled: false, // Set to true to enable Telegram notification
-				chatId: 123, // Telegram chat ID, use @getmyid_bot to get your chat ID
-				token: "", // Telegram bot token
-				disableNotification: false // Revoke notification (sound, vibration, etc.)
-			}
-		}
-	},
-	cronTimings: {
-		CHECK_IN: "0 0 0 * * *", // Check in daily at 00:00:00
-		EXPEDITION: "0 */30 * * * *", // Check expedition every 30 minutes
-		STAMINA_CHECK_INTERVAL: "0 */30 * * * *" // Check stamina every 30 minutes
-	}
+	STAMINA_CHECK: true, // Set to true to enable stamina check
+	PERSISTENT_EXPEDITION: false, // Set to true if you want to keep sending notification
+	PERSISTENT_STAMINA: true, // Set to true if you want to keep sending notification even if stamina is above the threshold and capped.
+	CHECK_CODE_REDEEM: true, // Set to true to enable code check (THIS ONLY CHECK FOR NEW GLOBAL CODES)
+	DISCORD_WEBHOOK: null, // Discord webhook URL
+	TELEGRAM_CHAT_ID: null, // Telegram chat ID, use @getmyid_bot to get your chat ID
+	TELEGRAM_TOKEN: null, // Telegram bot token
+	TELEGRAM_DISABLE_NOTIFICATION: false, // Revoke notification (sound, vibration, etc.)
+	CHECK_IN: "0 0 0 * * *", // Check in daily at 00:00:00
+	EXPEDITION: "0 */30 * * * *", // Check expedition every 30 minutes
+	STAMINA_CHECK_INTERVAL: "0 */30 * * * *" // Check stamina every 30 minutes
 };
 
 export default config;

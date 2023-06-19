@@ -1,11 +1,10 @@
-import config from "../../config.js";
-
 export const definitions = {
 	name: "stamina",
-	expression: config.cronTimings.STAMINA_CHECK_INTERVAL,
+	expression: sr.Config.get("STAMINA_CHECK_INTERVAL") ?? "0 */30 * * * *",
 	description: "Check for your stamina and notify you when it's almost full",
 	code: (async function announceStamina () {
-		const staminaResult = await sr.Stamina.checkAndRun({ skipCheck: config.notification.skipCheck });
+		const skipCheck = sr.Config.get("PERSISTENT_STAMINA") ?? false;
+		const staminaResult = await sr.Stamina.checkAndRun({ skipCheck });
 		if (staminaResult.length === 0) {
 			return;
 		}

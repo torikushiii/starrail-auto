@@ -1,11 +1,9 @@
-import config from "../../config.js";
-
 export const definitions = {
 	name: "check-code-redeem",
 	expression: "0 */30 * * * *",
 	description: "Check and redeem code",
 	code: (async function codeRedeem () {
-		if (!config?.notification?.codes) {
+		if (!sr.Config.get("CHECK_CODE_REDEEM")) {
 			this.stop();
 			return;
 		}

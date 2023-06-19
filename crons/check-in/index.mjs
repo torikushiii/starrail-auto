@@ -1,8 +1,6 @@
-import config from "../../config.js";
-
 export const definitions = {
 	name: "check-in",
-	expression: config.cronTimings.CHECK_IN,
+	expression: sr.Config.get("CHECK_IN") ?? "0 0 0 * * *",
 	description: "Run daily check-in every day at midnight",
 	code: (async function announceCheckIn () {
 		const checkInResult = await sr.CheckIn.checkAndSign();

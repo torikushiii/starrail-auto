@@ -4,20 +4,16 @@ export default class Discord extends Controller {
 	#active = false;
 	#token = null;
 
-	constructor (config) {
+	constructor () {
 		super();
 
-		if (config.enabled === false) {
+		const token = sr.Config.get("DISCORD_WEBHOOK");
+		if (!token || token === null) {
 			return;
 		}
 
-		const token = config.webhook;
-		if (!token) {
-			throw new sr.Error({ message: "Discord webhook doesn't exist" });
-		}
-		
-		this.#token = token;
 		this.#active = true;
+		this.#token = token;
 	}
 
 	async send (embed) {

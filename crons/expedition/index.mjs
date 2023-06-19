@@ -1,11 +1,10 @@
-import config from "../../config.js";
-
 export const definitions = {
 	name: "expedition",
-	expression: config.cronTimings.EXPEDITION,
+	expression: sr.Config.get("EXPEDITION") ?? "0 */30 * * * *",
 	description: "Check for characters in expedition and notify you when they are done",
 	code: (async function announceExpedition () {
-		const expeditionResult = await sr.Expedition.checkAndRun({ skipCheck: config.notification.skipCheck });
+		const skipCheck = sr.Config.get("PERSISTENT_EXPEDITION") ?? false;
+		const expeditionResult = await sr.Expedition.checkAndRun({ skipCheck });
 		if (expeditionResult.length === 0) {
 			return;
 		}

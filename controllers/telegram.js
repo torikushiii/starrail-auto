@@ -11,53 +11,15 @@ export default class Telegram extends Controller {
 	static lastUpdateId = 0;
 	static firstRun = true;
 	
-	constructor (config) {
+	constructor () {
 		super();
 
-		if (config.enabled === false) {
+		this.#chatId = sr.Config.get("TELEGRAM_CHAT_ID");
+		this.#token = sr.Config.get("TELEGRAM_TOKEN");
+		this.#disableNotification = sr.Config.get("TELEGRAM_DISABLE_NOTIFICATION") ?? false;
+
+		if (!this.#chatId || !this.#token) {
 			return;
-		}
-
-		this.#chatId = config.chatId;
-		if (typeof this.#chatId !== "number") {
-			throw new Error({
-				message: "Telegram chatId must be a number",
-				args: {
-					chatId: config,
-					type: {
-						expected: "number",
-						received: typeof this.#chatId
-					}
-				}
-			});
-		}
-
-		this.#token = config.token;
-		if (typeof this.#token !== "string") {
-			throw new Error({
-				message: "Telegram token must be a string",
-				args: {
-					token: config,
-					type: {
-						expected: "string",
-						received: typeof this.#token
-					}
-				}
-			});
-		}
-
-		this.#disableNotification = config.disableNotification;
-		if (typeof this.#disableNotification !== "boolean") {
-			throw new Error({
-				message: "Telegram disableNotification must be a boolean",
-				args: {
-					disableNotification: config,
-					type: {
-						expected: "boolean",
-						received: typeof this.#disableNotification
-					}
-				}
-			});
 		}
 
 		this.#active = true;

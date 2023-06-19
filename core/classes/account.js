@@ -1,4 +1,3 @@
-import config from "../../config.js";
 import ClassTemplate from "./template.js";
 
 export default class Account extends ClassTemplate {
@@ -62,7 +61,7 @@ export default class Account extends ClassTemplate {
 	}
 
 	static async loadData () {
-		const data = config.cookies;
+		const data = sr.Config.get("COOKIES");
         
 		for (const account of data) {
 			const object = new Account(account);
@@ -71,8 +70,11 @@ export default class Account extends ClassTemplate {
 	}
 
 	static async validate () {
-		const accounts = Account.data.values();
+		if (Account.data.size === 0) {
+			throw new sr.Error({ message: "No account data found" });
+		}
 
+		const accounts = Account.data.values();
 		for (const account of accounts) {
 			const { statusCode, body } = await sr.Got({
 				url: "https://sg-public-api.hoyolab.com/event/luna/os/info",
