@@ -2,6 +2,7 @@
 
 ## 6/20/2023
 - Major: Reworked `config` to class and for easier access to configs
+- Minor: Defaulted all values to `false` on `config.js` file
 
 ## 6/19/2023
 - Major: Added `utils` singleton and moved some of the `stamina` and `expedition` function to utils

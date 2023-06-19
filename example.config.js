@@ -11,10 +11,10 @@ const config = {
 			threshold: 170
 		}
 	],
-	STAMINA_CHECK: true, // Set to true to enable stamina check
+	STAMINA_CHECK: false, // Set to true to enable stamina check
 	PERSISTENT_EXPEDITION: false, // Set to true if you want to keep sending notification
-	PERSISTENT_STAMINA: true, // Set to true if you want to keep sending notification even if stamina is above the threshold and capped.
-	CHECK_CODE_REDEEM: true, // Set to true to enable code check (THIS ONLY CHECK FOR NEW GLOBAL CODES)
+	PERSISTENT_STAMINA: false, // Set to true if you want to keep sending notification even if stamina is above the threshold and capped.
+	CHECK_CODE_REDEEM: false, // Set to true to enable code check (THIS ONLY CHECK FOR NEW GLOBAL CODES)
 	DISCORD_WEBHOOK: null, // Discord webhook URL
 	TELEGRAM_CHAT_ID: null, // Telegram chat ID, use @getmyid_bot to get your chat ID
 	TELEGRAM_TOKEN: null, // Telegram bot token
