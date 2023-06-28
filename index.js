@@ -9,6 +9,10 @@ const importModule = async (module, path) => {
 	const { default: initObjects } = await import("./core/index.js");
 	globalThis.sr = await initObjects();
 
+	const { default: commandData } = await import("./commands/index.js");
+	const commands = await commandData;
+	await sr.Command.importData(commands.definitions);
+
 	await handleFlag(process.argv);
 	await importModule(sr.Cron, "crons");
 

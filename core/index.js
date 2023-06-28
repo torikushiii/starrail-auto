@@ -6,6 +6,7 @@ export default (async function () {
 		"lib/got",
 
 		"classes/config",
+		"classes/command",
 		"singletons/utils",
 
 		"classes/cron",

@@ -76,38 +76,13 @@ export default class Telegram extends Controller {
 			switch (message) {
 				case "/stamina": {
 					await this.send("📊 Getting stamina data...");
-
-					const staminaResult = await sr.Stamina.checkAndRun({ checkOnly: true });
-					for (const message of staminaResult) {
-						const { uid, currentStamina, maxStamina, delta } = message;
-						const staminaString = `📊 [${uid}] Stamina: ${currentStamina}/${maxStamina}`;
-						const deltaString = `📈 capped in: ${delta}`;
-
-						await this.send(`${staminaString}\n${deltaString}`);
-					}
-
+					await this.handleCommand("stamina", []);
 					break;
 				}
 
 				case "/expedition": {
 					await this.send("📊 Getting expedition data...");
-
-					const expeditionResult = await sr.Expedition.checkAndRun({ checkOnly: true });
-					for (const data of expeditionResult) {
-						const { uid } = data;
-						if (!data?.expeditions) {
-							await this.send(`[${uid}] No expedition is running or all expedition has been completed!`);
-							continue;
-						}
-
-						const expedition = data.expeditions.map(item => {
-							const { delta } = item;
-							return `📈 Remaining time: ${delta}`;
-						}).join("\n");
-
-						await this.send(`[${uid}] Expedition is running!\n${expedition}`);
-					}
-					
+					await this.handleCommand("expedition", []);
 					break;
 				}
 			}
@@ -141,6 +116,27 @@ export default class Telegram extends Controller {
 		}
 
 		return true;
+	}
+
+	async handleCommand (command, args) {
+		const execution = await sr.Command.checkAndRun(command, args, {
+			platform: {
+				id: 1,
+				name: "Telegram"
+			}
+		});
+
+		if (!execution) {
+			return;
+		}
+
+		const { reply } = execution;
+		if (!reply) {
+			return;
+		}
+
+		const message = execution.reply;
+		await this.send(message);
 	}
 
 	prepareMessage (messageData, options = {}) {
