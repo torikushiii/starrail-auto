@@ -59,6 +59,8 @@ export const definitions = {
 				if (sr.Telegram && sr.Telegram.active) {
 					await sr.Telegram.send(message);
 				}
+
+				this.data.codes.push(code);
 			}
 		}
 	})

@@ -1,5 +1,8 @@
 # Changelog
 
+## 6/30/2023
+- Bugfix: Code reedem cron didn't save the code properly
+
 ## 6/20/2023
 - Major: Reworked `config` to class and for easier access to configs
 - Minor: Defaulted all values to `false` on `config.js` file
