@@ -1,6 +1,6 @@
 <h1 align="center">
     <img width="120" height="120" src="https://i.imgur.com/qidPCBf.png" alt=""><br>
-    Honkai: Star Rail Check-In Helper
+    Honkai: Star Rail Helper
 </h1>
 
 <p align="center">
@@ -12,16 +12,17 @@
 
 ![Alt](https://repobeats.axiom.co/api/embed/258364749d69138ce925035dfe396bac085e8f1f.svg "Repobeats analytics image")
 
-# Daily Check-In
+# Honkai: Star Rail Helper
 
-[Daily Check-In](https://act.hoyolab.com/bbs/event/signin/hkrpg/index.html?act_id=e202303301540311)
+A multi-purpose tool for the Honkai Impact: Star Rail that can be used to automate the daily check-in process, check stamina and expedition status.
 
 # Services
-If you don't want to use Node.js, you can use one of the following services:
+If you don't want to use Node.js and only want to use it for auto check-in, you can use one of the following services:
 - [Google Apps Script](https://github.com/torikushiii/starrail-auto/tree/master/services/google-script)
 
 # Features
 - [x] Auto Check-in
+- [x] Multiple accounts
 - [x] Stamina check (Node only)
 - [x] Expedition check (Node only)
 - [x] Discord notifications
@@ -29,7 +30,6 @@ If you don't want to use Node.js, you can use one of the following services:
     - Commands
         - [x] Check stamina
         - [x] Check expedition status
-- [x] Multiple accounts
 
 # Pre-requisites
 - [Node.js](https://nodejs.org/en/)
