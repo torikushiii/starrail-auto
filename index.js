@@ -40,9 +40,6 @@ const importModule = async (module, path) => {
 		}
 	}
 
-	await sr.Account.validate();
-	sr.Logger.info("All accounts have been validated");
-
 	process.on("unhandledRejection", async (reason) => {
 		if (!(reason instanceof Error)) {
 			return;
