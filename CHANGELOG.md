@@ -2,6 +2,7 @@
 
 ## 7/6/2023
 - Major: Added `GenericRequestError` class to handle generic request error
+- Major: Refactored `Account` class to get all account related data
 - Minor: Improved `RequestError` error message
 - Minor: Removed log when account is registered
 - Minor: Check-in now returns proper account `UID`

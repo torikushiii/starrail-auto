@@ -1,57 +1,27 @@
 import ClassTemplate from "./template.js";
 
 export default class Account extends ClassTemplate {
-	#uid;
-	#cookie;
-	#staminaThreshold;
-
 	static data = new Map();
 	static ACT_ID = "e202303301540311";
 
 	constructor (data) {
 		super();
 
-		this.#uid = data.uid ?? Account.data.size;
-		if (typeof this.#uid !== "number") {
-			throw new sr.Error({
-				message: "Account uid must be a number",
-				args: {
-					uid: data,
-					type: {
-						expected: "number",
-						received: typeof this.#uid
-					}
-				}
-			});
-		}
+		this.id = data.id;
 
-		this.#cookie = data.cookie;
-		if (typeof this.#cookie !== "string") {
-			throw new sr.Error({
-				message: "Account cookie must be a string",
-				args: {
-					cookie: data,
-					type: {
-						expected: "string",
-						received: typeof this.#cookie
-					}
-				}
-			});
-		}
+		this.uid = data.uid;
 
-		this.#staminaThreshold = data.threshold;
-		if (typeof this.#staminaThreshold !== "number") {
-			throw new sr.Error({
-				message: "Account staminaThreshold must be a number",
-				args: {
-					staminaThreshold: data,
-					type: {
-						expected: "number",
-						received: typeof this.#staminaThreshold
-					}
-				}
-			});
-		}
+		this.rank = data.rank;
+
+		this.username = data.username;
+
+		this.region = data.region;
+
+		this.cookie = data.cookie;
+
+		this.threshold = data.threshold ?? 150;
+
+		this.skipChecks = data.skipChecks ?? false;
 	}
 
 	static async initialize () {
@@ -62,36 +32,41 @@ export default class Account extends ClassTemplate {
 
 	static async loadData () {
 		const data = sr.Config.get("COOKIES");
-        
-		for (const account of data) {
-			const object = new Account(account);
-			Account.data.set(object.#uid, object);
-		}
+		await this.validate(data);
 	}
 
-	static async validate () {
-		if (Account.data.size === 0) {
-			throw new sr.Error({ message: "No account data found" });
+	static async validate (accountList) {
+		const accounts = accountList;
+		if (accounts.length === 0) {
+			throw new sr.Error({ message: "No accounts found in config file." });
 		}
 
-		const accounts = Account.data.values();
-		for (const account of accounts) {
+		for (let i = 0; i < accounts.length; i++) {
+			const account = accounts[i];
+			const id = account.cookie.match(/account_id=(\d+)/)[1];
+			if (!id) {
+				sr.Logger.warn(`Account ${i + 1} has no account_id in cookie. Skipping...`);
+				continue;
+			}
+
 			const { statusCode, body } = await sr.Got({
-				url: "https://sg-public-api.hoyolab.com/event/luna/os/info",
-				headers: {
-					Cookie: account.#cookie
-				},
+				url: "https://bbs-api-os.hoyolab.com/game_record/card/wapi/getGameRecordCard",
+				responseType: "json",
+				throwHttpErrors: false,
 				searchParams: {
-					act_id: Account.ACT_ID
+					uid: id
+				},
+				headers: {
+					Cookie: account.cookie
 				}
 			});
 
 			if (statusCode !== 200) {
 				throw new sr.Error({
-					message: "API error when getting sign info",
+					message: `Account ${i + 1} is invalid.`,
 					args: {
 						account: {
-							uid: account.#uid
+							uid: id
 						},
 						request: {
 							statusCode,
@@ -101,12 +76,12 @@ export default class Account extends ClassTemplate {
 				});
 			}
 
-			if (body.retcode !== 0 && body.message !== "OK") {
+			if (body.data === null) {
 				throw new sr.Error({
-					message: "API error when getting sign info",
+					message: `Account ${i + 1} is invalid.`,
 					args: {
 						account: {
-							uid: account.#uid
+							uid: id
 						},
 						request: {
 							statusCode,
@@ -116,27 +91,56 @@ export default class Account extends ClassTemplate {
 				});
 			}
 
-			if (body.retcode === 0 && body.message === "OK") {
-				sr.Logger.info(`Account ${account.#uid} has been validated`);
+			if (body.retcode !== 0) {
+				throw new sr.Error({
+					message: `Account ${i + 1} is invalid.`,
+					args: {
+						account: {
+							uid: id
+						},
+						request: {
+							statusCode,
+							body
+						}
+					}
+				});
+			}
+
+			const data = body.data.list;
+			const starrailAccount = data.find(i => i.game_id === 6);
+			if (!starrailAccount) {
+				sr.Logger.warn(`Account ${i + 1} [${id}] has no StarRail account. Skipping...`);
 				continue;
 			}
+
+			const accoundData = new Account({
+				id,
+				uid: String(starrailAccount.game_role_id),
+				rank: starrailAccount.level,
+				username: starrailAccount.nickname,
+				region: starrailAccount.region,
+				cookie: account.cookie,
+				threshold: account.threshold,
+				skipChecks: Boolean(account.uid === null)
+			});
+
+			Account.data.set(id, accoundData);
 		}
+
+		console.table([...Account.data.values()].map(i => ({
+			"Account ID": i.id,
+			UID: i.uid,
+			Rank: i.rank,
+			Username: i.username,
+			Region: i.region,
+			Threshold: i.threshold,
+			"Skip Checks": i.skipChecks
+		})));
 
 		return true;
 	}
 
 	static getActiveAccounts () {
-		const accounts = Account.data.values();
-		const activeAccounts = [];
-
-		for (const account of accounts) {
-			activeAccounts.push({
-				uid: account.#uid,
-				cookie: account.#cookie,
-				threshold: account.#staminaThreshold
-			});
-		}
-
-		return activeAccounts;
+		return [...Account.data.values()];
 	}
 }
