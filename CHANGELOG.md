@@ -1,5 +1,8 @@
 # Changelog
 
+## 7/6/2023
+- Minor: Improved `RequestError` error message
+
 ## 6/30/2023
 - Major: Reworked command handler for future universal uses
 - Bugfix: Code reedem cron didn't save the code properly
