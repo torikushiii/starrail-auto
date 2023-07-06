@@ -3,6 +3,7 @@
 ## 7/6/2023
 - Major: Added `GenericRequestError` class to handle generic request error
 - Minor: Improved `RequestError` error message
+- Minor: Removed log when account is registered
 
 ## 6/30/2023
 - Major: Reworked command handler for future universal uses

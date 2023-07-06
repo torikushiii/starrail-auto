@@ -115,12 +115,14 @@ export default class Stamina extends HoyoTemplate {
 				continue;
 			}
 
+			if (account.skipChecks) {
+				continue;
+			}
+
 			Stamina.data.set(account.uid, {
 				...account,
 				fired: false
 			});
-
-			sr.Logger.info(`Loaded account with uid "${account.uid}" for stamina check with threshold ${account.threshold}`);
 		}
 	}
 
