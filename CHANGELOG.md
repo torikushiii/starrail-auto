@@ -4,6 +4,7 @@
 - Major: Added `GenericRequestError` class to handle generic request error
 - Minor: Improved `RequestError` error message
 - Minor: Removed log when account is registered
+- Minor: Check-in now returns proper account `UID`
 
 ## 6/30/2023
 - Major: Reworked command handler for future universal uses

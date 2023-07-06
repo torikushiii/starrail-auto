@@ -122,24 +122,24 @@ export default class CheckIn extends HoyoTemplate {
 	}
 
 	static async checkAndSign () {
-		const cookies = CheckIn.#getCookies();
+		const accountData = CheckIn.#getCookies();
         
-		for (let i = 0; i < cookies.length; i++) {
+		for (let i = 0; i < accountData.length; i++) {
 			const [infoData, awardsData] = await Promise.all([
-				CheckIn.getSignInfo(cookies[i]),
-				CheckIn.getAwards(cookies[i])
+				CheckIn.getSignInfo(accountData[i].cookie),
+				CheckIn.getAwards(accountData[i].cookie)
 			]);
 
 			const info = infoData;
 			const awards = awardsData;
 
 			if (!info || !awards) {
-				sr.Logger.warn(`[Account ${i + 1}]: Failed to get sign info or awards`);
+				sr.Logger.warn(`[${accountData[i].uid}]: Failed to get sign info or awards`);
 				continue;
 			}
 
 			if (awards.length === 0) {
-				sr.Logger.warn(`[Account ${i + 1}]: No awards found (?)`);
+				sr.Logger.warn(`[${accountData[i].uid}]: No awards found (?)`);
 				continue;
 			}
 
@@ -152,7 +152,7 @@ export default class CheckIn extends HoyoTemplate {
 
 			if (data.issigned) {
 				CheckIn.discordMessages.push({
-					account: i + 1,
+					account: accountData[i].uid,
 					signed: data.total,
 					result: "You've already checked in today, Trailblazer~",
 					award: {
@@ -170,10 +170,10 @@ export default class CheckIn extends HoyoTemplate {
 				count: awards[totalSigned].cnt
 			};
 
-			await CheckIn.sign(cookies[i]);
+			await CheckIn.sign(accountData[i].cookie);
 
 			CheckIn.discordMessages.push({
-				account: i + 1,
+				account: accountData[i].uid,
 				signed: totalSigned + 1,
 				result: "OK",
 				award: awardData
@@ -203,6 +203,9 @@ export default class CheckIn extends HoyoTemplate {
 			throw new sr.Error({ message: "No cookies provided" });
 		}
 
-		return cookies.map(i => i.cookie);
+		return cookies.map(i => ({
+			cookie: i.cookie,
+			uid: i.uid
+		}));
 	}
 }
