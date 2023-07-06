@@ -53,4 +53,27 @@ export default class CustomError extends globalThis.Error {
 	get args () { return this.#args; }
 	get timestamp () { return this.#timestamp; }
 	get date () { return new Date(this.#timestamp); }
+
+	static get GenericRequest () {
+		return GenericRequestError;
+	}
+}
+
+class GenericRequestError extends CustomError {
+	constructor (obj = {}) {
+		super({
+			message: obj.message,
+			name: "GenericRequestError",
+			args: {
+				...(obj.args ?? {}),
+				statusCode: obj.statusCode ?? null,
+				statusMessage: obj.statusMessage ?? null,
+				hostname: obj.hostname ?? null
+			}
+		});
+	}
+
+	static get name () {
+		return "GenericRequestError";
+	}
 }

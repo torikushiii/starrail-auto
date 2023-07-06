@@ -1,6 +1,7 @@
 # Changelog
 
 ## 7/6/2023
+- Major: Added `GenericRequestError` class to handle generic request error
 - Minor: Improved `RequestError` error message
 
 ## 6/30/2023
