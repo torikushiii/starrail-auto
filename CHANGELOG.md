@@ -8,6 +8,7 @@
 - Minor: Check-in now returns proper account `UID`
 - Minor: Moved Telegram got into custom `got` instance
 - Minor: Removed unused `Error` at Telegram controller
+- Minor: Added duplicate check when registering account
 
 ## 6/30/2023
 - Major: Reworked command handler for future universal uses

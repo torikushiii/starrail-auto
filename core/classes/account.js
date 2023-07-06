@@ -113,6 +113,12 @@ export default class Account extends ClassTemplate {
 				continue;
 			}
 
+			const duplicate = [...Account.data.values()].find(i => i.uid === String(starrailAccount.game_role_id));
+			if (duplicate) {
+				sr.Logger.warn(`Account ${i + 1} [${id}] is a duplicate. Skipping...`);
+				continue;
+			}
+
 			const accoundData = new Account({
 				id,
 				uid: String(starrailAccount.game_role_id),
