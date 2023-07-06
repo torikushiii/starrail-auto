@@ -6,7 +6,8 @@
 - Minor: Improved `RequestError` error message
 - Minor: Removed log when account is registered
 - Minor: Check-in now returns proper account `UID`
-- Minor: Moved Telegram got into build-in `got` instance
+- Minor: Moved Telegram got into custom `got` instance
+- Minor: Removed unused `Error` at Telegram controller
 
 ## 6/30/2023
 - Major: Reworked command handler for future universal uses

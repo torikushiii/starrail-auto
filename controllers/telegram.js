@@ -1,5 +1,4 @@
 import Controller from "./template.js";
-import Error from "../core/object/error.js";
 
 export default class Telegram extends Controller {
 	#chatId;
@@ -108,7 +107,7 @@ export default class Telegram extends Controller {
 		});
 
 		if (res.body.ok !== true) {
-			throw new Error({
+			throw new sr.Error({
 				message: "Error when sending Telegram message",
 				args: {
 					statusCode: res.statusCode,
