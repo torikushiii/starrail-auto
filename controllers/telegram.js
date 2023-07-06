@@ -1,4 +1,3 @@
-import got from "got";
 import Controller from "./template.js";
 import Error from "../core/object/error.js";
 
@@ -40,7 +39,7 @@ export default class Telegram extends Controller {
 			return;
 		}
 
-		const res = await got({
+		const res = await sr.Got({
 			url: `https://api.telegram.org/bot${this.#token}/getUpdates`,
 			method: "POST",
 			responseType: "json",
@@ -71,7 +70,10 @@ export default class Telegram extends Controller {
 
 		for (const update of res.body.result) {
 			Telegram.lastUpdateId = update.update_id;
-			const message = update.message.text;
+			const message = update?.message?.text;
+			if (!message) {
+				continue;
+			}
 
 			switch (message) {
 				case "/stamina": {
@@ -94,7 +96,7 @@ export default class Telegram extends Controller {
 			throw new sr.Error({ message: "Telegram is not active" });
 		}
 
-		const res = await got({
+		const res = await sr.Got({
 			url: `https://api.telegram.org/bot${this.#token}/sendMessage`,
 			method: "POST",
 			responseType: "json",
