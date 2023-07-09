@@ -1,6 +1,7 @@
 # Changelog
 
 ## 7/9/2023
+- Minor: When registering account with no `account_id` provided, it will still be registered with cookie provided but no account data such as `region`, `rank`, etc will be fetched.
 - Bugfix: Fixed bug where when user provided cookie and there's no `account_id` in the cookie, it will throw an error (#13)
 
 ## 7/6/2023

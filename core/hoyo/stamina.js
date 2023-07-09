@@ -111,7 +111,10 @@ export default class Stamina extends HoyoTemplate {
 	static async loadData () {
 		const accounts = sr.Account.getActiveAccounts();
 		for (const account of accounts) {
-			if (!sr.Utils.getAccountRegion(account.uid)) {
+			if (!account.uid) {
+				continue;
+			}
+			else if (!sr.Utils.getAccountRegion(account.uid)) {
 				continue;
 			}
 

@@ -45,7 +45,20 @@ export default class Account extends ClassTemplate {
 			const account = accounts[i];
 			const id = account.cookie?.match?.(/account_id=(\d+)/)?.[1];
 			if (!id) {
-				sr.Logger.warn(`Account ${i + 1} has no account_id in cookie. Skipping...`);
+				sr.Logger.warn(`Account ${i + 1} has no account_id in cookie. Skipping fetching account data...`);
+				
+				const accoundData = new Account({
+					id: i + 1,
+					uid: accounts[i].uid,
+					rank: 0,
+					username: "Unknown",
+					region: "Unknown",
+					cookie: account.cookie,
+					threshold: account.threshold,
+					skipChecks: Boolean(account.uid === null)
+				});
+
+				Account.data.set(i, accoundData);
 				continue;
 			}
 

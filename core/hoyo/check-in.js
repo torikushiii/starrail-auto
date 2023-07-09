@@ -205,7 +205,7 @@ export default class CheckIn extends HoyoTemplate {
 
 		return cookies.map(i => ({
 			cookie: i.cookie,
-			uid: i.uid
+			uid: i.uid ?? "[no uid]"
 		}));
 	}
 }
