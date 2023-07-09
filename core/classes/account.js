@@ -43,7 +43,7 @@ export default class Account extends ClassTemplate {
 
 		for (let i = 0; i < accounts.length; i++) {
 			const account = accounts[i];
-			const id = account.cookie.match(/account_id=(\d+)/)[1];
+			const id = account.cookie?.match?.(/account_id=(\d+)/)?.[1];
 			if (!id) {
 				sr.Logger.warn(`Account ${i + 1} has no account_id in cookie. Skipping...`);
 				continue;

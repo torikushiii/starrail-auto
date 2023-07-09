@@ -1,5 +1,8 @@
 # Changelog
 
+## 7/9/2023
+- Bugfix: Fixed bug where when user provided cookie and there's no `account_id` in the cookie, it will throw an error (#13)
+
 ## 7/6/2023
 - Major: Added `GenericRequestError` class to handle generic request error
 - Major: Refactored `Account` class to get all account related data
