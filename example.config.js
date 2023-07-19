@@ -21,7 +21,9 @@ const config = {
 	TELEGRAM_DISABLE_NOTIFICATION: false, // Revoke notification (sound, vibration, etc.)
 	CHECK_IN: "0 0 0 * * *", // Check in daily at 00:00:00
 	EXPEDITION: "0 */30 * * * *", // Check expedition every 30 minutes
-	STAMINA_CHECK_INTERVAL: "0 */30 * * * *" // Check stamina every 30 minutes
+	STAMINA_CHECK_INTERVAL: "0 */30 * * * *", // Check stamina every 30 minutes
+	DAILIES_REMINDER: "0 21 * * *", // Remind you to do your dailies at 21:00:00
+	WEEKLIES_REMINDER: "0 21 * * 0" // Remind you to do your weeklies at 21:00:00 on Sunday
 };
 
 export default config;

@@ -1,5 +1,8 @@
 # Changelog
 
+## 7/20/2023
+- Major: Added `daily` and `weekly` crons to check if user has done their daily and weekly tasks
+
 ## 7/9/2023
 - Minor: When registering account with no `account_id` provided, it will still be registered with cookie provided but no account data such as `region`, `rank`, etc will be fetched.
 - Bugfix: Fixed bug where when user provided cookie and there's no `account_id` in the cookie, it will throw an error (#13)
