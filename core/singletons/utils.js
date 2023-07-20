@@ -1,7 +1,10 @@
+import crypto from "crypto";
 import { load } from "cheerio";
 import SingletonClass from "./template.js";
 
 export default class UtilsSingleton extends SingletonClass {
+	static DS_SALT = "6s25p5ox5y14umn1p61aqyyvbvvl3lrt";
+	
 	static timeUnits = {
 		h: { m: 60, s: 3600, ms: 3600.0e3 },
 		m: { s: 60, ms: 60.0e3 },
@@ -64,5 +67,32 @@ export default class UtilsSingleton extends SingletonClass {
 
 	cheerio (html) {
 		return load(html);
+	}
+
+	generateDS () {
+		const time = (Date.now() / 1000).toFixed(0);
+		const random = this.randomString();
+		const hash = this.hash(`salt=${UtilsSingleton.DS_SALT}&t=${time}&r=${random}`);
+
+		return `${time},${random},${hash}`;
+	}
+
+	randomString () {
+		let result = "";
+		const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		const length = 6;
+
+		for (let i = 0; i < length; i++) {
+			result += chars[Math.floor(Math.random() * chars.length)];
+		}
+
+		return result;
+	}
+
+	hash (string) {
+		return crypto
+			.createHash("md5")
+			.update(string)
+			.digest("hex");
 	}
 }

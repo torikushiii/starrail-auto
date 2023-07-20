@@ -1,9 +1,7 @@
-import crypto from "crypto";
 import HoyoTemplate from "./template.js";
 
 export default class Stamina extends HoyoTemplate {
 	static MAX_STAMINA = 180;
-	static DS_SALT = "6s25p5ox5y14umn1p61aqyyvbvvl3lrt";
 
 	static data = new Map();
 
@@ -11,7 +9,7 @@ export default class Stamina extends HoyoTemplate {
 		const result = [];
 
 		for (const [uid, account] of Stamina.data) {
-			const generatedDS = Stamina.generateDS(Stamina.DS_SALT);
+			const generatedDS = sr.Utils.generateDS();
 			const region = sr.Utils.getAccountRegion(account.uid);
 
 			const res = await sr.Got({
@@ -127,32 +125,5 @@ export default class Stamina extends HoyoTemplate {
 				fired: false
 			});
 		}
-	}
-
-	static generateDS (salt) {
-		const time = (Date.now() / 1000).toFixed(0);
-		const random = Stamina.randomString();
-		const hash = Stamina.hash(`salt=${salt}&t=${time}&r=${random}`);
-
-		return `${time},${random},${hash}`;
-	}
-
-	static randomString () {
-		let result = "";
-		const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-		const length = 6;
-
-		for (let i = 0; i < length; i++) {
-			result += chars[Math.floor(Math.random() * chars.length)];
-		}
-
-		return result;
-	}
-
-	static hash (string) {
-		return crypto
-			.createHash("md5")
-			.update(string)
-			.digest("hex");
 	}
 }

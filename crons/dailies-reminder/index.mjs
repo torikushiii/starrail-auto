@@ -13,10 +13,8 @@ export const definitions = {
 			return;
 		}
 
-		const salt = "6s25p5ox5y14umn1p61aqyyvbvvl3lrt";
 		for (const account of accounts) {
-			// move all generated DS to utils
-			const ds = sr.Expedition.generateDS(salt);
+			const ds = sr.Utils.generateDS();
 			const region = sr.Utils.getAccountRegion(account.uid);
 
 			const res = await sr.Got({

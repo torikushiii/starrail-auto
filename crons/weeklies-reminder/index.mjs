@@ -13,10 +13,8 @@ export const definitions = {
 			return;
 		}
 
-		const salt = "6s25p5ox5y14umn1p61aqyyvbvvl3lrt";
 		for (const account of accounts) {
-			// move all generated DS to utils
-			const ds = sr.Expedition.generateDS(salt);
+			const ds = sr.Utils.generateDS();
 			const region = sr.Utils.getAccountRegion(account.uid);
 
 			const res = await sr.Got({
@@ -80,14 +78,14 @@ export const definitions = {
 				const currentScore = current_rogue_score.toLocaleString();
 				const maxScore = max_rogue_score.toLocaleString();
 
-				messages.push(`📈 You still have ${currentScore}/${maxScore} Simulated Universe points to do!`);
+				messages.push(`🌐 You still have ${currentScore}/${maxScore} Simulated Universe points to do!`);
 			}
 
 			if (weekly_cocoon_cnt < weekly_cocoon_limit) {
 				const currentCocoon = weekly_cocoon_cnt.toLocaleString();
 				const maxCocoon = weekly_cocoon_limit.toLocaleString();
 
-				messages.push(`📌 You still have ${currentCocoon}/${maxCocoon} World Bosses runs to do!`);
+				messages.push(`👹 You still have ${currentCocoon}/${maxCocoon} World Bosses runs to do!`);
 			}
 
 			messages.push("⏰ Don't forget to do your weeklies!");

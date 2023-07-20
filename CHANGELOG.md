@@ -2,6 +2,7 @@
 
 ## 7/20/2023
 - Major: Added `daily` and `weekly` crons to check if user has done their daily and weekly tasks
+- Minor: Moved all DS generators to `utils` singleton
 
 ## 7/9/2023
 - Minor: When registering account with no `account_id` provided, it will still be registered with cookie provided but no account data such as `region`, `rank`, etc will be fetched.
