@@ -25,6 +25,9 @@ If you don't want to use Node.js and only want to use it for auto check-in, you 
 - [x] Multiple accounts
 - [x] Stamina check (Node only)
 - [x] Expedition check (Node only)
+- [x] Remind you to do your weekly boss (Node only)
+- [x] Remind you to do your daily commission (Node only)
+- [x] Remind you to do your Simulated Universe points (Node only)
 - [x] Discord notifications
 - [x] Telegram notifications (Node only)
     - Commands
