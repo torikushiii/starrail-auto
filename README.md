@@ -24,12 +24,14 @@ If you don't want to use Node.js and only want to use it for auto check-in, you 
 - [x] Auto Check-in
 - [x] Multiple accounts
 - [x] Stamina check (Node only)
+    - Will send you notification if your stamina is above set [threshold](https://i.imgur.com/EFPVkI9.png) (default: 170)
 - [x] Expedition check (Node only)
+    - Will send you notification if your expedition is [done](https://i.imgur.com/qjFWrdl.png)
 - [x] Reminders (Node only)
     - Dailies
-        - Remind you to do your daily commission every day at 09:00 PM or your specified time
+        - Remind you to do your [daily commission](https://i.imgur.com/5kEqkTG.png) every day at 09:00 PM or your specified time (Only if you haven't done it yet)
     - Weeklies
-        - Remind you to do your weekly boss every your specified time or Sunday 09:00 PM
+        - Remind you to do your [weekly boss](https://i.imgur.com/0aoC7bu.png) every your specified time or Sunday 09:00 PM
         - Remind you to do your Simulated Universe points every your specified time or Sunday 09:00 PM
 - [x] Discord notifications
 - [x] Telegram notifications (Node only)
