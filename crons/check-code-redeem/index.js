@@ -8,7 +8,7 @@ export const definitions = {
 			return;
 		}
 		
-		const skippedCodes = ["STARRAILGIFT"];
+		const skippedCodes = ["STARRAILGIFT", "BTN5EL69P6K3"];
 		this.data.codes ??= [];
 		this.data.firstRun ??= true;
 
