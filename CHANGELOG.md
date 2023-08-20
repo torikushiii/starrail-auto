@@ -1,5 +1,8 @@
 # Changelog
 
+## 8/21/2023
+- Minor: Notification now display username of the account
+
 ## 7/20/2023
 - Major: Added `daily` and `weekly` crons to check if user has done their daily and weekly tasks
 - Minor: Moved all DS generators to `utils` singleton

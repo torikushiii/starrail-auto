@@ -10,8 +10,8 @@ export const definitions = {
 		}
 
 		for (const data of expeditionResult) {
-			const { uid } = data;
-			sr.Logger.info(`[${uid}] All expedition has been completed!`);
+			const { uid, username } = data;
+			sr.Logger.info(`[${uid}] ${username} All expedition has been completed!`);
 		}
 
 		if (sr.Discord && sr.Discord.active) {
@@ -23,7 +23,7 @@ export const definitions = {
         
 		if (sr.Telegram && sr.Telegram.active) {
 			for (const data of expeditionResult) {
-				await sr.Telegram.send(`🗺️ Account: ${data.uid}\nAll expedition are done!`);
+				await sr.Telegram.send(`🗺️ [${data.uid}] ${data.username}:\nAll expedition are done!`);
 			}
 		}
 	})

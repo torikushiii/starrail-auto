@@ -10,8 +10,8 @@ export const definitions = {
 
 		for (const data of checkInResult) {
 			const message = (data.result === "OK")
-				? `[Account ${data.account}] Check-in successful: ${data.award.name} x${data.award.count}`
-				: `[Account ${data.account}] ${data.result}`;
+				? `[Account ${data.uid}] ${data.username} Check-in successful: ${data.award.name} x${data.award.count}`
+				: `[Account ${data.uid}] ${data.username} ${data.result}`;
 
 			sr.Logger.info(message);
 		}

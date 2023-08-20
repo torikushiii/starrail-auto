@@ -10,8 +10,8 @@ export const definitions = {
 		}
 
 		for (const message of staminaResult) {
-			const { uid, currentStamina, maxStamina, delta } = message;
-			sr.Logger.info(`[${uid}] Stamina is above the threshold: ${currentStamina}/${maxStamina} (${delta})`);
+			const { uid, username, currentStamina, maxStamina, delta } = message;
+			sr.Logger.info(`[${uid}] ${username} Stamina is above the threshold: ${currentStamina}/${maxStamina} (${delta})`);
 		}
 
 		if (sr.Discord && sr.Discord.active) {

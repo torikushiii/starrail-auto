@@ -62,7 +62,10 @@ export default class Expedition extends HoyoTemplate {
 			}
 
 			if (isAllCompleted && options.checkOnly) {
-				result.push({ uid: account.uid });
+				result.push({
+					uid: account.uid,
+					username: account.username
+				});
 				
 				continue;
 			}
@@ -78,7 +81,10 @@ export default class Expedition extends HoyoTemplate {
 			}
 
 			if (isAllCompleted && options.skipCheck) {
-				result.push({ uid: account.uid });
+				result.push({
+					uid: account.uid,
+					username: account.username
+				});
 				
 				continue;
 			}

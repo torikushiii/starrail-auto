@@ -152,7 +152,8 @@ export default class CheckIn extends HoyoTemplate {
 
 			if (data.issigned) {
 				CheckIn.discordMessages.push({
-					account: accountData[i].uid,
+					uid: accountData[i].uid,
+					username: accountData[i].username,
 					signed: data.total,
 					result: "You've already checked in today, Trailblazer~",
 					award: {
@@ -173,7 +174,8 @@ export default class CheckIn extends HoyoTemplate {
 			await CheckIn.sign(accountData[i].cookie);
 
 			CheckIn.discordMessages.push({
-				account: accountData[i].uid,
+				uid: accountData[i].uid,
+				username: accountData[i].username,
 				signed: totalSigned + 1,
 				result: "OK",
 				award: awardData
@@ -205,7 +207,8 @@ export default class CheckIn extends HoyoTemplate {
 
 		return cookies.map(i => ({
 			cookie: i.cookie,
-			uid: i.uid ?? "[no uid]"
+			uid: i.uid ?? "[???]",
+			username: i.username ?? "???"
 		}));
 	}
 }

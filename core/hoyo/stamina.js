@@ -62,6 +62,7 @@ export default class Stamina extends HoyoTemplate {
 			const delta = sr.Utils.formatTime(staminaRecoverTime);
 			const objectData = {
 				uid,
+				username: account.username,
 				currentStamina,
 				maxStamina,
 				delta

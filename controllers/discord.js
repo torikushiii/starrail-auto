@@ -50,7 +50,7 @@ export default class Discord extends Controller {
 		if (options.checkIn) {
 			for (const data of messageData) {
 				message += `
-				No. ${data.account} account:
+				No. [${data.uid}] ${data.username}:
 				===============================
 				🎁 Today's reward: ${data.award.name} x${data.award.count}
 				📅 Monthly check-in: ${data.signed} days
@@ -74,7 +74,7 @@ export default class Discord extends Controller {
 			};
 		}
 		else if (options.stamina) {
-			const { uid, currentStamina, maxStamina, delta } = messageData;
+			const { uid, username, currentStamina, maxStamina, delta } = messageData;
 			const embed = {
 				color: 0xBB0BB5,
 				title: "Honkai: Star Rail - Stamina",
@@ -85,7 +85,7 @@ export default class Discord extends Controller {
 				description: "⚠️ Your stamina is above the threshold ⚠️",
 				fields: [
 					{
-						name: `[${uid}] Current Stamina`,
+						name: `[${uid}] ${username} Current Stamina`,
 						value: `${currentStamina}/${maxStamina}`,
 						inline: false
 					},
@@ -104,7 +104,7 @@ export default class Discord extends Controller {
 			return embed;
 		}
 		else if (options.expedition) {
-			const { uid } = messageData;
+			const { uid, username } = messageData;
 			const embed = {
 				color: 0xBB0BB5,
 				title: "Honkai: Star Rail - Expedition",
@@ -115,7 +115,7 @@ export default class Discord extends Controller {
 				description: `⚠️ All expedition are done! ⚠️`,
 				fields: [
 					{
-						name: `Account: ${uid}`,
+						name: `[${uid}] ${username}`,
 						value: "All expedition are done!",
 						inline: false
 					}

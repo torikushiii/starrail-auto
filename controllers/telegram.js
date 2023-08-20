@@ -149,16 +149,16 @@ export default class Telegram extends Controller {
 				const reward = `🎁 Today's reward: ${data.award.name} x${data.award.count}`;
 				const signed = `📅 Monthly signed: ${data.signed}`;
 
-				messages.push(`[Account ${data.account}]\n${string}\n${reward}\n${signed}`);
+				messages.push(`[Account ${data.uid} ${data.username}]\n${string}\n${reward}\n${signed}`);
 			}
 
 			return messages.join("\n\n");
 		}
 		else if (options.stamina) {
-			const { uid, currentStamina, maxStamina, delta } = messageData;
+			const { uid, username, currentStamina, maxStamina, delta } = messageData;
 
 			const alertMessage = "⚠️ Your stamina is above the threshold! ⚠️";
-			const staminaString = `📊 [${uid}] Stamina: ${currentStamina}/${maxStamina}`;
+			const staminaString = `📊 [${uid}] ${username} Stamina: ${currentStamina}/${maxStamina}`;
 			const deltaString = `📈 capped in: ${delta}`;
 
 			return `${alertMessage}\n\n${staminaString}\n${deltaString}`;
