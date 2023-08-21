@@ -2,6 +2,7 @@
 
 ## 8/21/2023
 - Minor: Notification now display username of the account
+- Bugfix: When expedition is done, it will now display the correct expedition name (#16)
 
 ## 7/20/2023
 - Major: Added `daily` and `weekly` crons to check if user has done their daily and weekly tasks

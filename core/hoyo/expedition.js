@@ -90,7 +90,11 @@ export default class Expedition extends HoyoTemplate {
 			}
 
 			if (isAllCompleted && !account.fired) {
-				result.push({ uid: account.uid });
+				result.push({
+					uid: account.uid,
+					username: account.username
+				});
+				
 				Expedition.data.set(uid, {
 					...account,
 					fired: true
