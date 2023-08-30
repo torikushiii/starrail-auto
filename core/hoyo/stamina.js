@@ -1,7 +1,7 @@
 import HoyoTemplate from "./template.js";
 
 export default class Stamina extends HoyoTemplate {
-	static MAX_STAMINA = 180;
+	static MAX_STAMINA = 240;
 
 	static data = new Map();
 
@@ -119,6 +119,10 @@ export default class Stamina extends HoyoTemplate {
 
 			if (account.skipChecks) {
 				continue;
+			}
+
+			if (account.threshold > Stamina.MAX_STAMINA) {
+				throw new sr.Error({ message: `Threshold cannot be greater than max stamina (${Stamina.MAX_STAMINA})` });
 			}
 
 			Stamina.data.set(account.uid, {
