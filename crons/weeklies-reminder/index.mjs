@@ -64,7 +64,7 @@ export const definitions = {
 				weekly_cocoon_limit
 			} = data;
 
-			const isAllCompleted = (weekly_cocoon_cnt === weekly_cocoon_limit) && (current_rogue_score === max_rogue_score);
+			const isAllCompleted = (weekly_cocoon_cnt === 0) && (current_rogue_score === max_rogue_score);
 			if (isAllCompleted) {
 				return;
 			}
@@ -81,7 +81,7 @@ export const definitions = {
 				messages.push(`🌐 You still have ${currentScore}/${maxScore} Simulated Universe points to do!`);
 			}
 
-			if (weekly_cocoon_cnt < weekly_cocoon_limit) {
+			if (weekly_cocoon_cnt !== 0) {
 				const currentCocoon = weekly_cocoon_cnt.toLocaleString();
 				const maxCocoon = weekly_cocoon_limit.toLocaleString();
 
