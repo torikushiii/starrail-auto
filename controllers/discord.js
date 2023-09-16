@@ -128,6 +128,27 @@ export default class Discord extends Controller {
 
 			return embed;
 		}
+		else if (options.reserve) {
+			const { uid, username, currentReserveStamina } = messageData;
+			const embed = {
+				color: 0xBB0BB5,
+				title: "Honkai: Star Rail - Reserve Stamina",
+				author: {
+					name: "Honkai: Star Rail",
+					icon_url: "https://i.imgur.com/o0hyhmw.png"
+				},
+				description: "⚠️ Your reserve stamina is full ⚠️",
+				fields: [
+					{
+						name: `[${uid}] ${username} Current Reserve Stamina`,
+						value: `${currentReserveStamina}`,
+						inline: false
+					}
+				]
+			};
+
+			return embed;
+		}
 	}
 
 	get active () { return this.#active; }

@@ -1,5 +1,8 @@
 # Changelog
 
+## 9/16/2023
+- Major: Initial implementation for checking if reserve stamina is full
+
 ## 8/21/2023
 - Minor: Notification now display username of the account
 - Bugfix: When expedition is done, it will now display the correct expedition name (#16)

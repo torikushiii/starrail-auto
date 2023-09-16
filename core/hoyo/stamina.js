@@ -56,7 +56,9 @@ export default class Stamina extends HoyoTemplate {
 			const {
 				current_stamina: currentStamina,
 				max_stamina: maxStamina,
-				stamina_recover_time: staminaRecoverTime
+				stamina_recover_time: staminaRecoverTime,
+				current_reserve_stamina: currentReserveStamina,
+				is_reserve_stamina_full: isReserveStaminaFull
 			} = data;
 
 			const delta = sr.Utils.formatTime(staminaRecoverTime);
@@ -65,6 +67,8 @@ export default class Stamina extends HoyoTemplate {
 				username: account.username,
 				currentStamina,
 				maxStamina,
+				currentReserveStamina,
+				isReserveStaminaFull,
 				delta
 			};
 
@@ -73,10 +77,21 @@ export default class Stamina extends HoyoTemplate {
 				continue;
 			}
 
-			if (currentStamina <= account.threshold) {
+			if (currentStamina <= account.threshold && !isReserveStaminaFull) {
 				Stamina.data.set(uid, {
 					...account,
 					fired: false
+				});
+
+				continue;
+			}
+
+			if (currentStamina <= account.threshold && isReserveStaminaFull) {
+				result.push({
+					uid,
+					username: account.username,
+					currentReserveStamina,
+					isReserveStaminaFull
 				});
 
 				continue;
