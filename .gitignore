@@ -171,3 +171,4 @@ dist
 types.js
 config.js
 !core/classes/config.js
+codes.js
