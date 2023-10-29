@@ -8,8 +8,20 @@ export const definitions = {
 			return;
 		}
 		
-		const skippedCodes = ["STARRAILGIFT", "BTN5EL69P6K3"];
+		const fs = await import("fs");
+		const skippedCodes = [
+			{
+				code: "STARRAILGIFT",
+				rewards: "50 Stellar Jades + EXP materials"
+			},
+			{
+				code: "BTN5EL69P6K3",
+				rewards: "50 Stellar Jades + 10k credits"
+			}
+		];
+
 		this.data.codes ??= [];
+		this.data.firedCodes ??= [];
 		this.data.firstRun ??= true;
 
 		const res = await sr.Got({
@@ -23,9 +35,23 @@ export const definitions = {
 		const $codes = $(".codes .box");
 		for (let i = 0; i < $codes.length; i++) {
 			const $code = $($codes[i]);
-			const code = $code.find(".code").text();
+			const code = $code.find(".code").text().replace(" NEW!", "");
 			const rewards = $code.find(".rewards").text();
 			codes.push({ code, rewards });
+		}
+
+		let savedCodes;
+		try {
+			const codeFile = await import("./codes.js");
+			savedCodes = codeFile.default;
+		}
+		catch {
+			const codeData = [...skippedCodes, ...codes];
+			
+			const path = "./crons/check-code-redeem/codes.js";
+			fs.writeFileSync(path, `export default ${JSON.stringify(codeData, null, 4)}`);
+
+			savedCodes = codes;
 		}
 
 		if (this.data.firstRun) {
@@ -34,33 +60,37 @@ export const definitions = {
 			return;
 		}
 
-		for (const code of codes) {
-			if (skippedCodes.includes(code.code)) {
+		const newCodes = this.data.codes.filter((c) => !savedCodes.some((sc) => sc.code === c.code));
+		if (newCodes.length === 0) {
+			return;
+		}
+
+		fs.writeFileSync("./crons/check-code-redeem/codes.js", `export default ${JSON.stringify(codes, null, 4)}`);
+
+		for (const code of newCodes) {
+			if (skippedCodes.some((sc) => sc.code === code.code) || this.data.firedCodes.includes(code.code)) {
 				continue;
 			}
 
-			if (!this.data.codes.some((c) => c.code === code.code)) {
-				const message = `Code: ${code.code}\nRewards: ${code.rewards}`;
+			const message = `Code: ${code.code}\nRewards: ${code.rewards}`;
 
-				sr.Logger.info(`New code: ${code.code} - ${code.rewards}`);
+			this.data.firedCodes.push(code.code);
+			sr.Logger.info(`New code: ${code.code} - ${code.rewards}`);
 
-				if (sr.Discord && sr.Discord.active) {
-					await sr.Discord.send({
-						color: 0xBB0BB5,
-						title: "Honkai: Star Rail New Code",
-						description: message,
-						timestamp: new Date(),
-						footer: {
-							text: "Honkai: Star Rail New Code"
-						}
-					});
-				}
+			if (sr.Discord && sr.Discord.active) {
+				await sr.Discord.send({
+					color: 0xBB0BB5,
+					title: "Honkai: Star Rail New Code",
+					description: message,
+					timestamp: new Date(),
+					footer: {
+						text: "Honkai: Star Rail New Code"
+					}
+				});
+			}
 
-				if (sr.Telegram && sr.Telegram.active) {
-					await sr.Telegram.send(message);
-				}
-
-				this.data.codes.push(code);
+			if (sr.Telegram && sr.Telegram.active) {
+				await sr.Telegram.send(message);
 			}
 		}
 	})

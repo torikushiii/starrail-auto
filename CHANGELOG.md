@@ -1,5 +1,8 @@
 # Changelog
 
+## 10/29/2023
+- Major: Writed newly obtained redeem codes to `codes.js` file to avoid duplicate codes
+
 ## 9/16/2023
 - Major: Initial implementation for checking if reserve stamina is full
 
