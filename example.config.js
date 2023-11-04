@@ -15,6 +15,7 @@ const config = {
 	PERSISTENT_EXPEDITION: false, // Set to true if you want to keep sending notification
 	PERSISTENT_STAMINA: false, // Set to true if you want to keep sending notification even if stamina is above the threshold and capped.
 	CHECK_CODE_REDEEM: false, // Set to true to enable code check (THIS ONLY CHECK FOR NEW GLOBAL CODES)
+	REDEEM_CODE: false, // Set to true to enable code redeem
 	DISCORD_WEBHOOK: null, // Discord webhook URL
 	TELEGRAM_CHAT_ID: null, // Telegram chat ID, use @getmyid_bot to get your chat ID
 	TELEGRAM_TOKEN: null, // Telegram bot token
