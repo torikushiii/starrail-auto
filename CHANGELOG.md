@@ -2,6 +2,7 @@
 
 ## 11/4/2023
 - Minor: Reworked new code checker and codes now check for hoyolab if there's any new codes too
+- Minor: Added option to auto-redeem for codes in `config.js` and added function to automatically redeem new codes
 
 ## 10/29/2023
 - Major: Writed newly obtained redeem codes to `codes.js` file to avoid duplicate codes

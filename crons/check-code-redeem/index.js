@@ -137,6 +137,65 @@ export const definitions = {
 			return;
 		}
 
+		if (sr.Config.get("REDEEM_CODE")) {
+			const accounts = sr.Account.getActiveAccounts();
+			for (const account of accounts) {
+				for (const code of newCodes) {
+					const res = await sr.Got({
+						url: "https://sg-hkrpg-api.hoyolab.com/common/apicdkey/api/webExchangeCdkeyHyl",
+						searchParams: {
+							cdkey: code.code,
+							game_biz: "hkrpg_global",
+							lang: "en",
+							region: account.region,
+							t: Date.now(),
+							uid: account.uid
+						},
+						headers: {
+							"x-rpc-app_version": "2.42.0",
+							"x-rpc-client_type": 4,
+							cookie: account.cookie
+						}
+					});
+
+					if (res.statusCode !== 200) {
+						sr.Logger.json({
+							message: "Error while redeeming code",
+							args: {
+								code,
+								statusCode: res.statusCode,
+								body: res.body
+							}
+						});
+
+						continue;
+					}
+
+					if (res.body.retcode !== 0) {
+						sr.Logger.json({
+							message: "Error while redeeming code",
+							args: {
+								code,
+								body: res.body
+							}
+						});
+
+						continue;
+					}
+
+					sr.Logger.json({
+						message: "Code redeemed",
+						args: {
+							code,
+							body: res.body
+						}
+					});
+
+					await new Promise(r => setTimeout(r, 5000));
+				}
+			}
+		}
+
 		this.data.codes.push(...newCodes);
 		fs.unlinkSync("./crons/check-code-redeem/codes.js");
 		fs.writeFileSync("./crons/check-code-redeem/codes.js", `export default ${JSON.stringify(this.data.codes, null, 4)}`);
