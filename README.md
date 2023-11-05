@@ -17,7 +17,7 @@
 A multi-purpose tool for the Honkai Impact: Star Rail that can be used to automate the daily check-in process, check stamina and expedition status.
 
 # Services
-If you don't want to use Node.js and only want to use it for auto check-in, you can use one of the following services:
+If you don't want to use Node.js and simply only want to use it for auto check-in, you can use one of the following services:
 - [Google Apps Script](https://github.com/torikushiii/starrail-auto/tree/master/services/google-script)
 
 # Features
@@ -33,6 +33,9 @@ If you don't want to use Node.js and only want to use it for auto check-in, you 
     - Weeklies
         - Remind you to do your [weekly boss](https://i.imgur.com/0aoC7bu.png) every your specified time or Sunday 09:00 PM
         - Remind you to do your Simulated Universe points every your specified time or Sunday 09:00 PM
+- [x] Code Redeem (Node only)
+    - Will send you notification if there's a new code available
+    - Will automatically redeem the code for you
 - [x] Discord notifications
 - [x] Telegram notifications (Node only)
     - Commands
@@ -40,7 +43,7 @@ If you don't want to use Node.js and only want to use it for auto check-in, you 
         - [x] Check expedition status
 
 # Pre-requisites
-- [Node.js](https://nodejs.org/en/)
+- [Node.js](https://nodejs.org/en/) (You will need to run your computer 24/7 if you want to use this, Google Apps Script is recommended if you don't want to run your computer 24/7 but you can only use it for auto check-in)
 
 # Installation
 1. Clone the repository.
