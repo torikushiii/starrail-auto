@@ -79,13 +79,6 @@ export const definitions = {
 
 		const exchangeGroup = hoyoRes.body.data.modules.find(i => i.exchange_group !== null);
 		if (!exchangeGroup) {
-			sr.Logger.json({
-				message: "No exchange group found in HoyoLab response",
-				args: {
-					body: hoyoRes.body
-				}
-			});
-
 			return;
 		}
 
