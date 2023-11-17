@@ -1,5 +1,8 @@
 # Changelog
 
+## 11/17/2023
+- Minor: Updated the regular expression used to extract the account ID from the cookie in the account class.
+
 ## 11/9/2023
 - Minor: Removed log if there's no exchange group
 
