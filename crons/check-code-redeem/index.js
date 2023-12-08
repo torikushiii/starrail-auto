@@ -78,10 +78,6 @@ export const definitions = {
 		}
 
 		const exchangeGroup = hoyoRes.body.data.modules.find(i => i.exchange_group !== null);
-		if (!exchangeGroup) {
-			return;
-		}
-
 		const pictureHash = [
 			{
 				hash: "77cb5426637574ba524ac458fa963da0_6409817950389238658",
@@ -102,7 +98,7 @@ export const definitions = {
 		];
 
 		const pendingCodes = [];
-		const { bonuses } = exchangeGroup.exchange_group;
+		const bonuses = (exchangeGroup && exchangeGroup.exchange_group && exchangeGroup.exchange_group.bonuses) ?? [];
 		if (bonuses.length !== 0) {
 			const avaliableCodes = bonuses.filter(i => i.code_status === "ON");
 			for (const code of avaliableCodes) {
@@ -161,6 +157,7 @@ export const definitions = {
 							}
 						});
 
+						await new Promise(r => setTimeout(r, 5000));
 						continue;
 					}
 
@@ -173,6 +170,7 @@ export const definitions = {
 							}
 						});
 
+						await new Promise(r => setTimeout(r, 5000));
 						continue;
 					}
 
