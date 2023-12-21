@@ -17,8 +17,7 @@ export const definitions = {
 		}
 
 		if (sr.Discord && sr.Discord.active) {
-			const embed = sr.Discord.prepareMessage(checkInResult, { checkIn: true });
-			await sr.Discord.send(embed);
+			await sr.Discord.prepareMessage(checkInResult, { checkIn: true });
 		}
 
 		if (sr.Telegram && sr.Telegram.active) {

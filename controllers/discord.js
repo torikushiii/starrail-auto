@@ -44,34 +44,69 @@ export default class Discord extends Controller {
 		}
 	}
 
-	prepareMessage (messageData, options = {}) {
-		let message = "";
-
+	async prepareMessage (messageData, options = {}) {
 		if (options.checkIn) {
-			for (const data of messageData) {
-				message += `
-				No. [${data.uid}] ${data.username}:
-				===============================
-				🎁 Today's reward: ${data.award.name} x${data.award.count}
-				📅 Monthly check-in: ${data.signed} days
-				🏆 Check-in result: ${data.result}
-				===============================
-				`;
+			for (let i = 0; i < messageData.length; i++) {
+				const { uid, username, signed, result, award } = messageData[i];
+				const accountData = sr.Account.get(uid);
+
+				const embed = {
+					color: 0xBB0BB5,
+					title: "Honkai: Star Rail Daily Login",
+					author: {
+						name: "PomPom",
+						icon_url: "https://i.imgur.com/o0hyhmw.png"
+					},
+					thumbnail: {
+						url: award.icon
+					},
+					description: "You have successfully checked in today, Trailblazer~",
+					fields: [
+						{
+							name: "Nickname",
+							value: username,
+							inline: true
+						},
+						{
+							name: "UID",
+							value: uid,
+							inline: true
+						},
+						{
+							name: "Rank",
+							value: accountData.rank,
+							inline: true
+						},
+						{
+							name: "Region",
+							value: sr.Utils.formattedAccountRegion(accountData.region),
+							inline: true
+						},
+						{
+							name: "Today's Reward",
+							value: `${award.name} x${award.count}`,
+							inline: true
+						},
+						{
+							name: "Total Sign-in Days",
+							value: signed,
+							inline: true
+						},
+						{
+							name: "Result",
+							value: result,
+							inline: true
+						}
+					],
+					timestamp: new Date(),
+					footer: {
+						text: `HoyoLab Auto Check-in (${i + 1} / ${messageData.length} Executed)`,
+						icon_url: "https://webstatic.hoyoverse.com/upload/static-resource/2022/08/04/8a31e3d6bce7684556cd45b1e1c309bf_1216320235452608527.png"
+					}
+				};
+
+				await this.send(embed);
 			}
-			
-			return {
-				color: 0xBB0BB5,
-				title: "Honkai: Star Rail Auto Check-in",
-				author: {
-					name: "Honkai: Star Rail",
-					icon_url: "https://i.imgur.com/o0hyhmw.png"
-				},
-				description: message,
-				timestamp: new Date(),
-				footer: {
-					text: "Honkai: Star Rail Auto Check-in"
-				}
-			};
 		}
 		else if (options.stamina) {
 			const { uid, username, currentStamina, maxStamina, delta } = messageData;
