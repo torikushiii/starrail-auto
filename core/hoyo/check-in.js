@@ -158,7 +158,8 @@ export default class CheckIn extends HoyoTemplate {
 					result: "You've already checked in today, Trailblazer~",
 					award: {
 						name: awards[data.total].name,
-						count: awards[data.total].cnt
+						count: awards[data.total].cnt,
+						icon: awards[data.total].icon
 					}
 				});
                 
@@ -168,7 +169,8 @@ export default class CheckIn extends HoyoTemplate {
 			const totalSigned = data.total;
 			const awardData = {
 				name: awards[totalSigned].name,
-				count: awards[totalSigned].cnt
+				count: awards[totalSigned].cnt,
+				icon: awards[totalSigned].icon
 			};
 
 			await CheckIn.sign(accountData[i].cookie);
