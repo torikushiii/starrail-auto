@@ -65,6 +65,21 @@ export default class UtilsSingleton extends SingletonClass {
 		}
 	}
 
+	formattedAccountRegion (region) {
+		switch (region) {
+			case "prod_official_cht":
+				return "TW";
+			case "prod_official_asia":
+				return "SEA";
+			case "prod_official_eur":
+				return "EU";
+			case "prod_official_usa":
+				return "NA";
+			default:
+				return false;
+		}
+	}
+
 	cheerio (html) {
 		return load(html);
 	}
