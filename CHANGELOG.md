@@ -1,5 +1,11 @@
 # Changelog
 
+## 12/22/2023
+- Major: Reworked Discord embed notification
+- Minor: Added icon property to award object
+- Minor: Added `formattedAccountRegion` to utils
+- Minor: Added method to get account by ID
+
 ## 12/8/2023
 - Minor: Fixed auto redeemer does not work when there's new codes
 
