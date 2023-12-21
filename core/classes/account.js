@@ -35,6 +35,26 @@ export default class Account extends ClassTemplate {
 		await this.validate(data);
 	}
 
+	static get (id) {
+		if (typeof id === "string") {
+			const account = Account.data.get(id);
+			if (!account) {
+				return null;
+			}
+
+			return account;
+		}
+		else {
+			throw new sr.Error({
+				message: "Invalid argument type",
+				args: {
+					id,
+					type: typeof id
+				}
+			});
+		}
+	}
+
 	static async validate (accountList) {
 		const accounts = accountList;
 		if (accounts.length === 0) {
@@ -48,7 +68,7 @@ export default class Account extends ClassTemplate {
 			if (!id) {
 				sr.Logger.warn(`Account ${i + 1} has no account_id in cookie. Skipping fetching account data...`);
 				
-				const accoundData = new Account({
+				const accountData = new Account({
 					id: i + 1,
 					uid: accounts[i].uid,
 					rank: 0,
@@ -59,7 +79,7 @@ export default class Account extends ClassTemplate {
 					skipChecks: Boolean(account.uid === null)
 				});
 
-				Account.data.set(i, accoundData);
+				Account.data.set(i, accountData);
 				continue;
 			}
 
@@ -133,9 +153,10 @@ export default class Account extends ClassTemplate {
 				continue;
 			}
 
-			const accoundData = new Account({
+			const uid = String(starrailAccount.game_role_id);
+			const accountData = new Account({
 				id,
-				uid: String(starrailAccount.game_role_id),
+				uid,
 				rank: starrailAccount.level,
 				username: starrailAccount.nickname,
 				region: starrailAccount.region,
@@ -144,7 +165,7 @@ export default class Account extends ClassTemplate {
 				skipChecks: Boolean(account.uid === null)
 			});
 
-			Account.data.set(id, accoundData);
+			Account.data.set(uid, accountData);
 		}
 
 		console.table([...Account.data.values()].map(i => ({
