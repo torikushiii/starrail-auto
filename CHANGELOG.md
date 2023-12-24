@@ -1,5 +1,8 @@
 # Changelog
 
+## 12/25/2023
+- Minor: Update account cookie regex to include ltuid_v2
+
 ## 12/22/2023
 - Major: Reworked Discord embed notification
 - Minor: Added icon property to award object
