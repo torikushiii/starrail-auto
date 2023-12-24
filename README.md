@@ -55,15 +55,14 @@ If you don't want to use Node.js and simply only want to use it for auto check-i
 1. Go to the Daily Check-In page [here](https://act.hoyolab.com/bbs/event/signin/hkrpg/index.html?act_id=e202303301540311).
 2. Log in with your miHoYo account.
 3. Open the browser console (F12).
-4. Click on the "Console" tab.
-5. Type in `document.cookie` in the console and press Enter.
-6. Copy the output from the console.
-   ![](https://i.imgur.com/hFCL4yN.png)
-7. Paste the output into `cookies` property in the `config.js` file.
-8. Fill in the `webhook` field if you want to receive a Discord notification when the check-in is successful.
-9. Run `index.js` with `node index.js` if you want to run it indefinitely everytime the daily reset occurs.
-10. Run `index.js` with `node index.js --sign` if you want to run it once.
-11. Additonal arguments:
+4. Click on the "Application" tab.
+5. Type "lt" in the "Filter" bar.
+   ![image](https://github.com/torikushiii/starrail-auto/assets/21153445/fa902bdd-d165-4a8b-869b-860837ecee30)
+6. Copy name and value (ltoken_v2 and ltuid_v2) and put it in your `config.js` file like this format `name=value;`
+   - Remember to put "; (semicolon)" at every the end of `value`, e.g `ltoken_v2=abc; ltuid_v2=123`
+8. Run `index.js` with `node index.js` if you want to run it indefinitely everytime the daily reset occurs.
+9. Run `index.js` with `node index.js --sign` if you want to run it once.
+10. Additonal arguments:
     - `--stamina` to check all accounts stamina. (You need to set your in-game `uid` for it to work)
     - `--expedition` to check all accounts expedition status. (You need to set your in-game `uid` for it to work)
     - `--help` to show the help menu.
