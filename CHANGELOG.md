@@ -1,5 +1,8 @@
 # Changelog
 
+## 12/26/2023
+- Minor: Updated Google Script instructions
+
 ## 12/25/2023
 - Minor: Update account cookie regex to include ltuid_v2
 

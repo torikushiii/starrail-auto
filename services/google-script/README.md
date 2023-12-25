@@ -48,10 +48,11 @@
 1. Go to the Daily Check-In page [here](https://act.hoyolab.com/bbs/event/signin/hkrpg/index.html?act_id=e202303301540311).
 2. Log in with your miHoYo account.
 3. Open the browser console (F12).
-4. Click on the "Console" tab.
-5. Type in `document.cookie` in the console and press Enter.
-6. Copy the output from the console.
-   ![](https://i.imgur.com/hFCL4yN.png)
+4. Click on the "Application" tab.
+5. Type "lt" in the "Filter" bar.
+   ![image](https://github.com/torikushiii/starrail-auto/assets/21153445/fa902bdd-d165-4a8b-869b-860837ecee30)
+6. Copy name and value (ltoken_v2 and ltuid_v2) and put it in your `config.js` file like this format `name=value;`
+   - Remember to put "; (semicolon)" at every the end of `value`, e.g `ltoken_v2=abc; ltuid_v2=123`
 7. Paste it into the "Value" field for "COOKIE" in the "Script properties" section.
    - **IF YOU WANT TO RUN IT WITH MULTIPLE ACCOUNTS, SEPARATE THE COOKIES WITH A HASH (#).**
    - **EXAMPLE: `COOKIE=cookie1#cookie2#cookie3`**
