@@ -51,7 +51,7 @@ export const definitions = {
 
 		if (sr.Discord && sr.Discord.active) {
 			for (const message of data) {
-				const embed = sr.Discord.prepareMessage(message, { stamina: true });
+				const embed = await sr.Discord.prepareMessage(message, { stamina: true });
 				await sr.Discord.send(embed);
 			}
 		}
