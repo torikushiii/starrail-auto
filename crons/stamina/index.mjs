@@ -18,7 +18,7 @@ export const definitions = {
 				sr.Logger.info(`[${uid}] ${username} Reserve Stamina is full: ${currentReserveStamina}`);
 
 				if (sr.Discord && sr.Discord.active) {
-					const embed = sr.Discord.prepareMessage(message, { reserve: true });
+					const embed = await sr.Discord.prepareMessage(message, { reserve: true });
 					await sr.Discord.send(embed);
 				}
 
