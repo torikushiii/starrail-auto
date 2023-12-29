@@ -1,5 +1,8 @@
 # Changelog
 
+## 12/29/2023
+- Minor: Add `getSignData` method to CheckIn class
+
 ## 12/28/2023
 - Bugfix: Add await keyword to Discord message preparation
 

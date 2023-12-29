@@ -121,6 +121,35 @@ export default class CheckIn extends HoyoTemplate {
 		return true;
 	}
 
+	static async getSignData () {
+		const accountData = CheckIn.#getCookies();
+
+		const list = [];
+		for (let i = 0; i < accountData.length; i++) {
+			const info = await CheckIn.getSignInfo(accountData[i].cookie);
+
+			if (!info) {
+				sr.Logger.warn(`[${accountData[i].uid}]: Failed to get sign info`);
+				continue;
+			}
+
+			const data = {
+				today: info.data.today,
+				total: info.data.total_sign_day,
+				issigned: info.data.is_sign
+			};
+
+			list.push({
+				uid: accountData[i].uid,
+				username: accountData[i].username,
+				cookie: accountData[i].cookie,
+				data
+			});
+		}
+
+		return list;
+	}
+
 	static async checkAndSign () {
 		const accountData = CheckIn.#getCookies();
         
