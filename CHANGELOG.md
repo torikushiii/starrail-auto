@@ -1,5 +1,8 @@
 # Changelog
 
+## 1/2/2024
+- Bugfix: Add delay after successful request
+
 ## 12/29/2023
 - Major: Added `check-in-checker` to check if user has checked in or not to avoid missing check-in
 - Minor: Add `getSignData` method to CheckIn class

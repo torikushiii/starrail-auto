@@ -37,6 +37,7 @@ export const definitions = {
 			return;
 		}
 
+		await new Promise(resolve => setTimeout(resolve, 5000));
 		await sr.Discord.prepareMessage(data, { checkIn: true });
 	})
 };
