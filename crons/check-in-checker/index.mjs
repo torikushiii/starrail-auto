@@ -14,6 +14,7 @@ export const definitions = {
 
 			const sign = await sr.CheckIn.sign(account.cookie);
 			if (sign === false) {
+				await new Promise(resolve => setTimeout(resolve, 5000));
 				continue;
 			}
 

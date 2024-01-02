@@ -1,5 +1,8 @@
 # Changelog
 
+## 1/3/2024
+- Bugfix: Added missing delay on unsuccessful request
+
 ## 1/2/2024
 - Bugfix: Add delay after successful request
 
