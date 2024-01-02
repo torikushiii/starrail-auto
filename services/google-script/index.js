@@ -1,13 +1,9 @@
-// Your HSR Cookie should look like this
-// Ensure the name of the cookie is COOKIE
-// _MHYUUID=xxxx ; mi18nLang=en-us ; ltoken=xxxx ; ltuid=xxxx ; cookie_token=xxxx ; account_id=xxxx
-// Separate cookies for multiple accounts with a # symbol
-// e.g. cookie1#cookie2
+const COOKIE = [
+	"ltoken_v2=xxx; ltuid_v2=xxx;"
+	// and so on...
+];
 
-const scriptProperties = PropertiesService.getScriptProperties();
-
-const COOKIE = scriptProperties.getProperty("COOKIE");
-const DISCORD_WEBHOOK = scriptProperties.getProperty("DISCORD_WEBHOOK");
+const DISCORD_WEBHOOK = null;
 
 const ACT_ID = "e202303301540311";
 const BASE_URL = "https://sg-public-api.hoyolab.com/event/luna/os";
@@ -92,8 +88,8 @@ class Discord {
 
 class StarRail {
 	constructor (cookie) {
-		if (typeof cookie !== "string" || typeof cookie === "undefined") {
-			throw new Error("cookie must be a string");
+		if (!Array.isArray(cookie)) {
+			throw new Error("cookie must be an array");
 		}
 
 		this.cookie = cookie;
@@ -128,7 +124,7 @@ class StarRail {
 	}
 
 	async run () {
-		const cookies = this.parseCookies;
+		const cookies = this.cookie;
 
 		let counter = 0;
 		for (const cookie of cookies) {
@@ -225,10 +221,6 @@ class StarRail {
 		}
 
 		return body.data.awards;
-	}
-
-	get parseCookies () {
-		return this.cookie.split("#");
 	}
 
 	static get userAgent () {
