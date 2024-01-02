@@ -18,30 +18,20 @@
     ![](https://i.imgur.com/4dRgXLe.png)
 4. Copy the contents of `index.js` and paste it into the editor.
     ![](https://i.imgur.com/ZaA2oSX.png)
-5. Click on "Project settings".
-    ![](https://i.imgur.com/GMhLjEw.png)
-6. Scroll down and add the following to the "Script properties" section:
-   ```
-   COOKIE
-   DISCORD_WEBHOOK
-   ```
-    ![](https://i.imgur.com/BudKBiI.png)
-7. Add `COOKIE` with your cookie.
-   - **IF YOU WANT TO RUN IT WITH MULTIPLE ACCOUNTS, SEPARATE THE COOKIES WITH A HASH (#).**
-   - **EXAMPLE: `COOKIE=cookie1#cookie2#cookie3`**
-8. Add `DISCORD_WEBHOOK` with your Discord webhook (optional).
-9. Click on "Save script properties".
-10. Click on "Editor" and then "Save Project" and "Run" to run it once.
-    ![](https://i.imgur.com/4B8jZea.png)
+5. Follow the [Getting your cookie](#getting-your-cookie) instruction.
+6. Add your cookie to the code
+    ![](https://github.com/torikushiii/starrail-auto/assets/21153445/4aa9c2ab-ff47-4de3-a93c-2ba53310d1c8)
+7. Add `DISCORD_WEBHOOK` with your Discord webhook (optional).
+8. Click on save icon "Run" to run it once.
     ![](https://i.imgur.com/SvNODZL.png)
-11. When first running the script, you will be prompted to authorize the script.
+9. When first running the script, you will be prompted to authorize the script.
     ![](https://i.imgur.com/igXjtkO.png)
-12. Click on "Review Permissions".
-13. Choose your Google account if prompted.
-14. You will be prompted to allow the script to access your Google account.
+10. Click on "Review Permissions".
+11. Choose your Google account if prompted.
+12. You will be prompted to allow the script to access your Google account.
     ![](https://i.imgur.com/n7gsH6o.png)
-15. Click on "Allow".
-16. After that when you run the script, the Execution log will show the output.
+13. Click on "Allow".
+14. After that when you run the script, the Execution log will show the output.
     ![](https://i.imgur.com/KFGR003.png)
 
 # Getting your cookie
