@@ -1,6 +1,4 @@
-import Controller from "./template.js";
-
-export default class Discord extends Controller {
+module.exports = class Discord extends require("./template.js") {
 	#active = false;
 	#token = null;
 
@@ -9,32 +7,37 @@ export default class Discord extends Controller {
 
 		const token = sr.Config.get("DISCORD_WEBHOOK");
 		if (!token || token === null) {
+			console.warn("Discord Webhook is not set, disabling Discord.");
 			return;
 		}
 
-		this.#active = true;
 		this.#token = token;
+		this.#active = true;
 	}
 
 	async send (embed) {
 		if (!this.#active) {
-			throw new sr.Error({ message: "Discord is not active" });
+			throw new sr.Error({ message: "Discord is not active." });
 		}
-		
+
 		const res = await sr.Got({
 			url: this.#token,
 			method: "POST",
 			responseType: "json",
+			throwHttpErrors: false,
+			searchParams: {
+				wait: true
+			},
 			json: {
 				embeds: [embed],
 				username: "Honkai: Star Rail",
-				avatar_url: "https://i.imgur.com/o0hyhmw.png"
+				avatar_url: "https://webstatic-sea.hoyolab.com/communityweb/business/starrail_hoyoverse.png"
 			}
 		});
 
-		if (res.statusCode !== 204) {
+		if (res.statusCode !== 200) {
 			throw new sr.Error({
-				message: "Failed to send message to Discord",
+				message: "Discord Webhook returned an error.",
 				args: {
 					statusCode: res.statusCode,
 					statusMessage: res.statusMessage,
@@ -42,6 +45,8 @@ export default class Discord extends Controller {
 				}
 			});
 		}
+
+		return true;
 	}
 
 	async prepareMessage (messageData, options = {}) {
@@ -114,7 +119,7 @@ export default class Discord extends Controller {
 				color: 0xBB0BB5,
 				title: "Honkai: Star Rail - Stamina",
 				author: {
-					name: "Honkai: Star Rail",
+					name: "PomPom",
 					icon_url: "https://i.imgur.com/o0hyhmw.png"
 				},
 				description: "⚠️ Your stamina is above the threshold ⚠️",
@@ -144,7 +149,7 @@ export default class Discord extends Controller {
 				color: 0xBB0BB5,
 				title: "Honkai: Star Rail - Expedition",
 				author: {
-					name: "Honkai: Star Rail",
+					name: "PomPom",
 					icon_url: "https://i.imgur.com/o0hyhmw.png"
 				},
 				description: `⚠️ All expedition are done! ⚠️`,
@@ -169,7 +174,7 @@ export default class Discord extends Controller {
 				color: 0xBB0BB5,
 				title: "Honkai: Star Rail - Reserve Stamina",
 				author: {
-					name: "Honkai: Star Rail",
+					name: "PomPom",
 					icon_url: "https://i.imgur.com/o0hyhmw.png"
 				},
 				description: "⚠️ Your reserve stamina is full ⚠️",
@@ -187,4 +192,4 @@ export default class Discord extends Controller {
 	}
 
 	get active () { return this.#active; }
-}
+};

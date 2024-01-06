@@ -1,4 +1,4 @@
-export const definitions = {
+module.exports = {
 	name: "stamina",
 	expression: sr.Config.get("STAMINA_CHECK_INTERVAL") ?? "0 */30 * * * *",
 	description: "Check for your stamina and notify you when it's almost full",

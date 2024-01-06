@@ -1,4 +1,4 @@
-export default {
+module.exports = {
 	name: "stamina",
 	description: "Check for Trailblazer stamina and see how long until it capped",
 	run: async (context) => {

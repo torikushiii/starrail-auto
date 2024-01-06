@@ -1,7 +1,4 @@
-import config from "../../config.js";
-import ClassTemplate from "./template.js";
-
-export default class Config extends ClassTemplate {
+module.exports = class Config extends require("./template.js") {
 	#name;
 	#value;
 
@@ -24,15 +21,14 @@ export default class Config extends ClassTemplate {
 		return Config;
 	}
 
-	static async loadData () {
-		for (const [name, value] of Object.entries(config)) {
-			const data = {
-				name,
-				value
-			};
+	static async load (data) {
+		const loaded = new Set();
 
-			const instance = new Config(data);
-			Config.data.set(name, instance);
+		for (const [name, value] of Object.entries(data)) {
+			const object = new Config({ name, value });
+
+			Config.data.set(name, object);
+			loaded.add(name);
 		}
 	}
 
@@ -51,4 +47,4 @@ export default class Config extends ClassTemplate {
 
 		return target.value;
 	}
-}
+};

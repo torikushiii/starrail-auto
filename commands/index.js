@@ -1,8 +1,8 @@
-import path from "path";
-import fs from "fs/promises";
+const loadCommands = (async function () {
+	const fs = require("fs/promises");
+	const path = require("path");
 
-export default (async function () {
-	const commandList = await fs.readdir(path.join(process.cwd(), "commands"), {
+	const commandList = await fs.readdir(__dirname, {
 		withFileTypes: true
 	});
 
@@ -12,7 +12,7 @@ export default (async function () {
 	const dirList = commandList.filter((entry) => entry.isDirectory());
 	for (const dir of dirList) {
 		let def;
-		const defPath = path.join(process.cwd(), "commands", dir.name, "index.js");
+		const defPath = path.join(__dirname, dir.name, "index.js");
 		try {
 			const codeData = await import(defPath);
 			def = codeData.default;
@@ -30,4 +30,8 @@ export default (async function () {
 		definitions,
 		failed
 	};
-})();
+});
+
+module.exports = {
+	loadCommands
+};

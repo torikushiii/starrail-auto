@@ -1,4 +1,4 @@
-export const definitions = {
+module.exports = {
 	name: "weeklies-reminder",
 	expression: sr.Config.get("WEEKLIES_REMINDER") ?? "0 21 * * 0",
 	description: "Remind you to do your weeklies",

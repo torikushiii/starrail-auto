@@ -1,4 +1,4 @@
-export const definitions = {
+module.exports = {
 	name: "check-in",
 	expression: sr.Config.get("CHECK_IN") ?? "0 0 0 * * *",
 	description: "Run daily check-in every day at midnight",

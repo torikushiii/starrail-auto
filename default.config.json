@@ -1,0 +1,73 @@
+{
+    "usage": [
+        "config.json is a JSON file that contains the configuration for the application.",
+        "To configure your application, copy this file as \"config.json\" and edit the values.",
+        "Do not add the new config.json to your git repository, as it contains sensitive information."
+    ],
+    "accounts": [
+        {
+            "uid": 123,
+            "cookie": "cookie",
+            "thershold": 170
+        },
+        {
+            "uid": null,
+            "cookie": "cookie",
+            "thershold": 170
+        }
+    ],
+    "config": {
+        "USAGE_0": [
+            "STAMINA_CHECK: If true, check stamina every 30 minutes and send a notification if your stamina is above the threshold",
+            "PERSISTENT_STAMINA: If true, this will keep sending notifications every 30 minutes until your stamina is below the threshold",
+            "STAMINA_CHECK_INTERVAL: cron expression for stamina check"
+        ],
+        "STAMINA_CHECK": true,
+        "PERSISTENT_STAMINA": false,
+        "STAMINA_CHECK_INTERVAL": "0 */30 * * * *",
+
+        "USAGE_1": [
+            "EXPEDITION_CHECK: If true, check expedition every 30 minutes and send a notification if your expedition is done",
+            "PERSISTENT_EXPEDITION: If true, this will keep sending notifications every 30 minutes until you claim your expedition",
+            "EXPEDITION: cron expression for expedition check"
+        ],
+        "EXPEDITION_CHECK": true,
+        "PERSISTENT_EXPEDITION": false,
+        "EXPEDITION": "0 */30 * * * *",
+
+        "USAGE_2": [
+            "REDEEM_CODE: If true, redeem code every 30 minutes when there's a new code",
+            "CHECK_CODE_REDEEM: check redeem code every 30 minutes and send a notification if there's a new code"
+        ],
+        "REDEEM_CODE": false,
+        "CHECK_CODE_REDEEM": true,
+
+        "DISCORD_WEBHOOK": "https://discord.com/api/webhooks/123/abc",
+        
+        "USAGE_3": [
+            "TELEGRAM_CHAT_ID: use @getmyid_bot to get your chat id",
+            "TELEGRAM_TOKEN: Telegram bot token",
+            "TELEGRAM_DISABLE_NOTIFICATION: disable telegram notifications (sound, vibration, etc.)"
+        ],
+        "TELEGRAM_CHAT_ID": 123,
+        "TELEGRAM_TOKEN": "123:abc",
+        "TELEGRAM_DISABLE_NOTIFICATION": false,
+        
+        "CHECK_IN": "0 0 0 * * *",
+        "DAILIES_REMINDER": "0 21 * * *",
+        "WEEKLIES_REMINDER": "0 21 * * 0"
+    },
+    "modules": {
+        "crons": {
+            "USAGE": [
+                "This module allows you to disable all crons.",
+                "If you want to disable all crons, set \"disableAll\" to true.",
+                "If you want to disable only some crons, set \"disableAll\" to false and add the crons you want to disable to the blacklist.",
+                "If you want to disable all crons except some, set \"disableAll\" to true and add the crons you want to enable to the whitelist."
+            ],
+            "disableAll": false,
+            "whitelist": [],
+            "blacklist": []
+        }
+    }
+}

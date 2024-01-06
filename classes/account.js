@@ -1,8 +1,5 @@
-import ClassTemplate from "./template.js";
-
-export default class Account extends ClassTemplate {
+module.exports = class Account extends require("./template.js") {
 	static data = new Map();
-	static ACT_ID = "e202303301540311";
 
 	constructor (data) {
 		super();
@@ -24,14 +21,13 @@ export default class Account extends ClassTemplate {
 		this.skipChecks = data.skipChecks ?? false;
 	}
 
-	static async initialize () {
+	static async initialize (data) {
 		Account.data = new Map();
-		await Account.loadData();
+		await Account.loadData(data);
 		return Account;
 	}
 
-	static async loadData () {
-		const data = sr.Config.get("COOKIES");
+	static async loadData (data) {
 		await this.validate(data);
 	}
 
@@ -59,6 +55,18 @@ export default class Account extends ClassTemplate {
 		const accounts = accountList;
 		if (accounts.length === 0) {
 			throw new sr.Error({ message: "No accounts found in config file." });
+		}
+
+		for (const account of accounts) {
+			const regex = /(ltuid_v2|ltoken_v2|ltoken|ltuid)=\w+/g;
+			if (!regex.test(account.cookie)) {
+				throw new sr.Error({
+					message: "Cookie must contain at least one of the following: ltuid_v2, ltoken_v2, ltoken, ltuid",
+					args: {
+						account
+					}
+				});
+			}
 		}
 
 		for (let i = 0; i < accounts.length; i++) {
@@ -184,4 +192,4 @@ export default class Account extends ClassTemplate {
 	static getActiveAccounts () {
 		return [...Account.data.values()];
 	}
-}
+};

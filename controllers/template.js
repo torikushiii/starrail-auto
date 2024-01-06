@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-export default class Controller {
+module.exports = class Controller {
 	initListeners () {}
 	
 	async send (message, options = {}) {}
@@ -7,4 +7,4 @@ export default class Controller {
 	prepareMessage (messageData, options = {}) {}
 
 	destroy () {}
-}
+};

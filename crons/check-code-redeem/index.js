@@ -1,10 +1,12 @@
-export const definitions = {
+let codeList = [];
+let firstRun = true;
+
+module.exports = {
 	name: "check-code-redeem",
 	expression: "0 */30 * * * *",
 	description: "Check and redeem code from prydwen and HoyoLab",
 	code: (async function codeRedeem () {
 		if (!sr.Config.get("CHECK_CODE_REDEEM")) {
-			this.stop();
 			return;
 		}
 		
@@ -19,9 +21,6 @@ export const definitions = {
 				rewards: "50 Stellar Jades + 10k credits"
 			}
 		];
-
-		this.data.codes ??= [];
-		this.data.firstRun ??= true;
 
 		const res = await sr.Got({
 			url: "https://www.prydwen.gg/star-rail/",
@@ -40,17 +39,17 @@ export const definitions = {
 		}
 
 		try {
-			const savedCodes = await import("./codes.js");
-			this.data.codes = savedCodes.default;
+			const savedCodes = require("./codes.js");
+			codeList = savedCodes;
 		}
 		catch {
 			const path = "./crons/check-code-redeem/codes.js";
-			fs.writeFileSync(path, `export default ${JSON.stringify([...skippedCodes, ...codes], null, 4)}`);
-			this.data.codes = [...skippedCodes, ...codes];
+			fs.writeFileSync(path, `module.exports = ${JSON.stringify(skippedCodes, null, 4)}`);
+			codeList = [...skippedCodes, ...codes];
 		}
 
-		if (this.data.firstRun) {
-			this.data.firstRun = false;
+		if (firstRun) {
+			firstRun = false;
 			return;
 		}
 
@@ -112,12 +111,12 @@ export const definitions = {
 		}
 
 		const newCodes = [];
-		const hoyoCodes = pendingCodes.filter(i => !this.data.codes.some(j => j.code === i.code));
+		const hoyoCodes = pendingCodes.filter(i => !codeList.some(j => j.code === i.code));
 		if (hoyoCodes.length !== 0) {
 			newCodes.push(...hoyoCodes);
 		}
 
-		const prydwenCodes = codes.filter(i => !this.data.codes.some(j => j.code === i.code));
+		const prydwenCodes = codes.filter(i => !codeList.some(j => j.code === i.code));
 		if (prydwenCodes.length !== 0) {
 			newCodes.push(...prydwenCodes);
 		}
@@ -187,17 +186,22 @@ export const definitions = {
 			}
 		}
 
-		this.data.codes.push(...newCodes);
+		codeList.push(...newCodes);
 		fs.unlinkSync("./crons/check-code-redeem/codes.js");
-		fs.writeFileSync("./crons/check-code-redeem/codes.js", `export default ${JSON.stringify(this.data.codes, null, 4)}`);
+		fs.writeFileSync("./crons/check-code-redeem/codes.js", `module.exports = ${JSON.stringify(codeList, null, 4)}`);
 
-		const message = newCodes.map(i => `Code: ${i.code}\nRewards: ${i.rewards}`).join("\n\n");
+		const baseUrl = "https://hsr.hoyoverse.com/gift";
+		const message = newCodes.map(i => `Code: ${i.code}\nRewards: ${i.rewards}\nClaim Here: ${baseUrl}?code=${i.code}`).join("\n\n");
 		sr.Logger.info(`New code(s) found:\n${message}`);
 
 		if (sr.Discord && sr.Discord.active) {
 			await sr.Discord.send({
 				color: 0xBB0BB5,
 				title: "Honkai: Star Rail New Code",
+				author: {
+					name: "PomPom",
+					icon_url: "https://i.imgur.com/o0hyhmw.png"
+				},
 				description: message,
 				timestamp: new Date(),
 				footer: {

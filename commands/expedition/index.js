@@ -1,4 +1,4 @@
-export default {
+module.exports = {
 	name: "expedition",
 	description: "Check for characters in expedition and see how long until they are done",
 	run: async (context) => {

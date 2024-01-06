@@ -1,12 +1,12 @@
-import HoyoTemplate from "./template.js";
+module.exports = class Stamina extends require("./template.js") {
+	static MAX_STAMINA = 240;
 
-export default class Expedition extends HoyoTemplate {
 	static data = new Map();
 
 	static async checkAndRun (options = {}) {
 		const result = [];
 
-		for (const [uid, account] of Expedition.data) {
+		for (const [uid, account] of Stamina.data) {
 			const generatedDS = sr.Utils.generateDS();
 			const region = sr.Utils.getAccountRegion(account.uid);
 
@@ -51,64 +51,73 @@ export default class Expedition extends HoyoTemplate {
 			}
 
 			const { data } = res.body;
-			const { expeditions } = data;
+			const {
+				current_stamina: currentStamina,
+				max_stamina: maxStamina,
+				stamina_recover_time: staminaRecoverTime,
+				current_reserve_stamina: currentReserveStamina,
+				is_reserve_stamina_full: isReserveStaminaFull
+			} = data;
 
-			const isAllCompleted = expeditions.every(i => i.status !== "Ongoing");
-			if (!isAllCompleted) {
-				Expedition.data.set(uid, {
+			const delta = sr.Utils.formatTime(staminaRecoverTime);
+			const objectData = {
+				uid,
+				username: account.username,
+				currentStamina,
+				maxStamina,
+				currentReserveStamina,
+				isReserveStaminaFull,
+				delta
+			};
+
+			if (options.checkOnly) {
+				result.push(objectData);
+				continue;
+			}
+
+			if (currentStamina <= account.threshold && !isReserveStaminaFull) {
+				Stamina.data.set(uid, {
 					...account,
 					fired: false
 				});
-			}
 
-			if (isAllCompleted && options.checkOnly) {
-				result.push({
-					uid: account.uid,
-					username: account.username
-				});
-				
 				continue;
 			}
-			else if (!isAllCompleted && options.checkOnly) {
+
+			if (currentStamina <= account.threshold && isReserveStaminaFull) {
 				result.push({
-					uid: account.uid,
-					expeditions: expeditions.map(i => ({
-						delta: sr.Utils.formatTime(i.remaining_time)
-					}))
+					uid,
+					username: account.username,
+					currentReserveStamina,
+					isReserveStaminaFull
 				});
 
 				continue;
 			}
 
-			if (isAllCompleted && options.skipCheck) {
-				result.push({
-					uid: account.uid,
-					username: account.username
-				});
-				
+			if (options.skipCheck) {
+				result.push(objectData);
 				continue;
 			}
 
-			if (isAllCompleted && !account.fired) {
-				result.push({
-					uid: account.uid,
-					username: account.username
-				});
-				
-				Expedition.data.set(uid, {
-					...account,
-					fired: true
-				});
+			if (account.fired) {
+				continue;
 			}
+
+			result.push(objectData);
+			Stamina.data.set(uid, {
+				...account,
+				fired: true
+			});
 		}
 
 		return result;
 	}
 
 	static async initialize () {
-		Expedition.data = new Map();
-		await Expedition.loadData();
-		return Expedition;
+		Stamina.data = new Map();
+		await Stamina.loadData();
+		return Stamina;
 	}
 
 	static async loadData () {
@@ -125,10 +134,14 @@ export default class Expedition extends HoyoTemplate {
 				continue;
 			}
 
-			Expedition.data.set(account.uid, {
+			if (account.threshold > Stamina.MAX_STAMINA) {
+				throw new sr.Error({ message: `Threshold cannot be greater than max stamina (${Stamina.MAX_STAMINA})` });
+			}
+
+			Stamina.data.set(account.uid, {
 				...account,
 				fired: false
 			});
 		}
 	}
-}
+};

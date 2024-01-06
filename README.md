@@ -22,6 +22,7 @@ If you don't want to use Node.js and simply only want to use it for auto check-i
 
 # Features
 - [x] Auto Check-in
+    # ![image](https://github.com/torikushiii/starrail-auto/assets/21153445/08635e37-9d78-433d-9e90-1c0ae0fd6242)
 - [x] Multiple accounts
 - [x] Stamina check (Node only)
     - Will send you notification if your stamina is above set [threshold](https://i.imgur.com/EFPVkI9.png) (default: 170)
@@ -31,8 +32,8 @@ If you don't want to use Node.js and simply only want to use it for auto check-i
     - Dailies
         - Remind you to do your [daily commission](https://i.imgur.com/5kEqkTG.png) every day at 09:00 PM or your specified time (Only if you haven't done it yet)
     - Weeklies
-        - Remind you to do your [weekly boss](https://i.imgur.com/0aoC7bu.png) every your specified time or Sunday 09:00 PM
-        - Remind you to do your Simulated Universe points every your specified time or Sunday 09:00 PM
+        - Remind you to do your [weekly boss](https://i.imgur.com/0aoC7bu.png) every your specified time or Sunday 09:00 PM (Only if you haven't done it yet)
+        - Remind you to do your Simulated Universe points every your specified time or Sunday 09:00 PM (Only if you haven't done it yet)
 - [x] Code Redeem (Node only)
     - Will send you notification if there's a new code available
     - Will automatically redeem the code for you

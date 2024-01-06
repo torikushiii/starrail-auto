@@ -1,4 +1,4 @@
-export default class CustomError extends globalThis.Error {
+class StarRailError extends globalThis.Error {
 	#args;
 	#timestamp;
 	#messageDescriptor;
@@ -19,7 +19,7 @@ export default class CustomError extends globalThis.Error {
 			this.#args = Object.freeze(obj.args);
 		}
 
-		this.name = obj.name ?? "CustomError";
+		this.name = obj.name ?? "StarRailError";
 		this.#timestamp = Date.now();
 		this.#messageDescriptor = Object.getOwnPropertyDescriptor(this, "message");
         
@@ -59,7 +59,7 @@ export default class CustomError extends globalThis.Error {
 	}
 }
 
-class GenericRequestError extends CustomError {
+class GenericRequestError extends StarRailError {
 	constructor (obj = {}) {
 		super({
 			message: obj.message,
@@ -77,3 +77,5 @@ class GenericRequestError extends CustomError {
 		return "GenericRequestError";
 	}
 }
+
+module.exports = StarRailError;

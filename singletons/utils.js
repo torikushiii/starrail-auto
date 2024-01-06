@@ -1,8 +1,7 @@
-import crypto from "crypto";
-import { load } from "cheerio";
-import SingletonClass from "./template.js";
+const crypto = require("crypto");
+const { load } = require("cheerio");
 
-export default class UtilsSingleton extends SingletonClass {
+module.exports = class UtilsSingleton extends require("./template.js") {
 	static DS_SALT = "6s25p5ox5y14umn1p61aqyyvbvvl3lrt";
 	
 	static timeUnits = {
@@ -110,4 +109,4 @@ export default class UtilsSingleton extends SingletonClass {
 			.update(string)
 			.digest("hex");
 	}
-}
+};

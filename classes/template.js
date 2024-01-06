@@ -1,4 +1,4 @@
-export default class ClassTemplate {
+module.exports = class ClassTemplate {
 	destroy () {
 		throw new Error("destroy() is not implemented");
 	}
@@ -30,4 +30,4 @@ export default class ClassTemplate {
 
 		this.data = definitions.map(i => new this(i));
 	}
-}
+};

@@ -1,6 +1,4 @@
-import Controller from "./template.js";
-
-export default class Telegram extends Controller {
+module.exports = class Telegram extends require("./template.js") {
 	#chatId;
 	#token = null;
 	#disableNotification = false;
@@ -17,20 +15,14 @@ export default class Telegram extends Controller {
 		this.#disableNotification = sr.Config.get("TELEGRAM_DISABLE_NOTIFICATION") ?? false;
 
 		if (!this.#chatId || !this.#token) {
+			console.warn("Telegram chat ID or token is not set, disabling Telegram.");
 			return;
 		}
 
 		this.#active = true;
-		
-		this.cron = new sr.Cron({
-			name: "telegram-listener",
-			// If you recieved error message such as "409: Conflict", try to increase this value
-			expression: "*/5 * * * * *",
-			description: "Listens for Telegram updates",
-			code: () => this.initListeners()
-		});
 
-		this.cron.start();
+		// If you recieved error message such as "409: Conflict", try to increase this value
+		setInterval(() => this.initListeners(), 5000);
 	}
 
 	async initListeners () {
@@ -42,6 +34,7 @@ export default class Telegram extends Controller {
 			url: `https://api.telegram.org/bot${this.#token}/getUpdates`,
 			method: "POST",
 			responseType: "json",
+			throwHttpErrors: false,
 			json: {
 				offset: Telegram.lastUpdateId + 1
 			}
@@ -166,4 +159,4 @@ export default class Telegram extends Controller {
 	}
 
 	get active () { return this.#active; }
-}
+};

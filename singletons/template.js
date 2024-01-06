@@ -1,4 +1,4 @@
-export default class SingletonClass {
+module.exports = class SingletonClass {
 	destroy () {
 		throw new Error("Method not implemented.");
 	}
@@ -10,4 +10,4 @@ export default class SingletonClass {
 	get modulePath () {
 		throw new Error("Method not implemented.");
 	}
-}
+};

@@ -1,10 +1,10 @@
-export const definitions = {
+module.exports = {
 	name: "check-in-checker",
-	expression: "0 */31 * * * *", // to avoid conflict with check-in
+	expression: "0 0 1-23/2 * * *", // to avoid conflict with check-in
 	description: "This cron is to check wether you have checked in or not.",
 	code: (async function checkInChecker () {
 		const checkIn = await sr.CheckIn.getSignData();
-		const awards = sr.CheckIn.getAwards();
+		const awards = await sr.CheckIn.getAwards();
 		
 		const data = [];
 		for (const account of checkIn) {

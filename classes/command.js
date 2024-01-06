@@ -1,6 +1,4 @@
-import ClassTemplate from "./template.js";
-
-export default class Command extends ClassTemplate {
+module.exports = class Command extends require("./template.js") {
 	name;
 	description = null;
 	code;
@@ -159,4 +157,4 @@ export default class Command extends ClassTemplate {
 
 		return execution;
 	}
-}
+};

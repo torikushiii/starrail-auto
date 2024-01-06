@@ -1,6 +1,6 @@
-import util from "util";
-import chalk from "chalk";
-import { createLogger, format, transports, addColors } from "winston";
+const util = require("util");
+const chalk = require("chalk");
+const { createLogger, format, transports, addColors } = require("winston");
 const { combine, colorize, timestamp, printf } = format;
 
 const levels = {
@@ -54,7 +54,7 @@ const json = (...args) => {
 	winston.info(util.inspect(...args));
 };
 
-export default {
+module.exports = {
 	info,
 	error,
 	debug,

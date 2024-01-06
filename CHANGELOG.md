@@ -1,5 +1,8 @@
 # Changelog
 
+## 1/7/2024
+- Major: Reworked codebase from ES6 to CommonJS
+
 ## 1/3/2024
 - Bugfix: Added missing delay on unsuccessful request
 

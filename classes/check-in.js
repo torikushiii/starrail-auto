@@ -1,6 +1,4 @@
-import HoyoTemplate from "./template.js";
-
-export default class CheckIn extends HoyoTemplate {
+module.exports = class CheckIn extends require("./template.js") {
 	static discordMessages = [];
 
 	static data = [];
@@ -242,4 +240,4 @@ export default class CheckIn extends HoyoTemplate {
 			username: i.username ?? "???"
 		}));
 	}
-}
+};
