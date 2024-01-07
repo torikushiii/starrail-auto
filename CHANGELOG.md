@@ -1,6 +1,7 @@
 # Changelog
 
 ## 1/8/2024
+- Minor: Bumped Telegram timeout to 5 seconds
 - Bugfix: Added missing commands module at the config file
 
 ## 1/7/2024

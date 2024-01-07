@@ -35,6 +35,9 @@ module.exports = class Telegram extends require("./template.js") {
 			method: "POST",
 			responseType: "json",
 			throwHttpErrors: false,
+			timeout: {
+				request: 5000
+			},
 			json: {
 				offset: Telegram.lastUpdateId + 1
 			}
