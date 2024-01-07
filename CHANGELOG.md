@@ -1,5 +1,8 @@
 # Changelog
 
+## 1/8/2024
+- Bugfix: Added missing commands module at the config file
+
 ## 1/7/2024
 - Major: Reworked codebase from ES6 to CommonJS
 

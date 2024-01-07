@@ -58,6 +58,11 @@
         "WEEKLIES_REMINDER": "0 21 * * 0"
     },
     "modules": {
+        "commands": {
+            "disableAll": false,
+            "whitelist": [],
+            "blacklist": []
+        },
         "crons": {
             "USAGE": [
                 "This module allows you to disable all crons.",
