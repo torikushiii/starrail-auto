@@ -8,12 +8,12 @@
         {
             "uid": 123,
             "cookie": "cookie",
-            "thershold": 170
+            "threshold": 170
         },
         {
             "uid": null,
             "cookie": "cookie",
-            "thershold": 170
+            "threshold": 170
         }
     ],
     "config": {

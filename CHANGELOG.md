@@ -4,6 +4,7 @@
 - Minor: Bumped Telegram timeout to 5 seconds
 - Minor: Fix error message in config file handling
 - Bugfix: Added missing commands module at the config file
+- Bugfix: Fixed typo from `thershold` to `threshold``
 
 ## 1/7/2024
 - Major: Reworked codebase from ES6 to CommonJS
