@@ -91,7 +91,7 @@ catch {
 		configData = require("./default.config.json");
 	}
 	catch {
-		throw new Error("No default or custom config file found.");
+		throw new Error({ message: "No default or custom config file found." });
 	}
 }
 
