@@ -1,5 +1,8 @@
 # Changelog
 
+## 1/22/2024
+- Minor: Added donation link to README.md
+
 ## 1/8/2024
 - Minor: Bumped Telegram timeout to 5 seconds
 - Minor: Fix error message in config file handling

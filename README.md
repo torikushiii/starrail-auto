@@ -73,3 +73,17 @@ For Discord notifications or Telegram setup, refer to this folder: [setup](https
 
 # Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. If there's any bugs, please open an issue.
+
+**New here?**
+
+To get started, fork the repo, make your changes, add, commit and push your changes to your fork, then come back here and open a pull request. If you're new to GitHub, [this tutorial](https://www.freecodecamp.org/news/how-to-make-your-first-pull-request-on-github-3#let-s-make-our-first-pull-request-) may help.
+
+You can support the project by giving it a star, sharing it with your friends, contributing to the project, and report any bugs you find.
+
+# Buy me a coffee
+If this repo is useful to you, you can buy me a coffee to support me. Thank you!
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/torikushiii)
+
+- [Ko-fi](https://ko-fi.com/torikushiii)
+- [Trakteer](https://trakteer.id/torikushiii)
