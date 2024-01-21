@@ -2,6 +2,7 @@
 
 ## 1/22/2024
 - Minor: Added donation link to README.md
+- Minor: Bumped timeout to 7 seconds
 
 ## 1/8/2024
 - Minor: Bumped Telegram timeout to 5 seconds

@@ -1,7 +1,7 @@
 module.exports = {
 	name: "check-in-checker",
 	expression: "0 0 1-23/2 * * *", // to avoid conflict with check-in
-	description: "This cron is to check wether you have checked in or not.",
+	description: "This cron is to check wether you have checked in or not to avoid missing check-in",
 	code: (async function checkInChecker () {
 		const checkIn = await sr.CheckIn.getSignData();
 		const awards = await sr.CheckIn.getAwards();
@@ -14,7 +14,7 @@ module.exports = {
 
 			const sign = await sr.CheckIn.sign(account.cookie);
 			if (sign === false) {
-				await new Promise(resolve => setTimeout(resolve, 5000));
+				await new Promise(resolve => setTimeout(resolve, 7000));
 				continue;
 			}
 
@@ -38,7 +38,7 @@ module.exports = {
 			return;
 		}
 
-		await new Promise(resolve => setTimeout(resolve, 5000));
+		await new Promise(resolve => setTimeout(resolve, 7000));
 		await sr.Discord.prepareMessage(data, { checkIn: true });
 	})
 };
