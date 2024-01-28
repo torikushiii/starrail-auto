@@ -6,6 +6,7 @@
 - Minor: Updated documentation with new elements.
 - Bugfix: Fixed typo `example.config.js` -> `default.config.js` in README.md.
 - Bugfix: Fixed typo `docker-compose` -> `docker compose` in Makefile
+- Bugfix: Fixed service name `starrail-auto` -> `instance` in Makefile
 
 ## 1/22/2024
 - Minor: Added donation link to README.md

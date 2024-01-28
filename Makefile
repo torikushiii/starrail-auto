@@ -1,7 +1,7 @@
 DOCKER_COMPOSE_CMD := docker compose -f docker-compose.yml
 
 APP_INDEX_FILE := index.js
-APP_SERVICE_NAME := starrail-auto
+APP_SERVICE_NAME := instance
 
 run:
 	node $(APP_INDEX_FILE)
