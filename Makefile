@@ -1,4 +1,4 @@
-DOCKER_COMPOSE_CMD := docker-compose -f docker-compose.yml
+DOCKER_COMPOSE_CMD := docker compose -f docker-compose.yml
 
 APP_INDEX_FILE := index.js
 APP_SERVICE_NAME := starrail-auto

@@ -4,7 +4,8 @@
 - Major: Added Docker and Docker Compose support.
 - Minor: Added Makefile with a list of general operations.
 - Minor: Updated documentation with new elements.
-- Bugfix: Fixed typo from `example.config.js` to `default.config.js` in README.md.
+- Bugfix: Fixed typo `example.config.js` -> `default.config.js` in README.md.
+- Bugfix: Fixed typo `docker-compose` -> `docker compose` in Makefile
 
 ## 1/22/2024
 - Minor: Added donation link to README.md
