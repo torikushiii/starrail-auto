@@ -1,0 +1,9 @@
+# Node specific
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Application configuration
+config.json
+default.config.json

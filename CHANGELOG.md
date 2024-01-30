@@ -1,5 +1,13 @@
 # Changelog
 
+## 1/28/2024
+- Major: Added Docker and Docker Compose support.
+- Minor: Added Makefile with a list of general operations.
+- Minor: Updated documentation with new elements.
+- Bugfix: Fixed typo `example.config.js` -> `default.config.js` in README.md.
+- Bugfix: Fixed typo `docker-compose` -> `docker compose` in Makefile
+- Bugfix: Fixed service name `starrail-auto` -> `instance` in Makefile
+
 ## 1/22/2024
 - Minor: Added donation link to README.md
 - Minor: Bumped timeout to 7 seconds
@@ -8,7 +16,7 @@
 - Minor: Bumped Telegram timeout to 5 seconds
 - Minor: Fix error message in config file handling
 - Bugfix: Added missing commands module at the config file
-- Bugfix: Fixed typo from `thershold` to `threshold``
+- Bugfix: Fixed typo from `thershold` to `threshold`
 
 ## 1/7/2024
 - Major: Reworked codebase from ES6 to CommonJS
