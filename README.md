@@ -49,8 +49,8 @@ If you don't want to use Node.js and simply only want to use it for auto check-i
 # Installation
 1. Clone the repository.
 2. Run `npm install` to install the dependencies.
-3. Create a `config.js` or rename `default.config.js` to `config.js`.
-4. Follow the instructions in the `config.js` file.
+3. Create a `config.json` or rename `default.config.json` to `config.json`.
+4. Follow the instructions in the `config.json` file.
 
 # Usage
 1. Go to the Daily Check-In page [here](https://act.hoyolab.com/bbs/event/signin/hkrpg/index.html?act_id=e202303301540311).
@@ -59,8 +59,7 @@ If you don't want to use Node.js and simply only want to use it for auto check-i
 4. Click on the "Application" tab.
 5. Type "lt" in the "Filter" bar.
    ![image](https://github.com/torikushiii/starrail-auto/assets/21153445/fa902bdd-d165-4a8b-869b-860837ecee30)
-6. Copy name and value (ltoken_v2 and ltuid_v2) and put it in your `config.js` file like this format `name=value;`
-   - Remember to put "; (semicolon)" at every the end of `value`, e.g `ltoken_v2=abc; ltuid_v2=123`
+6. Copy name and value (ltoken_v2 and ltuid_v2) and put it in your newly created `config.json` or `default.config.json` file.
 8. Run `index.js` with `node index.js` if you want to run it indefinitely everytime the daily reset occurs.
 9. Run `index.js` with `node index.js --sign` if you want to run it once.
 10. Additonal arguments:

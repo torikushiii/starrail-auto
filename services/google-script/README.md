@@ -41,12 +41,8 @@
 4. Click on the "Application" tab.
 5. Type "lt" in the "Filter" bar.
    ![image](https://github.com/torikushiii/starrail-auto/assets/21153445/fa902bdd-d165-4a8b-869b-860837ecee30)
-6. Copy name and value (ltoken_v2 and ltuid_v2) and put it in your `config.js` file like this format `name=value;`
-   - Remember to put "; (semicolon)" at every the end of `value`, e.g `ltoken_v2=abc; ltuid_v2=123`
-7. Paste it into the "Value" field for "COOKIE" in the "Script properties" section.
-   - **IF YOU WANT TO RUN IT WITH MULTIPLE ACCOUNTS, SEPARATE THE COOKIES WITH A HASH (#).**
-   - **EXAMPLE: `COOKIE=cookie1#cookie2#cookie3`**
-8. Click on "Save script properties".
+6. Paste the `ltoken` and `ltuid` value to the COOKIE array on the code.
+   ![](https://github.com/torikushiii/starrail-auto/assets/21153445/4aa9c2ab-ff47-4de3-a93c-2ba53310d1c8)
 
 # Trigger
 If you want to automate the script, you can add a trigger to run it daily.

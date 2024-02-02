@@ -1,5 +1,8 @@
 # Changelog
 
+## 2/2/2024
+- Minor: Updated `README.md` with more clear instructions
+
 ## 1/28/2024
 - Major: Added Docker and Docker Compose support.
 - Minor: Added Makefile with a list of general operations.

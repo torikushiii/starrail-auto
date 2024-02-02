@@ -7,12 +7,13 @@
     "accounts": [
         {
             "uid": 123,
-            "cookie": "cookie",
+            "cookie": "ltoken_v2=xxx; ltuid_v2=xxx",
             "threshold": 170
         },
         {
+            "info": "null uid will still checks you in but won't be checking stamina, expedition, etc",
             "uid": null,
-            "cookie": "cookie",
+            "cookie": "ltoken_v2=xxx; ltuid_v2=xxx",
             "threshold": 170
         }
     ],
@@ -42,7 +43,7 @@
         "REDEEM_CODE": false,
         "CHECK_CODE_REDEEM": true,
 
-        "DISCORD_WEBHOOK": "https://discord.com/api/webhooks/123/abc",
+        "DISCORD_WEBHOOK": null,
         
         "USAGE_3": [
             "TELEGRAM_CHAT_ID: use @getmyid_bot to get your chat id",
