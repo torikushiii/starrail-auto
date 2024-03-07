@@ -1,5 +1,8 @@
 # Changelog
 
+## 3/8/2024
+- Minor: Update account identifier in check-in message.
+
 ## 2/2/2024
 - Minor: Updated `README.md` with more clear instructions
 

@@ -43,8 +43,8 @@ const handleFlags = async (argv) => {
 			const checkInResult = await sr.CheckIn.checkAndSign();
 			for (const data of checkInResult) {
 				const message = (data.result === "OK")
-					? `[Account ${data.account}] Check-in successful: ${data.award.name} x${data.award.count}`
-					: `[Account ${data.account}] ${data.result}`;
+					? `[Account ${data.uid}] Check-in successful: ${data.award.name} x${data.award.count}`
+					: `[Account ${data.uid}] ${data.result}`;
 
 				sr.Logger.info(message);
 			}
