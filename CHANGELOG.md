@@ -1,5 +1,8 @@
 # Changelog
 
+## 3/20/2024
+- Bugfix: Added missing conditional check if stamina set to `false` in `config.js` file
+
 ## 3/8/2024
 - Minor: Update account identifier in check-in message.
 

@@ -3,6 +3,11 @@ module.exports = {
 	expression: sr.Config.get("STAMINA_CHECK_INTERVAL") ?? "0 */30 * * * *",
 	description: "Check for your stamina and notify you when it's almost full",
 	code: (async function announceStamina () {
+		const enabled = sr.Config.get("STAMINA_CHECK");
+		if (!enabled) {
+			return;
+		}
+
 		const skipCheck = sr.Config.get("PERSISTENT_STAMINA") ?? false;
 		const staminaResult = await sr.Stamina.checkAndRun({ skipCheck });
 		if (staminaResult.length === 0) {
