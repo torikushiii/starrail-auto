@@ -182,6 +182,7 @@ module.exports = class CheckIn extends require("./template.js") {
 					uid: accountData[i].uid,
 					username: accountData[i].username,
 					signed: data.total,
+					issigned: true,
 					result: "You've already checked in today, Trailblazer~",
 					award: {
 						name: awards[data.total].name,

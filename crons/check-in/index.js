@@ -8,6 +8,11 @@ module.exports = {
 			return;
 		}
 
+		const results = checkInResult.filter(data => !data.issigned);
+		if (results.length === 0) {
+			return;
+		}
+
 		for (const data of checkInResult) {
 			const message = (data.result === "OK")
 				? `[Account ${data.uid}] ${data.username} Check-in successful: ${data.award.name} x${data.award.count}`
