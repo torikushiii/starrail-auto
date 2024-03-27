@@ -1,5 +1,8 @@
 # Changelog
 
+## 3/27/2024
+- Minor: Added option to disable check-in-checker if user have a custom check-in hour set
+
 ## 3/20/2024
 - Bugfix: Added missing conditional check if stamina set to `false` in `config.js` file
 

@@ -54,6 +54,11 @@
         "TELEGRAM_TOKEN": "123:abc",
         "TELEGRAM_DISABLE_NOTIFICATION": false,
         
+        "USAGE_4": [
+            "CHECK_IN_CHECKER: If you want to use custom hour for check in, set this to false"
+        ],
+        "CHECK_IN_CHECKER": true,
+        
         "CHECK_IN": "0 0 0 * * *",
         "DAILIES_REMINDER": "0 21 * * *",
         "WEEKLIES_REMINDER": "0 21 * * 0"

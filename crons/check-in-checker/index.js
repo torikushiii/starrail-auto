@@ -3,6 +3,11 @@ module.exports = {
 	expression: "0 0 1-23/2 * * *", // to avoid conflict with check-in
 	description: "This cron is to check wether you have checked in or not to avoid missing check-in",
 	code: (async function checkInChecker () {
+		const checker = sr.Config.get("CHECK_IN_CHECKER") ?? true;
+		if (!checker) {
+			return;
+		}
+		
 		const checkIn = await sr.CheckIn.getSignData();
 		const awards = await sr.CheckIn.getAwards();
 		
