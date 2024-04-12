@@ -32,57 +32,67 @@ const handleFlags = async (argv) => {
 			Show all accounts current expedition status.
 	`;
 
-	const flag = argv[2];
-	switch (flag) {
-		case "-h":
-		case "--help": {
-			console.log(help);
-			process.exit(0);
-		}
-		
-		case "-c":
-		case "--sign": {
-			const checkInResult = await sr.CheckIn.checkAndSign();
-			for (const data of checkInResult) {
-				const message = (data.result === "OK")
-					? `[Account ${data.uid}] Check-in successful: ${data.award.name} x${data.award.count}`
-					: `[Account ${data.uid}] ${data.result}`;
-
-				sr.Logger.info(message);
+	const flags = argv.slice(2);
+	let shouldExit = false;
+	for (const flag of flags) {
+		switch (flag) {
+			case "-h":
+			case "--help": {
+				console.log(help);
+				process.exit(0);
 			}
-
-			process.exit(0);
-		}
-
-		case "-s":
-		case "--stamina": {
-			const staminaResult = await sr.Stamina.checkAndRun({ checkOnly: true });
-			for (const message of staminaResult) {
-				const { uid, currentStamina, maxStamina, delta } = message;
-				sr.Logger.info(`[${uid}] Current stamina: ${currentStamina}/${maxStamina} (${delta})`);
-			}
-
-			process.exit(0);
-		}
-		
-		case "-e":
-		case "--expedition": {
-			const expiditionResult = await sr.Expedition.checkAndRun({ checkOnly: true });
-			for (const data of expiditionResult) {
-				const { uid } = data;
-				if (!data?.expeditions) {
-					sr.Logger.info(`[${uid}] All expedition has been completed!`);
-					continue;
+			
+			case "-c":
+			case "--sign": {
+				const checkInResult = await sr.CheckIn.checkAndSign();
+				for (const data of checkInResult) {
+					const message = (data.result === "OK")
+						? `[Account ${data.uid}] Check-in successful: ${data.award.name} x${data.award.count}`
+						: `[Account ${data.uid}] ${data.result}`;
+	
+					sr.Logger.info(message);
 				}
-
-				for (const expedition of data.expeditions) {
-					const { delta } = expedition;
-					sr.Logger.info(`[${uid}] Remaining time: ${delta}`);
-				}
+	
+				shouldExit = true;
+				break;
 			}
-
-			process.exit(0);
+	
+			case "-s":
+			case "--stamina": {
+				const staminaResult = await sr.Stamina.checkAndRun({ checkOnly: true });
+				for (const message of staminaResult) {
+					const { uid, currentStamina, maxStamina, delta } = message;
+					sr.Logger.info(`[${uid}] Current stamina: ${currentStamina}/${maxStamina} (${delta})`);
+				}
+	
+				shouldExit = true;
+				break;
+			}
+			
+			case "-e":
+			case "--expedition": {
+				const expiditionResult = await sr.Expedition.checkAndRun({ checkOnly: true });
+				for (const data of expiditionResult) {
+					const { uid } = data;
+					if (!data?.expeditions) {
+						sr.Logger.info(`[${uid}] All expedition has been completed!`);
+						continue;
+					}
+	
+					for (const expedition of data.expeditions) {
+						const { delta } = expedition;
+						sr.Logger.info(`[${uid}] Remaining time: ${delta}`);
+					}
+				}
+	
+				shouldExit = true;
+				break;
+			}
 		}
+	}
+
+	if (shouldExit) {
+		process.exit(0);
 	}
 };
 
