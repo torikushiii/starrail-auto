@@ -34,11 +34,13 @@ const handleFlags = async (argv) => {
 
 	const flag = argv[2];
 	switch (flag) {
+		case "-h":
 		case "--help": {
 			console.log(help);
 			process.exit(0);
 		}
 		
+		case "-c":
 		case "--sign": {
 			const checkInResult = await sr.CheckIn.checkAndSign();
 			for (const data of checkInResult) {
@@ -52,6 +54,7 @@ const handleFlags = async (argv) => {
 			process.exit(0);
 		}
 
+		case "-s":
 		case "--stamina": {
 			const staminaResult = await sr.Stamina.checkAndRun({ checkOnly: true });
 			for (const message of staminaResult) {
@@ -62,6 +65,7 @@ const handleFlags = async (argv) => {
 			process.exit(0);
 		}
 		
+		case "-e":
 		case "--expedition": {
 			const expiditionResult = await sr.Expedition.checkAndRun({ checkOnly: true });
 			for (const data of expiditionResult) {
