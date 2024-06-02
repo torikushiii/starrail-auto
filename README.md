@@ -53,16 +53,21 @@ If you don't want to use Node.js and simply only want to use it for auto check-i
 4. Follow the instructions in the `config.json` file.
 
 # Usage
-1. Go to the Daily Check-In page [here](https://act.hoyolab.com/bbs/event/signin/hkrpg/index.html?act_id=e202303301540311).
-2. Log in with your miHoYo account.
+1. Go to your HoyoLab profile [here](https://www.hoyolab.com/accountCenter/postList).
+2. Log in with your Hoyoverse account.
 3. Open the browser console (F12).
-4. Click on the "Application" tab.
-5. Type "lt" in the "Filter" bar.
-   ![image](https://github.com/torikushiii/starrail-auto/assets/21153445/fa902bdd-d165-4a8b-869b-860837ecee30)
-6. Copy name and value (ltoken_v2 and ltuid_v2) and put it in your newly created `config.json` or `default.config.json` file.
-8. Run `index.js` with `node index.js` if you want to run it indefinitely everytime the daily reset occurs.
-9. Run `index.js` with `node index.js --sign` if you want to run it once.
-10. Additonal arguments:
+4. Click on the "Network" tab.
+5. Refresh the page.
+6. Search for `getGameRecordCard` and click on it.
+    ![](https://github.com/torikushiii/hoyolab-auto/assets/21153445/e0c37bb0-e1ff-4fda-8584-5b51e9b89c6c)
+7. Click on the "Cookies" tab.
+8. Look for `account_mid_v2`, `cookie_token_v2`, and `ltuid_v2`.
+    ![](https://github.com/torikushiii/hoyolab-auto/assets/21153445/eaa1c456-0fce-4143-90c4-b7dfe4d146c0)
+9. Double click the value of each cookie and copy it.
+10. Paste the values in your `default.config.js` or `config.js` file.
+11. Run `index.js` with `node index.js` if you want to run it indefinitely everytime the daily reset occurs.
+12. Run `index.js` with `node index.js --sign` if you want to run it once.
+13. Additonal arguments:
     - `--stamina` to check all accounts stamina. (You need to set your in-game `uid` for it to work)
     - `--expedition` to check all accounts expedition status. (You need to set your in-game `uid` for it to work)
     - `--help` to show the help menu.

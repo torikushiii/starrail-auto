@@ -7,13 +7,13 @@
     "accounts": [
         {
             "uid": 123,
-            "cookie": "ltoken_v2=xxx; ltuid_v2=xxx",
+            "cookie": "cookie_token_v2=xxx; account_mid_v2=xxx; ltuid_v2=xxx",
             "threshold": 170
         },
         {
             "info": "null uid will still checks you in but won't be checking stamina, expedition, etc",
             "uid": null,
-            "cookie": "ltoken_v2=xxx; ltuid_v2=xxx",
+            "cookie": "cookie_token_v2=xxx; account_mid_v2=xxx; ltuid_v2=xxx",
             "threshold": 170
         }
     ],

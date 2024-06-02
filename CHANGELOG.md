@@ -1,5 +1,8 @@
 # Changelog
 
+## 6/3/2024
+- Major: Updated login process and cookie retrieval, and revised cookie configuration format.
+
 ## 3/27/2024
 - Minor: Added option to disable check-in-checker if user have a custom check-in hour set
 - Bugfix: Added missing `issigned` property
