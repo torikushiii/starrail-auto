@@ -9,5 +9,6 @@ services:
     network_mode: bridge
     volumes:
       - ./config.json:/app/config.json:ro
+      - ./crons/check-code-redeem:/app/crons/check-code-redeem
     environment:
       TZ: Asia/Shanghai
