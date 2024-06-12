@@ -1,6 +1,7 @@
 const loadCommands = (async function () {
 	const fs = require("fs/promises");
 	const path = require("path");
+	const { platform } = require("os");
 
 	const commandList = await fs.readdir(__dirname, {
 		withFileTypes: true
@@ -12,7 +13,7 @@ const loadCommands = (async function () {
 	const dirList = commandList.filter((entry) => entry.isDirectory());
 	for (const dir of dirList) {
 		let def;
-		const baseDir = `file://${__dirname}`;
+		const baseDir = platform() === "win32" ? `file://${__dirname}` : __dirname;
 		const defPath = path.join(baseDir, dir.name, "index.js");
 		try {
 			const codeData = await import(defPath);
