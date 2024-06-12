@@ -12,12 +12,14 @@ const loadCommands = (async function () {
 	const dirList = commandList.filter((entry) => entry.isDirectory());
 	for (const dir of dirList) {
 		let def;
-		const defPath = path.join(__dirname, dir.name, "index.js");
+		const baseDir = `file://${__dirname}`;
+		const defPath = path.join(baseDir, dir.name, "index.js");
 		try {
 			const codeData = await import(defPath);
 			def = codeData.default;
 		}
-		catch {
+		catch (e) {
+			console.error(e);
 			failed.push(dir.name);
 		}
 
