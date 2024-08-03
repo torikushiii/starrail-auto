@@ -1,5 +1,6 @@
 # Notice
-This project only receives bug fixes. Please use [hoyolab-auto](https://github.com/torikushiii/hoyolab-auto) instead
+
+# This project only receives bug fixes. Please use [hoyolab-auto](https://github.com/torikushiii/hoyolab-auto) instead
 
 <h1 align="center">
     <img width="120" height="120" src="https://i.imgur.com/qidPCBf.png" alt=""><br>
