@@ -1,5 +1,5 @@
 # Notice
-Project soon will no longer maintained because I'll be fully working [hoyolab-auto](https://github.com/torikushiii/hoyolab-auto) repo which does the same as this but added support for almost all Hoyoverse games. Feel free to keep using this repo if you want to use it for Star Rail only. If you have any questions, feel free to open an issue.
+This project only receives bug fixes. Please use [hoyolab-auto](https://github.com/torikushiii/hoyolab-auto) instead
 
 <h1 align="center">
     <img width="120" height="120" src="https://i.imgur.com/qidPCBf.png" alt=""><br>
